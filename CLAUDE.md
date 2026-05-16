@@ -91,7 +91,7 @@ All visual values live here. **Component CSS must never contain hardcoded colors
 
 ### Token layering
 
-1. **Palette tokens** — primitives like `--gray-0..12`, `--teal-1..12`. Same across themes.
+1. **Palette tokens** — primitives like `--gray-0..12`, `--accent-1..12`. Same across themes. The accent palette is named generically (not after the current color, e.g. `--teal-*` or `--citron-*`) so the accent hue can be re-themed by editing `tokens.css` values only — no rename ripples through component CSS.
 2. **Semantic tokens** — purpose-named like `--color-bg-canvas`, `--color-text-primary`, `--color-accent-bg`. These reference palette tokens and **swap by theme**.
 
 **Components must consume semantic tokens, not palette tokens directly.** Reach for `--color-bg-surface`, not `--gray-1`. If a semantic token is missing, add one.
@@ -118,6 +118,8 @@ src/components/Dialog/
 ├── Dialog.docs.tsx     Examples + prop documentation for the docs site
 └── index.ts            Re-exports the namespace + types
 ```
+
+**Coupled component pairs** (`Toggle` + `ToggleGroup`, `Radio` + `RadioGroup`, `Checkbox` + `CheckboxGroup`) share a single folder named after the leaf. They share `Component.tsx`, `Component.module.css`, `Component.types.ts`, and `Component.docs.tsx`. The `index.ts` re-exports both names. Don't split tightly coupled pairs into separate folders — they share state semantics and visual styling.
 
 ### CSS Modules + BEM
 
@@ -211,6 +213,31 @@ For variant/size props (which Base UI doesn't supply), expose them on our wrappe
 - Add our own `data-*` attribute on the root and style it (`.button[data-variant="primary"]`).
 
 Either is fine — pick whichever reads more naturally for the component. Be consistent within a single component.
+
+### Prop shapes: leaf vs compound
+
+Bekk components fall into two shapes, and each has its own prop convention:
+
+- **Leaf wrappers** (one HTML element — `Button`, `Toggle`, future `Input`): extend the appropriate native HTML attributes type and spread `{...rest}` onto the underlying Base UI part. Curated bekk props (`variant`, `size`, `iconStart`, etc.) are pulled out explicitly first, so they don't collide with native attrs. This gives consumers `onClick`, `onFocus`, `aria-*`, `data-*`, `form`, `name`, etc. without us enumerating them.
+
+  ```ts
+  export interface ButtonProps extends Omit<
+    ButtonHTMLAttributes<HTMLButtonElement>,
+    "className" | "style"
+  > {
+    ref?: Ref<HTMLButtonElement>
+    className?: string
+    style?: CSSProperties
+    variant?: ButtonVariant
+    size?: ButtonSize
+    iconStart?: ReactNode
+    iconEnd?: ReactNode
+  }
+  ```
+
+- **Compound components** (Accordion, Tooltip, future Dialog/Popover/Menu): enumerate every prop explicitly per part. Don't extend native HTML attrs — these components have curated state APIs (`value`, `onValueChange`, `open`, `onOpenChange`, `disabled`, etc.), and surface-area discipline matters more than ergonomic event-handler forwarding. If a consumer needs an event handler we don't expose, add a prop.
+
+The split corresponds to the encapsulation philosophy in § 6: leaves are essentially typed HTML elements with a styling layer, so passing native attrs through is honest. Compound components are stateful constructions where every prop should be a deliberate decision.
 
 ### React 19 refs
 
@@ -320,7 +347,18 @@ The docs site is part of the dev experience but **not** part of the published li
 
 ## 8. How to add a new component
 
-> **Build order: alphabetical.** Components are added in alphabetical order of their Base UI component name (see `docs/components/`). The next component to build is the alphabetically-first one not yet in `src/components/`. Don't skip ahead unless the user explicitly asks.
+> **Build order: priority list, not alphabetical.** Components are added in the order below, prioritizing (a) components that unlock dogfooding the docs site and (b) high-traffic primitives that other components' docs depend on. The next component to build is the first unchecked item. Don't skip ahead unless the user explicitly asks.
+>
+> When a component ships, tick it off here and — if useful — add the next priority to the tail of the queue. This list is maintained as we learn what's actually needed.
+>
+> **Queue:**
+>
+> - [x] Accordion
+> - [x] Button
+> - [x] Toggle / ToggleGroup
+> - [x] Tooltip
+> - [ ] Dialog — high-traffic primitive; exercises the absorbed-parts pattern (Portal + Backdrop + Popup → Content) future overlay components will copy
+> - [ ] NavigationMenu — unlocks dogfooding the docs sidebar (§ 11)
 >
 > Before writing any code, ask the user the questions in § 9. This is not optional.
 
@@ -350,10 +388,11 @@ After those questions are answered:
    export type * from "./Dialog.types"
    ```
 
-7. **Add a token if you need a value you don't have** — but only after asking the user (see § 9).
-8. **Verify in `bun run dev`.** Open the docs page, exercise every example, toggle between light and dark, check keyboard navigation. No automated tests are required for v1, but manual verification is.
-9. **Run `bun run check`** until clean.
-10. **Show the user** before committing.
+7. **Update the package barrel `src/index.ts`** to re-export the new component + its public types. This is the file consumers will import from once bekk is published; if a component isn't here, it's not part of the public API. Easy to forget — make it part of the muscle memory.
+8. **Add a token if you need a value you don't have** — but only after asking the user (see § 9).
+9. **Verify in `bun run dev`.** Open the docs page, exercise every example, toggle between light and dark, check keyboard navigation. No automated tests are required for v1, but manual verification is.
+10. **Run `bun run check`** until clean.
+11. **Show the user** before committing.
 
 ---
 
@@ -366,12 +405,37 @@ After those questions are answered:
 Apply these by default to every new component. Before writing the pre-component questions, check this list AND read the most recently built component in `src/components/` to see how the same patterns were applied. Deviate only when the component genuinely demands it, and surface the deviation explicitly.
 
 - **Anatomy.** Mirror Base UI's namespace, then pare down: absorb any part that exists only as Base UI implementation plumbing (Portal, Backdrop, Positioner, redundant heading wrappers around buttons, content-padding wrappers). Keep parts that carry meaningful content or have independent consumer variations. Aim for the smallest anatomy that doesn't lose expressiveness — usually 3–5 parts.
-- **Variants + sizes.** Every component with visual variation exposes `variant` and `size` props.
+- **Variants + sizes.** Components with **meaningful visual variation** expose `variant` and `size` props.
   - Sizes: `"sm" | "md" | "lg"`. Default `"md"`.
   - Variants: `"default"` (the canonical look) plus `"ghost"` when the component is likely to appear nested inside other containers. Default `"default"`.
+  - **If there's only one tasteful look** (e.g. Tooltip — there's no plausible second style), skip `variant` entirely. Don't invent variation that has no use case. `size` can also be skipped if the component has only one sensible size.
   - More variants/sizes get added only when a real use case demands it.
 - **Heading level.** Components that render a heading expose `headingLevel?: 2 | 3 | 4 | 5 | 6`, default `3`.
-- **Icons.** When a component renders an icon (chevron, plus, close, …), bake in a sensible default from [`lucide-react`](https://lucide.dev/icons/) and expose an `icon` prop on the part that owns it so consumers can swap it. Icon **position** is baked in, not configurable. Icon **size** comes from `--icon-size-*` tokens — wrap the lucide icon in a sized span and let CSS scale the SVG via `width/height: 100%`, rather than passing lucide's `size` prop.
+- **Icons.** Two patterns, by role:
+  - **Baked-in icon** (Accordion's chevron, future Dialog close button): the icon is part of the visual identity. Bake in a sensible default from [`lucide-react`](https://lucide.dev/icons/) and expose an `icon` prop on the part that owns it so consumers can swap it. Position is fixed.
+  - **Icon slots** (Button, Toggle, future Input adornments): the icon flanks user content. Expose `iconStart?: ReactNode` and `iconEnd?: ReactNode` props. Position is fixed by the prop name. Either may be omitted; both may be present alongside `children`.
+  - In both cases: icon **size** comes from `--icon-size-*` tokens — wrap the lucide icon in a sized span and let CSS scale the SVG via `width/height: 100%`, rather than passing lucide's `size` prop.
+- **Trigger parts (compound overlays).** Components with overlay behavior (Tooltip, Popover, future Dialog/Menu) expose a `Trigger` part whose only job is to wire Base UI's behavior into a consumer-provided element. Type its `children` as **`ReactElement`** (not `ReactNode`) and pass it to Base UI's `render` prop internally:
+
+  ```tsx
+  function TooltipTrigger({ children, ...rest }: TooltipTriggerProps) {
+    return <BaseTooltip.Trigger render={children} {...rest} />
+  }
+  ```
+
+  Consumers use it like this:
+
+  ```tsx
+  <Tooltip.Root>
+    <Tooltip.Trigger>
+      <Button iconStart={<Info />} aria-label="Info" />
+    </Tooltip.Trigger>
+    <Tooltip.Content>Account details</Tooltip.Content>
+  </Tooltip.Root>
+  ```
+
+  The render prop is bekk's implementation detail. Typing children as `ReactElement` gives consumers a clear error if they pass multiple children or a string.
+
 - **Behavioral props always exposed (when Base UI offers them):**
   - `disabled` — on the root, and per-item where the component has items.
   - Full controlled state — `value` / `defaultValue` / `onValueChange`, or `open` / `onOpenChange`, mirroring Base UI's controlled-state shape.
@@ -425,7 +489,7 @@ When the work is ready: ask before running `git commit`, `git push`, or anything
 - **No `src/components/` directory yet.** Create it with the first component.
 - **No `src/docs/` shell yet.** The docs-site infrastructure (sidebar, routing, prop-table rendering, theme toggle, `*.docs.tsx` auto-discovery) gets built alongside the first component. Confirm scope with the user when that work starts.
 - **No tests.** Components are verified manually via the docs site. If we adopt a test runner, that's a separate, deliberate decision.
-- **Token palette is a starting point.** Neutral gray + teal accent + a few status colors. Iterate as real components reveal what's missing.
+- **Token palette is a starting point.** Neutral gray + a single generically-named accent palette (currently glacier / hue 198) + a few status colors. Iterate as real components reveal what's missing.
 - **Docs app is hand-rolled HTML.** The sidebar, prop tables, theme toggle and example previews are bespoke markup in `src/docs/`. Eventually the docs app should dogfood bekk's own components (e.g. the theme toggle becomes `ToggleGroup`, the sidebar becomes `NavigationMenu`, prop tables get a real table component). Migrate piecewise once those components exist; don't gate the docs site on it.
 - **Docs site features still missing:**
   - **"Show code" toggle per example** — consumers will want to copy markup.

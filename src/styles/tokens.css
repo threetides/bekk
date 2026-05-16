@@ -16,7 +16,8 @@
    ============================================================ */
 
 :root {
-  /* ---------- Palette: neutral (gray) ---------- */
+  /* ---------- Palette: neutral (gray, slight cool tint) ---------- */
+  /* Subtle hue-250 chroma harmonizes analogously with cool accents like glacier. */
   --gray-0: oklch(99% 0.002 250);
   --gray-1: oklch(96% 0.004 250);
   --gray-2: oklch(92% 0.006 250);
@@ -31,19 +32,24 @@
   --gray-11: oklch(14% 0.006 250);
   --gray-12: oklch(10% 0.004 250);
 
-  /* ---------- Palette: accent (teal) ---------- */
-  --teal-1: oklch(97% 0.02 200);
-  --teal-2: oklch(92% 0.04 200);
-  --teal-3: oklch(85% 0.07 200);
-  --teal-4: oklch(78% 0.1 200);
-  --teal-5: oklch(72% 0.115 200);
-  --teal-6: oklch(65% 0.13 200);
-  --teal-7: oklch(58% 0.125 200);
-  --teal-8: oklch(50% 0.115 200);
-  --teal-9: oklch(42% 0.1 200);
-  --teal-10: oklch(34% 0.08 200);
-  --teal-11: oklch(26% 0.06 200);
-  --teal-12: oklch(18% 0.04 200);
+  /* ---------- Palette: accent ----------
+     Named generically so the color can be re-themed by editing values only —
+     no consumer code references palette tokens directly.
+     Current accent: glacier (Nordic mountain water — pale cyan-blue with a
+     green undertone, hue 198). Deliberately lower chroma than a typical UI
+     accent — atmospheric, not electric. Scale peaks light (step 6 at L=78). */
+  --accent-1: oklch(98% 0.015 198);
+  --accent-2: oklch(95% 0.035 198);
+  --accent-3: oklch(90% 0.065 198);
+  --accent-4: oklch(86% 0.09 198);
+  --accent-5: oklch(82% 0.105 198);
+  --accent-6: oklch(78% 0.115 198);
+  --accent-7: oklch(70% 0.12 198);
+  --accent-8: oklch(60% 0.115 198);
+  --accent-9: oklch(48% 0.095 198);
+  --accent-10: oklch(36% 0.075 198);
+  --accent-11: oklch(24% 0.055 198);
+  --accent-12: oklch(14% 0.035 198);
 
   /* ---------- Palette: status ---------- */
   --success-6: oklch(65% 0.15 150);
@@ -138,19 +144,22 @@
   --color-text-secondary: var(--gray-9);
   --color-text-muted: var(--gray-7);
   --color-text-disabled: var(--gray-5);
-  --color-text-on-accent: oklch(100% 0 0);
+  --color-text-on-accent: var(--gray-12);
+
+  --color-bg-inverse: var(--gray-12);
+  --color-text-on-inverse: var(--gray-1);
 
   --color-border-subtle: var(--gray-2);
   --color-border-default: var(--gray-3);
   --color-border-strong: var(--gray-5);
 
-  --color-accent-bg: var(--teal-6);
-  --color-accent-bg-hover: var(--teal-7);
-  --color-accent-bg-active: var(--teal-8);
-  --color-accent-fg: var(--teal-7);
-  --color-accent-border: var(--teal-6);
+  --color-accent-bg: var(--accent-6);
+  --color-accent-bg-hover: var(--accent-7);
+  --color-accent-bg-active: var(--accent-8);
+  --color-accent-fg: var(--accent-8);
+  --color-accent-border: var(--accent-6);
 
-  --color-focus-ring: var(--teal-6);
+  --color-focus-ring: var(--accent-6);
 
   --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.06);
   --shadow-md: 0 4px 8px oklch(0% 0 0 / 0.08), 0 1px 2px oklch(0% 0 0 / 0.04);
@@ -175,17 +184,20 @@
     --color-text-disabled: var(--gray-7);
     --color-text-on-accent: var(--gray-12);
 
+    --color-bg-inverse: var(--gray-2);
+    --color-text-on-inverse: var(--gray-12);
+
     --color-border-subtle: var(--gray-10);
     --color-border-default: var(--gray-9);
     --color-border-strong: var(--gray-7);
 
-    --color-accent-bg: var(--teal-6);
-    --color-accent-bg-hover: var(--teal-5);
-    --color-accent-bg-active: var(--teal-4);
-    --color-accent-fg: var(--teal-5);
-    --color-accent-border: var(--teal-6);
+    --color-accent-bg: var(--accent-6);
+    --color-accent-bg-hover: var(--accent-5);
+    --color-accent-bg-active: var(--accent-4);
+    --color-accent-fg: var(--accent-5);
+    --color-accent-border: var(--accent-6);
 
-    --color-focus-ring: var(--teal-5);
+    --color-focus-ring: var(--accent-5);
 
     --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.3);
     --shadow-md: 0 4px 8px oklch(0% 0 0 / 0.4), 0 1px 2px oklch(0% 0 0 / 0.3);
@@ -207,17 +219,20 @@
   --color-text-disabled: var(--gray-7);
   --color-text-on-accent: var(--gray-12);
 
+  --color-bg-inverse: var(--gray-2);
+  --color-text-on-inverse: var(--gray-12);
+
   --color-border-subtle: var(--gray-10);
   --color-border-default: var(--gray-9);
   --color-border-strong: var(--gray-7);
 
-  --color-accent-bg: var(--teal-6);
-  --color-accent-bg-hover: var(--teal-5);
-  --color-accent-bg-active: var(--teal-4);
-  --color-accent-fg: var(--teal-5);
-  --color-accent-border: var(--teal-6);
+  --color-accent-bg: var(--accent-6);
+  --color-accent-bg-hover: var(--accent-5);
+  --color-accent-bg-active: var(--accent-4);
+  --color-accent-fg: var(--accent-5);
+  --color-accent-border: var(--accent-6);
 
-  --color-focus-ring: var(--teal-5);
+  --color-focus-ring: var(--accent-5);
 
   --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.3);
   --shadow-md: 0 4px 8px oklch(0% 0 0 / 0.4), 0 1px 2px oklch(0% 0 0 / 0.3);

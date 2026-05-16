@@ -2,6 +2,7 @@ import { useState } from "react"
 import type { FC } from "react"
 import { Accordion } from "./Accordion"
 import type { AccordionSize, AccordionVariant } from "./Accordion.types"
+import { Button } from "../Button"
 import type { DocPage } from "../../docs/types"
 
 const FAQ = [
@@ -136,17 +137,13 @@ const Controlled: FC = () => {
   const [value, setValue] = useState<string[]>(["what"])
   return (
     <div style={{ display: "grid", gap: 16, maxWidth: 480 }}>
-      <div style={{ display: "flex", gap: 8 }}>
-        <button
-          type="button"
-          onClick={() => setValue(FAQ.map((i) => i.value))}
-          style={{ padding: "6px 12px" }}
-        >
+      <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+        <Button size="sm" variant="ghost" onClick={() => setValue(FAQ.map((i) => i.value))}>
           Open all
-        </button>
-        <button type="button" onClick={() => setValue([])} style={{ padding: "6px 12px" }}>
+        </Button>
+        <Button size="sm" variant="ghost" onClick={() => setValue([])}>
           Collapse all
-        </button>
+        </Button>
         <span
           style={{
             alignSelf: "center",

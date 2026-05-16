@@ -1,5 +1,4 @@
 .toggle {
-  display: inline-flex;
   background-color: var(--color-bg-subtle);
   border-radius: var(--radius-md);
   padding: 2px;
@@ -7,26 +6,5 @@
 }
 
 .toggle__button {
-  appearance: none;
-  background: transparent;
-  border: none;
-  padding: var(--spacing-1) var(--spacing-3);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  font-family: inherit;
   text-transform: capitalize;
-  transition: background-color var(--duration-fast) var(--easing-standard);
-}
-
-.toggle__button:hover {
-  color: var(--color-text-primary);
-}
-
-.toggle__button[data-active] {
-  background-color: var(--color-bg-surface);
-  color: var(--color-text-primary);
-  box-shadow: var(--shadow-sm);
 }

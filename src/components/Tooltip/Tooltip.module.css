@@ -1,0 +1,80 @@
+/* Positioner — invisible wrapper that Base UI positions */
+.tooltip__positioner {
+  z-index: var(--z-tooltip);
+}
+
+/* Popup — the visible bubble */
+.tooltip__popup {
+  display: flex;
+  align-items: center;
+  padding: var(--bekk-tooltip-pad-y) var(--bekk-tooltip-pad-x);
+  background-color: var(--color-bg-inverse);
+  color: var(--color-text-on-inverse);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-sans);
+  font-size: var(--bekk-tooltip-font-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+  box-shadow: var(--shadow-md);
+  pointer-events: none;
+  transform-origin: var(--transform-origin);
+  transition:
+    opacity var(--duration-fast) var(--easing-standard),
+    transform var(--duration-fast) var(--easing-standard);
+}
+
+.tooltip__popup[data-starting-style],
+.tooltip__popup[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+/* Sizes set internal CSS variables */
+.tooltip__popup--sm {
+  --bekk-tooltip-pad-y: var(--spacing-1);
+  --bekk-tooltip-pad-x: var(--spacing-2);
+  --bekk-tooltip-font-size: var(--font-size-xs);
+}
+
+.tooltip__popup--md {
+  --bekk-tooltip-pad-y: var(--spacing-2);
+  --bekk-tooltip-pad-x: var(--spacing-3);
+  --bekk-tooltip-font-size: var(--font-size-sm);
+}
+
+.tooltip__popup--lg {
+  --bekk-tooltip-pad-y: var(--spacing-3);
+  --bekk-tooltip-pad-x: var(--spacing-4);
+  --bekk-tooltip-font-size: var(--font-size-md);
+}
+
+/* Arrow — Base UI's Arrow component is positioned automatically.
+   We render an SVG inside it and rotate per side via data-side. */
+.tooltip__arrow {
+  display: flex;
+}
+
+.tooltip__arrow svg {
+  width: 12px;
+  height: 8px;
+  fill: var(--color-bg-inverse);
+}
+
+.tooltip__arrow[data-side="top"] {
+  bottom: -8px;
+}
+
+.tooltip__arrow[data-side="bottom"] {
+  top: -8px;
+  transform: rotate(180deg);
+}
+
+.tooltip__arrow[data-side="left"] {
+  right: -10px;
+  transform: rotate(-90deg);
+}
+
+.tooltip__arrow[data-side="right"] {
+  left: -10px;
+  transform: rotate(90deg);
+}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import type { FC } from "react"
+import { Toggle, ToggleGroup } from "@/components/Toggle"
 import styles from "./ThemeToggle.module.css"
 
 type Theme = "auto" | "light" | "dark"
@@ -12,6 +13,10 @@ function getInitialTheme(): Theme {
   const stored = window.localStorage.getItem(STORAGE_KEY)
   if (stored === "light" || stored === "dark" || stored === "auto") return stored
   return "auto"
+}
+
+function isTheme(value: string | undefined): value is Theme {
+  return value === "auto" || value === "light" || value === "dark"
 }
 
 export const ThemeToggle: FC = () => {
@@ -27,20 +32,20 @@ export const ThemeToggle: FC = () => {
   }, [theme])
 
   return (
-    <div className={styles.toggle} role="radiogroup" aria-label="Theme">
+    <ToggleGroup
+      value={[theme]}
+      onValueChange={(value) => {
+        const next = value[0]
+        if (isTheme(next)) setTheme(next)
+      }}
+      aria-label="Theme"
+      className={styles.toggle}
+    >
       {THEMES.map((t) => (
-        <button
-          key={t}
-          type="button"
-          role="radio"
-          aria-checked={theme === t}
-          onClick={() => setTheme(t)}
-          className={styles["toggle__button"]}
-          data-active={theme === t ? "" : undefined}
-        >
+        <Toggle key={t} value={t} size="sm" variant="ghost" className={styles["toggle__button"]}>
           {t}
-        </button>
+        </Toggle>
       ))}
-    </div>
+    </ToggleGroup>
   )
 }

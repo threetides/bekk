@@ -1,0 +1,115 @@
+/* Block */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--bekk-button-gap);
+  padding: var(--bekk-button-pad-y) var(--bekk-button-pad-x);
+  border: var(--border-width-1) solid transparent;
+  border-radius: var(--radius-md);
+  background-color: transparent;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-sans);
+  font-size: var(--bekk-button-font-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  transition:
+    background-color var(--duration-fast) var(--easing-standard),
+    color var(--duration-fast) var(--easing-standard),
+    border-color var(--duration-fast) var(--easing-standard);
+}
+
+.button:focus-visible {
+  outline: var(--border-width-2) solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.button[data-disabled] {
+  cursor: not-allowed;
+}
+
+/* Sizes set internal CSS variables consumed by elements */
+.button--sm {
+  --bekk-button-pad-y: var(--spacing-1);
+  --bekk-button-pad-x: var(--spacing-3);
+  --bekk-button-font-size: var(--font-size-sm);
+  --bekk-button-icon-size: var(--icon-size-sm);
+  --bekk-button-gap: var(--spacing-2);
+}
+
+.button--md {
+  --bekk-button-pad-y: var(--spacing-2);
+  --bekk-button-pad-x: var(--spacing-4);
+  --bekk-button-font-size: var(--font-size-md);
+  --bekk-button-icon-size: var(--icon-size-md);
+  --bekk-button-gap: var(--spacing-2);
+}
+
+.button--lg {
+  --bekk-button-pad-y: var(--spacing-3);
+  --bekk-button-pad-x: var(--spacing-5);
+  --bekk-button-font-size: var(--font-size-lg);
+  --bekk-button-icon-size: var(--icon-size-lg);
+  --bekk-button-gap: var(--spacing-3);
+}
+
+/* Variant: default (solid accent) */
+.button--default {
+  background-color: var(--color-accent-bg);
+  color: var(--color-text-on-accent);
+}
+
+.button--default:hover:not([data-disabled]) {
+  background-color: var(--color-accent-bg-hover);
+}
+
+.button--default:active:not([data-disabled]) {
+  background-color: var(--color-accent-bg-active);
+}
+
+.button--default[data-disabled] {
+  background-color: var(--color-bg-muted);
+  color: var(--color-text-disabled);
+}
+
+/* Variant: ghost (transparent, hover bg only) */
+.button--ghost {
+  background-color: transparent;
+  color: var(--color-text-primary);
+}
+
+.button--ghost:hover:not([data-disabled]) {
+  background-color: var(--color-bg-subtle);
+}
+
+.button--ghost:active:not([data-disabled]) {
+  background-color: var(--color-bg-muted);
+}
+
+.button--ghost[data-disabled] {
+  color: var(--color-text-disabled);
+}
+
+/* Element: label (text span) */
+.button__label {
+  min-width: 0;
+}
+
+/* Element: icon (start or end) */
+.button__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--bekk-button-icon-size);
+  height: var(--bekk-button-icon-size);
+}
+
+.button__icon svg {
+  width: 100%;
+  height: 100%;
+}
