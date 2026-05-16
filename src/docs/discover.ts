@@ -45,10 +45,14 @@ export interface CategoryGroup {
   pages: DiscoveredPage[]
 }
 
-export const groupedPages: CategoryGroup[] = (() => {
+export function categorizeSlug(slug: string): Category {
+  return SLUG_TO_CATEGORY[slug] ?? "Other"
+}
+
+export function groupPagesByCategory(input: DiscoveredPage[]): CategoryGroup[] {
   const buckets = new Map<Category, DiscoveredPage[]>()
-  for (const p of pages) {
-    const category = SLUG_TO_CATEGORY[p.slug] ?? "Other"
+  for (const p of input) {
+    const category = categorizeSlug(p.slug)
     const bucket = buckets.get(category) ?? []
     bucket.push(p)
     buckets.set(category, bucket)
@@ -61,4 +65,6 @@ export const groupedPages: CategoryGroup[] = (() => {
   const other = buckets.get("Other")
   if (other?.length) ordered.push({ category: "Other", pages: other })
   return ordered
-})()
+}
+
+export const groupedPages: CategoryGroup[] = groupPagesByCategory(pages)
