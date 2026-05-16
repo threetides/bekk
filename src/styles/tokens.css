@@ -1,0 +1,225 @@
+/* ============================================================
+   bekk design tokens
+   ------------------------------------------------------------
+   Conventions:
+     - Colors: oklch
+     - Lengths: px (spacing, radii, borders, shadow offsets)
+     - Font sizes: rem (respect user font-size preferences)
+     - Line heights: unitless
+     - Durations: ms
+
+   Theming:
+     - Default = light
+     - Auto dark via `@media (prefers-color-scheme: dark)`
+     - Manual override via `html[data-theme="light" | "dark"]`
+     - Manual override always wins over the media query
+   ============================================================ */
+
+:root {
+  /* ---------- Palette: neutral (gray) ---------- */
+  --gray-0: oklch(99% 0.002 250);
+  --gray-1: oklch(96% 0.004 250);
+  --gray-2: oklch(92% 0.006 250);
+  --gray-3: oklch(86% 0.008 250);
+  --gray-4: oklch(78% 0.01 250);
+  --gray-5: oklch(68% 0.012 250);
+  --gray-6: oklch(56% 0.014 250);
+  --gray-7: oklch(46% 0.014 250);
+  --gray-8: oklch(36% 0.012 250);
+  --gray-9: oklch(28% 0.01 250);
+  --gray-10: oklch(20% 0.008 250);
+  --gray-11: oklch(14% 0.006 250);
+  --gray-12: oklch(10% 0.004 250);
+
+  /* ---------- Palette: accent (teal) ---------- */
+  --teal-1: oklch(97% 0.02 200);
+  --teal-2: oklch(92% 0.04 200);
+  --teal-3: oklch(85% 0.07 200);
+  --teal-4: oklch(78% 0.1 200);
+  --teal-5: oklch(72% 0.115 200);
+  --teal-6: oklch(65% 0.13 200);
+  --teal-7: oklch(58% 0.125 200);
+  --teal-8: oklch(50% 0.115 200);
+  --teal-9: oklch(42% 0.1 200);
+  --teal-10: oklch(34% 0.08 200);
+  --teal-11: oklch(26% 0.06 200);
+  --teal-12: oklch(18% 0.04 200);
+
+  /* ---------- Palette: status ---------- */
+  --success-6: oklch(65% 0.15 150);
+  --warning-6: oklch(75% 0.16 75);
+  --danger-6: oklch(60% 0.2 25);
+
+  /* ---------- Spacing (4px base) ---------- */
+  --spacing-0: 0;
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+  --spacing-10: 40px;
+  --spacing-12: 48px;
+  --spacing-16: 64px;
+  --spacing-20: 80px;
+  --spacing-24: 96px;
+
+  /* ---------- Border radius ---------- */
+  --radius-none: 0;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-full: 9999px;
+
+  /* ---------- Border width ---------- */
+  --border-width-1: 1px;
+  --border-width-2: 2px;
+
+  /* ---------- Typography ---------- */
+  --font-family-sans: "PlusJakartaSans", system-ui, sans-serif;
+  --font-family-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.7;
+
+  /* ---------- Z-index scale ---------- */
+  --z-base: 0;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-overlay: 1000;
+  --z-modal: 1100;
+  --z-popover: 1200;
+  --z-tooltip: 1300;
+  --z-toast: 1400;
+
+  /* ---------- Motion ---------- */
+  --duration-instant: 0ms;
+  --duration-fast: 120ms;
+  --duration-normal: 200ms;
+  --duration-slow: 320ms;
+
+  --easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --easing-emphasized: cubic-bezier(0.3, 0, 0, 1);
+  --easing-decelerate: cubic-bezier(0, 0, 0, 1);
+  --easing-accelerate: cubic-bezier(0.3, 0, 1, 1);
+
+  /* ---------- Semantic tokens (light, default) ---------- */
+  --color-bg-canvas: var(--gray-0);
+  --color-bg-surface: oklch(100% 0 0);
+  --color-bg-subtle: var(--gray-1);
+  --color-bg-muted: var(--gray-2);
+  --color-bg-emphasized: var(--gray-3);
+
+  --color-text-primary: var(--gray-12);
+  --color-text-secondary: var(--gray-9);
+  --color-text-muted: var(--gray-7);
+  --color-text-disabled: var(--gray-5);
+  --color-text-on-accent: oklch(100% 0 0);
+
+  --color-border-subtle: var(--gray-2);
+  --color-border-default: var(--gray-3);
+  --color-border-strong: var(--gray-5);
+
+  --color-accent-bg: var(--teal-6);
+  --color-accent-bg-hover: var(--teal-7);
+  --color-accent-bg-active: var(--teal-8);
+  --color-accent-fg: var(--teal-7);
+  --color-accent-border: var(--teal-6);
+
+  --color-focus-ring: var(--teal-6);
+
+  --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.06);
+  --shadow-md:
+    0 4px 8px oklch(0% 0 0 / 0.08), 0 1px 2px oklch(0% 0 0 / 0.04);
+  --shadow-lg:
+    0 12px 24px oklch(0% 0 0 / 0.12), 0 4px 8px oklch(0% 0 0 / 0.06);
+}
+
+/* ============================================================
+   Dark theme — applied when the user prefers it, unless the
+   document explicitly forces light via [data-theme="light"].
+   ============================================================ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg-canvas: var(--gray-12);
+    --color-bg-surface: var(--gray-11);
+    --color-bg-subtle: var(--gray-10);
+    --color-bg-muted: var(--gray-9);
+    --color-bg-emphasized: var(--gray-8);
+
+    --color-text-primary: var(--gray-0);
+    --color-text-secondary: var(--gray-3);
+    --color-text-muted: var(--gray-5);
+    --color-text-disabled: var(--gray-7);
+    --color-text-on-accent: var(--gray-12);
+
+    --color-border-subtle: var(--gray-10);
+    --color-border-default: var(--gray-9);
+    --color-border-strong: var(--gray-7);
+
+    --color-accent-bg: var(--teal-6);
+    --color-accent-bg-hover: var(--teal-5);
+    --color-accent-bg-active: var(--teal-4);
+    --color-accent-fg: var(--teal-5);
+    --color-accent-border: var(--teal-6);
+
+    --color-focus-ring: var(--teal-5);
+
+    --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.3);
+    --shadow-md:
+      0 4px 8px oklch(0% 0 0 / 0.4), 0 1px 2px oklch(0% 0 0 / 0.3);
+    --shadow-lg:
+      0 12px 24px oklch(0% 0 0 / 0.5), 0 4px 8px oklch(0% 0 0 / 0.3);
+  }
+}
+
+/* Explicit dark — always wins over the media query. */
+:root[data-theme="dark"] {
+  --color-bg-canvas: var(--gray-12);
+  --color-bg-surface: var(--gray-11);
+  --color-bg-subtle: var(--gray-10);
+  --color-bg-muted: var(--gray-9);
+  --color-bg-emphasized: var(--gray-8);
+
+  --color-text-primary: var(--gray-0);
+  --color-text-secondary: var(--gray-3);
+  --color-text-muted: var(--gray-5);
+  --color-text-disabled: var(--gray-7);
+  --color-text-on-accent: var(--gray-12);
+
+  --color-border-subtle: var(--gray-10);
+  --color-border-default: var(--gray-9);
+  --color-border-strong: var(--gray-7);
+
+  --color-accent-bg: var(--teal-6);
+  --color-accent-bg-hover: var(--teal-5);
+  --color-accent-bg-active: var(--teal-4);
+  --color-accent-fg: var(--teal-5);
+  --color-accent-border: var(--teal-6);
+
+  --color-focus-ring: var(--teal-5);
+
+  --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.3);
+  --shadow-md:
+    0 4px 8px oklch(0% 0 0 / 0.4), 0 1px 2px oklch(0% 0 0 / 0.3);
+  --shadow-lg:
+    0 12px 24px oklch(0% 0 0 / 0.5), 0 4px 8px oklch(0% 0 0 / 0.3);
+}

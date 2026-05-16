@@ -1,0 +1,31 @@
+{
+  "name": "bekk",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "fmt": "oxfmt",
+    "lint": "oxlint --deny-warnings",
+    "type-check": "tsc --noEmit --pretty",
+    "check": "bun run fmt && bun run lint && bun run type-check"
+  },
+  "dependencies": {
+    "@base-ui/react": "^1.4.1",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@types/node": "^24.12.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "globals": "^17.6.0",
+    "oxfmt": "^0.50.0",
+    "oxlint": "^1.65.0",
+    "typescript": "~6.0.2",
+    "vite": "^8.0.12"
+  }
+}
