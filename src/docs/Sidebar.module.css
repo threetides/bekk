@@ -8,10 +8,19 @@
 }
 
 .sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
   padding: 0 var(--spacing-6) var(--spacing-4);
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
+}
+
+.sidebar__mark {
+  flex: none;
+  display: block;
+  color: var(--color-accent-fg);
 }
 
 .sidebar__list {

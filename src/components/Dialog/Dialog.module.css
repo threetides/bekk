@@ -1,0 +1,122 @@
+/* Backdrop — absorbed into Content */
+.dialog__backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: var(--color-bg-backdrop);
+  z-index: var(--z-overlay);
+  transition: opacity var(--duration-normal) var(--easing-standard);
+}
+
+.dialog__backdrop[data-starting-style],
+.dialog__backdrop[data-ending-style] {
+  opacity: 0;
+}
+
+/* Popup — the visible dialog box */
+.dialog__popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: var(--z-modal);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+
+  width: 90vw;
+  max-height: calc(100dvh - var(--spacing-12));
+  overflow-y: auto;
+  padding: var(--spacing-6);
+
+  background-color: var(--color-bg-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+
+  font-family: var(--font-family-sans);
+  color: var(--color-text-primary);
+  outline: none;
+
+  --bekk-dialog-title-pad-right: 0;
+
+  transition:
+    opacity var(--duration-normal) var(--easing-decelerate),
+    transform var(--duration-normal) var(--easing-decelerate);
+}
+
+.dialog__popup[data-starting-style],
+.dialog__popup[data-ending-style] {
+  opacity: 0;
+  transform: translate(-50%, -48%) scale(0.96);
+}
+
+/* Sizes set the max-width */
+.dialog__popup--sm {
+  max-width: 400px;
+}
+
+.dialog__popup--md {
+  max-width: 520px;
+}
+
+.dialog__popup--lg {
+  max-width: 720px;
+}
+
+/* When the close X is shown, reserve room next to the title */
+.dialog__popup--with-close {
+  --bekk-dialog-title-pad-right: var(--spacing-8);
+}
+
+/* Element: title */
+.dialog__title {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  padding-right: var(--bekk-dialog-title-pad-right);
+}
+
+/* Element: description */
+.dialog__description {
+  margin: 0;
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-secondary);
+}
+
+/* Element: close X (absorbed, rendered by Content) */
+.dialog__close-x {
+  position: absolute;
+  top: var(--spacing-3);
+  right: var(--spacing-3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-8);
+  height: var(--spacing-8);
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--easing-standard),
+    color var(--duration-fast) var(--easing-standard);
+}
+
+.dialog__close-x:hover {
+  background-color: var(--color-bg-subtle);
+  color: var(--color-text-primary);
+}
+
+.dialog__close-x:focus-visible {
+  outline: var(--border-width-2) solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.dialog__close-x svg {
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
+}

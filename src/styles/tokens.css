@@ -149,6 +149,8 @@
   --color-bg-inverse: var(--gray-12);
   --color-text-on-inverse: var(--gray-1);
 
+  --color-bg-backdrop: oklch(0% 0 0 / 0.4);
+
   --color-border-subtle: var(--gray-2);
   --color-border-default: var(--gray-3);
   --color-border-strong: var(--gray-5);
@@ -187,6 +189,8 @@
     --color-bg-inverse: var(--gray-2);
     --color-text-on-inverse: var(--gray-12);
 
+    --color-bg-backdrop: oklch(0% 0 0 / 0.6);
+
     --color-border-subtle: var(--gray-10);
     --color-border-default: var(--gray-9);
     --color-border-strong: var(--gray-7);
@@ -221,6 +225,8 @@
 
   --color-bg-inverse: var(--gray-2);
   --color-text-on-inverse: var(--gray-12);
+
+  --color-bg-backdrop: oklch(0% 0 0 / 0.6);
 
   --color-border-subtle: var(--gray-10);
   --color-border-default: var(--gray-9);

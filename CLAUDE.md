@@ -357,7 +357,10 @@ The docs site is part of the dev experience but **not** part of the published li
 > - [x] Button
 > - [x] Toggle / ToggleGroup
 > - [x] Tooltip
-> - [ ] Dialog — high-traffic primitive; exercises the absorbed-parts pattern (Portal + Backdrop + Popup → Content) future overlay components will copy
+> - [x] Dialog
+> - [x] AlertDialog
+> - [x] Popover
+> - [ ] Toast — last of the Tier 2 overlays
 > - [ ] NavigationMenu — unlocks dogfooding the docs sidebar (§ 11)
 >
 > Before writing any code, ask the user the questions in § 9. This is not optional.
