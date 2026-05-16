@@ -1,6 +1,7 @@
 import type { FC } from "react"
 import type { DocPage } from "./types"
 import { PropTable } from "./PropTable"
+import { CodeBlock } from "./CodeBlock"
 import styles from "./ComponentPage.module.css"
 
 interface ComponentPageProps {
@@ -36,7 +37,10 @@ export const ComponentPage: FC<ComponentPageProps> = ({ page }) => {
               {ex.description !== undefined && (
                 <p className={styles["page__example-desc"]}>{ex.description}</p>
               )}
-              <div className={styles["page__example-preview"]}>{ex.render()}</div>
+              <div className={styles["page__example-card"]}>
+                <div className={styles["page__example-preview"]}>{ex.render()}</div>
+                {ex.code !== undefined && <CodeBlock code={ex.code} embedded />}
+              </div>
             </div>
           ))}
         </div>

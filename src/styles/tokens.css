@@ -139,6 +139,7 @@
   --color-bg-subtle: var(--gray-1);
   --color-bg-muted: var(--gray-2);
   --color-bg-emphasized: var(--gray-3);
+  --color-bg-sunken: var(--gray-1);
 
   --color-text-primary: var(--gray-12);
   --color-text-secondary: var(--gray-9);
@@ -150,6 +151,11 @@
   --color-text-on-inverse: var(--gray-1);
 
   --color-bg-backdrop: oklch(0% 0 0 / 0.4);
+
+  --color-status-info: var(--accent-7);
+  --color-status-success: var(--success-6);
+  --color-status-warning: var(--warning-6);
+  --color-status-danger: var(--danger-6);
 
   --color-border-subtle: var(--gray-2);
   --color-border-default: var(--gray-3);
@@ -179,6 +185,7 @@
     --color-bg-subtle: var(--gray-10);
     --color-bg-muted: var(--gray-9);
     --color-bg-emphasized: var(--gray-8);
+    --color-bg-sunken: var(--gray-12);
 
     --color-text-primary: var(--gray-0);
     --color-text-secondary: var(--gray-3);
@@ -190,6 +197,11 @@
     --color-text-on-inverse: var(--gray-12);
 
     --color-bg-backdrop: oklch(0% 0 0 / 0.6);
+
+    --color-status-info: var(--accent-6);
+    --color-status-success: oklch(70% 0.13 150);
+    --color-status-warning: oklch(78% 0.14 75);
+    --color-status-danger: oklch(68% 0.18 25);
 
     --color-border-subtle: var(--gray-10);
     --color-border-default: var(--gray-9);
@@ -216,6 +228,7 @@
   --color-bg-subtle: var(--gray-10);
   --color-bg-muted: var(--gray-9);
   --color-bg-emphasized: var(--gray-8);
+  --color-bg-sunken: var(--gray-12);
 
   --color-text-primary: var(--gray-0);
   --color-text-secondary: var(--gray-3);
@@ -227,6 +240,11 @@
   --color-text-on-inverse: var(--gray-12);
 
   --color-bg-backdrop: oklch(0% 0 0 / 0.6);
+
+  --color-status-info: var(--accent-6);
+  --color-status-success: oklch(70% 0.13 150);
+  --color-status-warning: oklch(78% 0.14 75);
+  --color-status-danger: oklch(68% 0.18 25);
 
   --color-border-subtle: var(--gray-10);
   --color-border-default: var(--gray-9);

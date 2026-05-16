@@ -1,0 +1,68 @@
+.codeblock {
+  position: relative;
+  background-color: var(--color-bg-sunken);
+  border: var(--border-width-1) solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.codeblock--embedded {
+  border: none;
+  border-radius: 0;
+}
+
+.codeblock__toolbar {
+  position: absolute;
+  top: var(--spacing-2);
+  right: var(--spacing-2);
+  z-index: var(--z-raised);
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--easing-standard);
+}
+
+.codeblock:hover .codeblock__toolbar,
+.codeblock:focus-within .codeblock__toolbar {
+  opacity: 1;
+}
+
+/* Shiki layout — we keep its tokenized spans, but the bg comes from bekk so the
+   block reads as recessed below the example surface. */
+.codeblock__rendered :global(.shiki) {
+  margin: 0;
+  padding: var(--spacing-4);
+  background-color: transparent;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  overflow-x: auto;
+  tab-size: 2;
+}
+
+/* Dual-theme syntax colors: shiki emits --shiki-light / --shiki-dark per span
+   when called with defaultColor: false. Map them to bekk's theming rules. */
+.codeblock__rendered :global(.shiki),
+.codeblock__rendered :global(.shiki span) {
+  color: var(--shiki-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(:root:not([data-theme="light"])) .codeblock__rendered :global(.shiki),
+  :global(:root:not([data-theme="light"])) .codeblock__rendered :global(.shiki span) {
+    color: var(--shiki-dark);
+  }
+}
+
+:global(:root[data-theme="dark"]) .codeblock__rendered :global(.shiki),
+:global(:root[data-theme="dark"]) .codeblock__rendered :global(.shiki span) {
+  color: var(--shiki-dark);
+}
+
+.codeblock__pre--fallback {
+  margin: 0;
+  padding: var(--spacing-4);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-primary);
+  overflow-x: auto;
+}

@@ -207,39 +207,95 @@ const docPage: DocPage = {
       title: "Default",
       description:
         "A simple informational popover with a title and description. Click outside or press Esc to close.",
-      render: () => <Default />
+      render: () => <Default />,
+      code: `<Popover.Root>
+  <Popover.Trigger>
+    <Button iconStart={<Bell aria-hidden />}>Notifications</Button>
+  </Popover.Trigger>
+  <Popover.Content>
+    <Popover.Title>Notifications</Popover.Title>
+    <Popover.Description>You're all caught up. Good job!</Popover.Description>
+  </Popover.Content>
+</Popover.Root>`
     },
     {
       title: "Interactive content",
       description:
         "Popovers can hold interactive UI: toggles, forms, action buttons. Wrap action buttons in `Popover.Close` to dismiss on click.",
-      render: () => <WithInteractiveContent />
+      render: () => <WithInteractiveContent />,
+      code: `const [filters, setFilters] = useState<string[]>(["active"])
+
+<Popover.Root>
+  <Popover.Trigger>
+    <Button variant="ghost">Filters ({filters.length})</Button>
+  </Popover.Trigger>
+  <Popover.Content size="lg">
+    <Popover.Title>Filter results</Popover.Title>
+    <Popover.Description>Refine what you see in the list.</Popover.Description>
+    <ToggleGroup multiple value={filters} onValueChange={setFilters} aria-label="Filters">
+      <Toggle value="active" variant="ghost" size="sm">Active</Toggle>
+      <Toggle value="archived" variant="ghost" size="sm">Archived</Toggle>
+      <Toggle value="starred" variant="ghost" size="sm">Starred</Toggle>
+    </ToggleGroup>
+    <Popover.Close>
+      <Button size="sm" iconStart={<Check aria-hidden />}>Apply</Button>
+    </Popover.Close>
+  </Popover.Content>
+</Popover.Root>`
     },
     {
       title: "Sides",
       description:
         "`side` chooses the preferred side. Base UI flips automatically if the popover overflows. (All shown open for reference.)",
-      render: () => <Sides />
+      render: () => <Sides />,
+      code: `<Popover.Content side="top">…</Popover.Content>
+<Popover.Content side="right">…</Popover.Content>
+<Popover.Content side="bottom">…</Popover.Content>
+<Popover.Content side="left">…</Popover.Content>`
     },
     {
       title: "Sizes",
       description: "Three sizes scale padding and font size. Default is `md`.",
-      render: () => <Sizes />
+      render: () => <Sizes />,
+      code: `<Popover.Content size="sm">…</Popover.Content>
+<Popover.Content size="md">…</Popover.Content>
+<Popover.Content size="lg">…</Popover.Content>`
     },
     {
       title: "Alignment",
       description: "`align` shifts the popover along the chosen side: start, center, or end.",
-      render: () => <Alignment />
+      render: () => <Alignment />,
+      code: `<Popover.Content side="bottom" align="start">…</Popover.Content>
+<Popover.Content side="bottom" align="center">…</Popover.Content>
+<Popover.Content side="bottom" align="end">…</Popover.Content>`
     },
     {
       title: "Without arrow",
       description: "`arrow={false}` removes the pointer for a flat menu-like look.",
-      render: () => <NoArrow />
+      render: () => <NoArrow />,
+      code: `<Popover.Content arrow={false}>
+  <Popover.Title>No arrow</Popover.Title>
+  <Popover.Description>Useful for menu-like popovers.</Popover.Description>
+</Popover.Content>`
     },
     {
       title: "Controlled",
       description: "Drive open state from outside with `open` + `onOpenChange`.",
-      render: () => <Controlled />
+      render: () => <Controlled />,
+      code: `const [open, setOpen] = useState(false)
+
+<Popover.Root open={open} onOpenChange={setOpen}>
+  <Popover.Trigger>
+    <Button iconStart={<Share2 aria-hidden />}>Share</Button>
+  </Popover.Trigger>
+  <Popover.Content>
+    <Popover.Title>Share link</Popover.Title>
+    <Popover.Description>This popover is controlled from outside.</Popover.Description>
+    <Popover.Close>
+      <Button size="sm">Dismiss</Button>
+    </Popover.Close>
+  </Popover.Content>
+</Popover.Root>`
     }
   ],
   props: {

@@ -227,37 +227,107 @@ const docPage: DocPage = {
       title: "Default",
       description:
         "A standard confirmation dialog with a destructive primary action. Click the trigger, the backdrop, the × button, or press Esc to close.",
-      render: () => <Default />
+      render: () => <Default />,
+      code: `<Dialog.Root>
+  <Dialog.Trigger>
+    <Button>Open dialog</Button>
+  </Dialog.Trigger>
+  <Dialog.Content>
+    <Dialog.Title>Delete project?</Dialog.Title>
+    <Dialog.Description>
+      This permanently deletes the project and all its data. You can't undo this.
+    </Dialog.Description>
+    <div style={{ display: "flex", justifyContent: "flex-end", gap: 12 }}>
+      <Dialog.Close>
+        <Button variant="ghost">Cancel</Button>
+      </Dialog.Close>
+      <Dialog.Close>
+        <Button>Delete project</Button>
+      </Dialog.Close>
+    </div>
+  </Dialog.Content>
+</Dialog.Root>`
     },
     {
       title: "Sizes",
       description:
         "Three sizes set different max-widths. Dialogs always shrink to fit smaller viewports (90vw fallback).",
-      render: () => <Sizes />
+      render: () => <Sizes />,
+      code: `<Dialog.Content size="sm">…</Dialog.Content>
+<Dialog.Content size="md">…</Dialog.Content>
+<Dialog.Content size="lg">…</Dialog.Content>`
     },
     {
       title: "Form inside dialog",
       description:
         "A common pattern: dialog wraps a form. The Submit button is outside `Dialog.Close` so submission can validate before closing. Cancel is wrapped in `Dialog.Close` so it closes immediately.",
-      render: () => <FormInside />
+      render: () => <FormInside />,
+      code: `<Dialog.Root>
+  <Dialog.Trigger>
+    <Button>Create workspace</Button>
+  </Dialog.Trigger>
+  <Dialog.Content>
+    <Dialog.Title>Create workspace</Dialog.Title>
+    <Dialog.Description>Pick a name. You can change it later.</Dialog.Description>
+    <form onSubmit={handleSubmit}>
+      <input value={name} onChange={(e) => setName(e.target.value)} autoFocus />
+      <div style={{ display: "flex", justifyContent: "flex-end", gap: 12 }}>
+        <Dialog.Close>
+          <Button variant="ghost" type="button">Cancel</Button>
+        </Dialog.Close>
+        <Button type="submit">Create</Button>
+      </div>
+    </form>
+  </Dialog.Content>
+</Dialog.Root>`
     },
     {
       title: "Long content",
       description:
         "Long content scrolls inside the popup. The popup caps at the viewport height (minus gutter) so the dialog never spills past the screen.",
-      render: () => <LongContent />
+      render: () => <LongContent />,
+      code: `<Dialog.Content size="lg">
+  <Dialog.Title>Terms of service</Dialog.Title>
+  <Dialog.Description>Long-form content scrolls within the body.</Dialog.Description>
+  {sections.map((s) => <p key={s.id}>{s.body}</p>)}
+  <Dialog.Close>
+    <Button>Accept</Button>
+  </Dialog.Close>
+</Dialog.Content>`
     },
     {
       title: "Without the close × button",
       description:
         "Pass `showCloseButton={false}` when you want the consumer to choose explicitly between actions (typical for destructive confirmations).",
-      render: () => <NoCloseX />
+      render: () => <NoCloseX />,
+      code: `<Dialog.Content showCloseButton={false}>
+  <Dialog.Title>Unsaved changes</Dialog.Title>
+  <Dialog.Description>You have unsaved changes.</Dialog.Description>
+  <Dialog.Close>
+    <Button variant="ghost">Stay</Button>
+  </Dialog.Close>
+  <Dialog.Close>
+    <Button>Discard changes</Button>
+  </Dialog.Close>
+</Dialog.Content>`
     },
     {
       title: "Controlled",
       description:
         "Drive open state from outside with `open` + `onOpenChange`. No `Dialog.Trigger` is needed when state is external.",
-      render: () => <Controlled />
+      render: () => <Controlled />,
+      code: `const [open, setOpen] = useState(false)
+
+<Button onClick={() => setOpen(true)}>Open via state</Button>
+
+<Dialog.Root open={open} onOpenChange={setOpen}>
+  <Dialog.Content>
+    <Dialog.Title>Controlled dialog</Dialog.Title>
+    <Dialog.Close>
+      <Button>Close</Button>
+    </Dialog.Close>
+  </Dialog.Content>
+</Dialog.Root>`
     }
   ],
   props: {

@@ -83,29 +83,49 @@ const docPage: DocPage = {
     {
       title: "Default",
       description: "The canonical button.",
-      render: () => <Default />
+      render: () => <Default />,
+      code: `<Button>Save changes</Button>`
     },
     {
       title: "Variants × sizes",
       description: "Two variants (default, ghost) crossed with three sizes (sm, md, lg).",
-      render: () => <VariantsSizes />
+      render: () => <VariantsSizes />,
+      code: `<Button variant="default" size="sm">Small</Button>
+<Button variant="default" size="md">Medium</Button>
+<Button variant="default" size="lg">Large</Button>
+
+<Button variant="ghost" size="sm">Small</Button>
+<Button variant="ghost" size="md">Medium</Button>
+<Button variant="ghost" size="lg">Large</Button>`
     },
     {
       title: "With icons",
       description:
         "Pass `iconStart` and/or `iconEnd` to flank the label. Both can be combined with text — or with no children for icon-only buttons (remember `aria-label`).",
-      render: () => <WithIcons />
+      render: () => <WithIcons />,
+      code: `<Button iconStart={<Plus aria-hidden />}>Add item</Button>
+<Button variant="ghost" iconEnd={<ArrowRight aria-hidden />}>
+  Continue
+</Button>
+<Button iconStart={<Trash2 aria-hidden />} aria-label="Delete" />`
     },
     {
       title: "Disabled",
       description: "`disabled` applies to both variants. Disabled buttons aren't focusable.",
-      render: () => <DisabledStates />
+      render: () => <DisabledStates />,
+      code: `<Button disabled>Save changes</Button>
+<Button variant="ghost" disabled>Cancel</Button>
+<Button disabled iconStart={<Plus aria-hidden />}>Add item</Button>`
     },
     {
       title: "Form submit",
       description:
         'Buttons default to `type="button"` so they don\'t submit forms by accident. Pass `type="submit"` explicitly when you want submit behavior.',
-      render: () => <FormSubmit />
+      render: () => <FormSubmit />,
+      code: `<form onSubmit={handleSubmit}>
+  <Button variant="ghost">Cancel</Button>
+  <Button type="submit">Submit</Button>
+</form>`
     }
   ],
   props: {

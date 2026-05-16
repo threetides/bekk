@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import type { FC } from "react"
+import { Toast } from "@/components/Toast"
 import { pages } from "./discover"
 import { Sidebar } from "./Sidebar"
 import { ComponentPage } from "./ComponentPage"
@@ -23,20 +24,23 @@ export const DocsApp: FC = () => {
   const current = pages.find((p) => p.slug === slug) ?? pages[0]
 
   return (
-    <div className={styles.docs}>
-      <Sidebar pages={pages} currentSlug={current?.slug} />
-      <div className={styles["docs__content"]}>
-        <div className={styles["docs__topbar"]}>
-          <ThemeToggle />
-        </div>
-        {current ? (
-          <ComponentPage page={current.page} />
-        ) : (
-          <div className={styles["docs__empty"]}>
-            No components yet. Add one in <code>src/components/</code>.
+    <Toast.Provider>
+      <div className={styles.docs}>
+        <Sidebar pages={pages} currentSlug={current?.slug} />
+        <div className={styles["docs__content"]}>
+          <div className={styles["docs__topbar"]}>
+            <ThemeToggle />
           </div>
-        )}
+          {current ? (
+            <ComponentPage page={current.page} />
+          ) : (
+            <div className={styles["docs__empty"]}>
+              No components yet. Add one in <code>src/components/</code>.
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+      <Toast.Viewport />
+    </Toast.Provider>
   )
 }

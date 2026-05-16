@@ -78,11 +78,21 @@
   margin: 0;
 }
 
+.page__example-card {
+  border: var(--border-width-1) solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
 .page__example-preview {
   padding: var(--spacing-6);
   background-color: var(--color-bg-surface);
-  border: var(--border-width-1) solid var(--color-border-subtle);
-  border-radius: var(--radius-lg);
+}
+
+/* When a code block follows the preview inside the card, draw a divider between
+   them so the seam reads as connected rather than overlapping. */
+.page__example-preview:not(:only-child) {
+  border-bottom: var(--border-width-1) solid var(--color-border-subtle);
 }
 
 .page__props {

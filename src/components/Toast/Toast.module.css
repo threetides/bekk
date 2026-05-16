@@ -1,0 +1,364 @@
+/* ============================================================
+   Viewport — fixed positioning at one of six screen corners/edges.
+   Toasts inside are absolutely positioned and stacked via Base UI's
+   CSS variables (--toast-index, --toast-offset-y, --toast-height,
+   --toast-frontmost-height, --toast-swipe-movement-x/y, plus the
+   data-expanded attribute set when the stack is hovered/focused).
+   ============================================================ */
+
+.toast__viewport {
+  position: fixed;
+  z-index: var(--z-toast);
+  width: 380px;
+  max-width: calc(100vw - var(--spacing-8));
+  pointer-events: none; /* dead space passes clicks through */
+
+  --bekk-toast-gap: var(--spacing-2);
+  --bekk-toast-peek: var(--spacing-3);
+}
+
+.toast__viewport--top-left {
+  top: var(--spacing-4);
+  left: var(--spacing-4);
+}
+
+.toast__viewport--top-center {
+  top: var(--spacing-4);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.toast__viewport--top-right {
+  top: var(--spacing-4);
+  right: var(--spacing-4);
+}
+
+.toast__viewport--bottom-left {
+  bottom: var(--spacing-4);
+  left: var(--spacing-4);
+}
+
+.toast__viewport--bottom-center {
+  bottom: var(--spacing-4);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.toast__viewport--bottom-right {
+  bottom: var(--spacing-4);
+  right: var(--spacing-4);
+}
+
+/* ============================================================
+   Toast — visual look (layout-independent)
+   ============================================================ */
+
+.toast {
+  position: absolute;
+  left: 0;
+  right: 0;
+  pointer-events: auto;
+  z-index: calc(var(--z-toast) - var(--toast-index));
+
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3) var(--spacing-4);
+  padding-left: var(--spacing-3);
+
+  background-color: var(--color-bg-surface);
+  border: var(--border-width-1) solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+
+  font-family: var(--font-family-sans);
+  color: var(--color-text-primary);
+
+  --bekk-toast-accent: var(--color-status-info);
+
+  /* Collapsed: all toasts share the frontmost toast's height */
+  height: var(--toast-frontmost-height, var(--toast-height));
+
+  transition:
+    transform var(--duration-slow) var(--easing-decelerate),
+    height var(--duration-normal) var(--easing-decelerate),
+    opacity var(--duration-normal) var(--easing-standard);
+}
+
+.toast[data-expanded] {
+  /* Expanded (hover/focus): each toast renders at its natural height */
+  height: var(--toast-height);
+}
+
+.toast::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--spacing-1);
+  background-color: var(--bekk-toast-accent);
+  border-top-left-radius: var(--radius-md);
+  border-bottom-left-radius: var(--radius-md);
+}
+
+/* Invisible bridge spanning the gap to the next toast in the stack. Keeps the
+   pointer "inside" the parent toast as it crosses the gap, so hovering between
+   adjacent toasts doesn't drop the expanded state. Direction depends on
+   anchor (above each toast for bottom-anchored stacks, below for top-anchored). */
+.toast::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--bekk-toast-gap);
+}
+
+.toast__viewport--bottom-left .toast::after,
+.toast__viewport--bottom-center .toast::after,
+.toast__viewport--bottom-right .toast::after {
+  bottom: 100%;
+}
+
+.toast__viewport--top-left .toast::after,
+.toast__viewport--top-center .toast::after,
+.toast__viewport--top-right .toast::after {
+  top: 100%;
+}
+
+.toast--info {
+  --bekk-toast-accent: var(--color-status-info);
+}
+.toast--success {
+  --bekk-toast-accent: var(--color-status-success);
+}
+.toast--warning {
+  --bekk-toast-accent: var(--color-status-warning);
+}
+.toast--error {
+  --bekk-toast-accent: var(--color-status-danger);
+}
+
+/* Toasts beyond the Provider's `limit` stay mounted (Base UI keeps them as
+   `inert` + `data-limited`) but must not occupy visual space — otherwise they
+   stack into a same-width "vertical wall" above the fan once the scale cap
+   bites, and they sit in the hover region above the topmost visible toast
+   without receiving pointer events, which collapses the expanded stack the
+   moment the cursor crosses into them. Hide them visually and from hit-testing. */
+.toast[data-limited] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ============================================================
+   Stacking — collapsed (default) vs expanded (data-expanded).
+
+   Bottom-anchored: stack grows UP (older toasts higher).
+   Top-anchored:   stack grows DOWN (older toasts lower).
+   ============================================================ */
+
+/* --- Bottom-anchored --- */
+.toast__viewport--bottom-left .toast,
+.toast__viewport--bottom-center .toast,
+.toast__viewport--bottom-right .toast {
+  bottom: 0;
+  transform-origin: bottom center;
+  transform: translateX(var(--toast-swipe-movement-x, 0px))
+    translateY(
+      calc(var(--toast-swipe-movement-y, 0px) - var(--toast-index) * var(--bekk-toast-peek))
+    )
+    scale(max(0.8, calc(1 - var(--toast-index) * 0.05)));
+}
+
+.toast__viewport--bottom-left .toast[data-expanded],
+.toast__viewport--bottom-center .toast[data-expanded],
+.toast__viewport--bottom-right .toast[data-expanded] {
+  transform: translateX(var(--toast-swipe-movement-x, 0px))
+    translateY(
+      calc(
+        var(--toast-swipe-movement-y, 0px) - var(--toast-offset-y, 0px) - var(--toast-index) *
+          var(--bekk-toast-gap)
+      )
+    );
+}
+
+/* --- Top-anchored --- */
+.toast__viewport--top-left .toast,
+.toast__viewport--top-center .toast,
+.toast__viewport--top-right .toast {
+  top: 0;
+  transform-origin: top center;
+  transform: translateX(var(--toast-swipe-movement-x, 0px))
+    translateY(
+      calc(var(--toast-swipe-movement-y, 0px) + var(--toast-index) * var(--bekk-toast-peek))
+    )
+    scale(max(0.8, calc(1 - var(--toast-index) * 0.05)));
+}
+
+.toast__viewport--top-left .toast[data-expanded],
+.toast__viewport--top-center .toast[data-expanded],
+.toast__viewport--top-right .toast[data-expanded] {
+  transform: translateX(var(--toast-swipe-movement-x, 0px))
+    translateY(
+      calc(
+        var(--toast-swipe-movement-y, 0px) + var(--toast-offset-y, 0px) + var(--toast-index) *
+          var(--bekk-toast-gap)
+      )
+    );
+}
+
+/* ============================================================
+   Enter / exit animations.
+   Direction matches the viewport anchor; swipe exits override.
+   ============================================================ */
+
+/* Enter — slide in from outside the anchored edge */
+.toast__viewport--bottom-left .toast[data-starting-style],
+.toast__viewport--bottom-center .toast[data-starting-style],
+.toast__viewport--bottom-right .toast[data-starting-style] {
+  transform: translateY(120%);
+  opacity: 0;
+}
+
+.toast__viewport--top-left .toast[data-starting-style],
+.toast__viewport--top-center .toast[data-starting-style],
+.toast__viewport--top-right .toast[data-starting-style] {
+  transform: translateY(-120%);
+  opacity: 0;
+}
+
+/* Exit (no swipe) — same direction as entry */
+.toast__viewport--bottom-left .toast[data-ending-style]:not([data-swipe-direction]),
+.toast__viewport--bottom-center .toast[data-ending-style]:not([data-swipe-direction]),
+.toast__viewport--bottom-right .toast[data-ending-style]:not([data-swipe-direction]) {
+  transform: translateY(120%);
+  opacity: 0;
+}
+
+.toast__viewport--top-left .toast[data-ending-style]:not([data-swipe-direction]),
+.toast__viewport--top-center .toast[data-ending-style]:not([data-swipe-direction]),
+.toast__viewport--top-right .toast[data-ending-style]:not([data-swipe-direction]) {
+  transform: translateY(-120%);
+  opacity: 0;
+}
+
+/* Swipe-out exits */
+.toast[data-ending-style][data-swipe-direction="right"] {
+  transform: translateX(calc(var(--toast-swipe-movement-x) + 120%));
+  opacity: 0;
+}
+
+.toast[data-ending-style][data-swipe-direction="left"] {
+  transform: translateX(calc(var(--toast-swipe-movement-x) - 120%));
+  opacity: 0;
+}
+
+.toast[data-ending-style][data-swipe-direction="down"] {
+  transform: translateY(calc(var(--toast-swipe-movement-y) + 120%));
+  opacity: 0;
+}
+
+.toast[data-ending-style][data-swipe-direction="up"] {
+  transform: translateY(calc(var(--toast-swipe-movement-y) - 120%));
+  opacity: 0;
+}
+
+/* ============================================================
+   Toast internals (icon / body / action / close) — unchanged.
+   ============================================================ */
+
+.toast__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
+  color: var(--bekk-toast-accent);
+  margin-top: 2px;
+}
+
+.toast__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.toast__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.toast__title {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+}
+
+.toast__description {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-secondary);
+}
+
+.toast__action {
+  flex-shrink: 0;
+  align-self: center;
+  padding: var(--spacing-1) var(--spacing-2);
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--bekk-toast-accent);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--duration-fast) var(--easing-standard);
+}
+
+.toast__action:hover {
+  background-color: var(--color-bg-subtle);
+}
+
+.toast__action:focus-visible {
+  outline: var(--border-width-2) solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.toast__close {
+  flex-shrink: 0;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-6);
+  height: var(--spacing-6);
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition:
+    background-color var(--duration-fast) var(--easing-standard),
+    color var(--duration-fast) var(--easing-standard);
+}
+
+.toast__close:hover {
+  background-color: var(--color-bg-subtle);
+  color: var(--color-text-primary);
+}
+
+.toast__close:focus-visible {
+  outline: var(--border-width-2) solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.toast__close svg {
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
+}

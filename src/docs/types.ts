@@ -17,6 +17,7 @@ export interface DocExample {
   title: string
   description?: string
   render: () => ReactNode
+  code?: string
 }
 
 export interface DocProp {

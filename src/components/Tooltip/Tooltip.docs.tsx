@@ -56,7 +56,7 @@ const Sizes: FC = () => (
             {size}
           </Button>
         </Tooltip.Trigger>
-        <Tooltip.Content size={size}>Tooltip size={size}</Tooltip.Content>
+        <Tooltip.Content size={size}>Tooltip {size}</Tooltip.Content>
       </Tooltip.Root>
     ))}
   </div>
@@ -150,45 +150,87 @@ const docPage: DocPage = {
     {
       title: "Default",
       description: "Hover or focus an icon button — the tooltip appears above with an arrow.",
-      render: () => <Default />
+      render: () => <Default />,
+      code: `<Tooltip.Root>
+  <Tooltip.Trigger>
+    <Button variant="ghost" iconStart={<Info aria-hidden />} aria-label="Account info" />
+  </Tooltip.Trigger>
+  <Tooltip.Content>Your account details</Tooltip.Content>
+</Tooltip.Root>`
     },
     {
       title: "Sides",
       description:
         "`side` chooses the preferred side. Base UI will flip the tooltip automatically if it overflows the viewport. (All shown open for reference.)",
-      render: () => <Sides />
+      render: () => <Sides />,
+      code: `<Tooltip.Content side="top">…</Tooltip.Content>
+<Tooltip.Content side="right">…</Tooltip.Content>
+<Tooltip.Content side="bottom">…</Tooltip.Content>
+<Tooltip.Content side="left">…</Tooltip.Content>`
     },
     {
       title: "Sizes",
       description: "Three sizes vary padding and font size. Default is `md`.",
-      render: () => <Sizes />
+      render: () => <Sizes />,
+      code: `<Tooltip.Content size="sm">Small</Tooltip.Content>
+<Tooltip.Content size="md">Medium</Tooltip.Content>
+<Tooltip.Content size="lg">Large</Tooltip.Content>`
     },
     {
       title: "Alignment",
       description: "`align` shifts the tooltip along the chosen side: start, center, or end.",
-      render: () => <Alignment />
+      render: () => <Alignment />,
+      code: `<Tooltip.Content side="bottom" align="start">Aligned start</Tooltip.Content>
+<Tooltip.Content side="bottom" align="center">Aligned center</Tooltip.Content>
+<Tooltip.Content side="bottom" align="end">Aligned end</Tooltip.Content>`
     },
     {
       title: "Without arrow",
       description:
         "Pass `arrow={false}` for a flat tooltip with no pointer — useful in tight spaces.",
-      render: () => <NoArrow />
+      render: () => <NoArrow />,
+      code: `<Tooltip.Root>
+  <Tooltip.Trigger>
+    <Button variant="ghost" iconStart={<Settings aria-hidden />} aria-label="Settings" />
+  </Tooltip.Trigger>
+  <Tooltip.Content arrow={false}>No arrow</Tooltip.Content>
+</Tooltip.Root>`
     },
     {
       title: "Disabled",
       description: "`disabled` on Root prevents the tooltip from opening at all.",
-      render: () => <DisabledTooltip />
+      render: () => <DisabledTooltip />,
+      code: `<Tooltip.Root disabled>
+  <Tooltip.Trigger>
+    <Button variant="ghost" iconStart={<Trash2 aria-hidden />} aria-label="Delete" />
+  </Tooltip.Trigger>
+  <Tooltip.Content>You will not see me</Tooltip.Content>
+</Tooltip.Root>`
     },
     {
       title: "Controlled",
       description: "Drive open state from outside with `open` + `onOpenChange`.",
-      render: () => <Controlled />
+      render: () => <Controlled />,
+      code: `const [open, setOpen] = useState(false)
+
+<Tooltip.Root open={open} onOpenChange={setOpen}>
+  <Tooltip.Trigger>
+    <Button iconStart={<Info aria-hidden />} aria-label="More info" />
+  </Tooltip.Trigger>
+  <Tooltip.Content>Controlled tooltip</Tooltip.Content>
+</Tooltip.Root>`
     },
     {
       title: "Custom delay",
       description:
         "`delay` and `closeDelay` (in ms) override Base UI's defaults. Set both to 0 for an instant tooltip.",
-      render: () => <FastDelay />
+      render: () => <FastDelay />,
+      code: `<Tooltip.Root>
+  <Tooltip.Trigger delay={0} closeDelay={0}>
+    <Button variant="ghost">Instant tooltip</Button>
+  </Tooltip.Trigger>
+  <Tooltip.Content>Opens immediately, closes immediately</Tooltip.Content>
+</Tooltip.Root>`
     }
   ],
   props: {

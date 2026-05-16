@@ -152,19 +152,51 @@ const docPage: DocPage = {
       title: "Default (destructive confirmation)",
       description:
         "The canonical use case: confirm a destructive action. The Action runs your callback and closes the dialog automatically.",
-      render: () => <Default />
+      render: () => <Default />,
+      code: `<AlertDialog.Root>
+  <AlertDialog.Trigger>
+    <Button>Delete project</Button>
+  </AlertDialog.Trigger>
+  <AlertDialog.Content>
+    <AlertDialog.Title>Delete project?</AlertDialog.Title>
+    <AlertDialog.Description>
+      This permanently deletes the project and all its data. You can't undo this.
+    </AlertDialog.Description>
+    <AlertDialog.Actions>
+      <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+      <AlertDialog.Action onClick={() => deleteProject()}>Delete</AlertDialog.Action>
+    </AlertDialog.Actions>
+  </AlertDialog.Content>
+</AlertDialog.Root>`
     },
     {
       title: "Sizes",
       description:
         "Three sizes set max-widths. AlertDialog defaults to `sm` (smaller than Dialog's default `md`) since alerts are usually short.",
-      render: () => <Sizes />
+      render: () => <Sizes />,
+      code: `<AlertDialog.Content size="sm">…</AlertDialog.Content>
+<AlertDialog.Content size="md">…</AlertDialog.Content>
+<AlertDialog.Content size="lg">…</AlertDialog.Content>`
     },
     {
       title: "Controlled",
       description:
         "Drive open state from outside with `open` + `onOpenChange`. Pass `onClick` to Cancel or Action to react to each choice.",
-      render: () => <Controlled />
+      render: () => <Controlled />,
+      code: `const [open, setOpen] = useState(false)
+
+<Button onClick={() => setOpen(true)}>Open via state</Button>
+
+<AlertDialog.Root open={open} onOpenChange={setOpen}>
+  <AlertDialog.Content>
+    <AlertDialog.Title>Discard changes?</AlertDialog.Title>
+    <AlertDialog.Description>This dialog is controlled from outside.</AlertDialog.Description>
+    <AlertDialog.Actions>
+      <AlertDialog.Cancel onClick={() => onCancel()}>Keep editing</AlertDialog.Cancel>
+      <AlertDialog.Action onClick={() => onConfirm()}>Discard</AlertDialog.Action>
+    </AlertDialog.Actions>
+  </AlertDialog.Content>
+</AlertDialog.Root>`
     }
   ],
   props: {

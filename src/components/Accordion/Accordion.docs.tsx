@@ -48,19 +48,19 @@ const MultipleOpen: FC = () => (
 const VARIANTS: AccordionVariant[] = ["default", "ghost"]
 const SIZES: AccordionSize[] = ["sm", "md", "lg"]
 
+const LABEL_STYLE = {
+  fontSize: 13,
+  fontFamily: "var(--font-family-mono)",
+  color: "var(--color-text-muted)",
+  marginBottom: 8
+} as const
+
 const VariantsSizes: FC = () => (
   <div style={{ display: "grid", gap: 24 }}>
     {VARIANTS.map((variant) =>
       SIZES.map((size) => (
         <div key={`${variant}-${size}`}>
-          <div
-            style={{
-              fontSize: 13,
-              fontFamily: "var(--font-family-mono)",
-              color: "var(--color-text-muted)",
-              marginBottom: 8
-            }}
-          >
+          <div style={LABEL_STYLE}>
             variant=&quot;{variant}&quot; size=&quot;{size}&quot;
           </div>
           <Accordion.Root
@@ -85,16 +85,7 @@ const VariantsSizes: FC = () => (
 const DisabledStates: FC = () => (
   <div style={{ display: "grid", gap: 24 }}>
     <div>
-      <div
-        style={{
-          fontSize: 13,
-          fontFamily: "var(--font-family-mono)",
-          color: "var(--color-text-muted)",
-          marginBottom: 8
-        }}
-      >
-        Whole accordion disabled
-      </div>
+      <div style={LABEL_STYLE}>Whole accordion disabled</div>
       <Accordion.Root disabled defaultValue={["what"]} style={{ maxWidth: 480 }}>
         {FAQ.map((i) => (
           <Accordion.Item key={i.value} value={i.value}>
@@ -105,16 +96,7 @@ const DisabledStates: FC = () => (
       </Accordion.Root>
     </div>
     <div>
-      <div
-        style={{
-          fontSize: 13,
-          fontFamily: "var(--font-family-mono)",
-          color: "var(--color-text-muted)",
-          marginBottom: 8
-        }}
-      >
-        One item disabled mid-stack
-      </div>
+      <div style={LABEL_STYLE}>One item disabled mid-stack</div>
       <Accordion.Root defaultValue={["what"]} style={{ maxWidth: 480 }}>
         <Accordion.Item value="what">
           <Accordion.Trigger>What is bekk?</Accordion.Trigger>
@@ -229,34 +211,84 @@ const docPage: DocPage = {
     {
       title: "Default",
       description: "Single-open behavior: opening an item closes the previously open one.",
-      render: () => <Default />
+      render: () => <Default />,
+      code: `<Accordion.Root defaultValue={["what"]}>
+  <Accordion.Item value="what">
+    <Accordion.Trigger>What is bekk?</Accordion.Trigger>
+    <Accordion.Panel>A small React component library built on Base UI.</Accordion.Panel>
+  </Accordion.Item>
+  <Accordion.Item value="why">
+    <Accordion.Trigger>Why Base UI?</Accordion.Trigger>
+    <Accordion.Panel>Accessible primitives without the assembly work.</Accordion.Panel>
+  </Accordion.Item>
+</Accordion.Root>`
     },
     {
       title: "Multiple open",
       description: "Pass `multiple` on Root to allow several panels open at the same time.",
-      render: () => <MultipleOpen />
+      render: () => <MultipleOpen />,
+      code: `<Accordion.Root multiple defaultValue={["what", "how"]}>
+  <Accordion.Item value="what">
+    <Accordion.Trigger>What is bekk?</Accordion.Trigger>
+    <Accordion.Panel>…</Accordion.Panel>
+  </Accordion.Item>
+  <Accordion.Item value="how">
+    <Accordion.Trigger>How do I get started?</Accordion.Trigger>
+    <Accordion.Panel>…</Accordion.Panel>
+  </Accordion.Item>
+</Accordion.Root>`
     },
     {
       title: "Variants × sizes",
       description: "The two variants (default, ghost) crossed with the three sizes (sm, md, lg).",
-      render: () => <VariantsSizes />
+      render: () => <VariantsSizes />,
+      code: `<Accordion.Root variant="default" size="md">…</Accordion.Root>
+<Accordion.Root variant="ghost" size="sm">…</Accordion.Root>
+<Accordion.Root variant="ghost" size="lg">…</Accordion.Root>`
     },
     {
       title: "Disabled",
       description:
         "`disabled` on Root disables the whole accordion. `disabled` on Item disables a single item.",
-      render: () => <DisabledStates />
+      render: () => <DisabledStates />,
+      code: `<Accordion.Root disabled>…</Accordion.Root>
+
+<Accordion.Root>
+  <Accordion.Item value="a">…</Accordion.Item>
+  <Accordion.Item value="b" disabled>
+    <Accordion.Trigger>Disabled item</Accordion.Trigger>
+    <Accordion.Panel>…</Accordion.Panel>
+  </Accordion.Item>
+</Accordion.Root>`
     },
     {
       title: "Controlled",
       description: "Pass `value` and `onValueChange` to drive state from outside.",
-      render: () => <Controlled />
+      render: () => <Controlled />,
+      code: `const [value, setValue] = useState<string[]>(["what"])
+
+<Accordion.Root
+  multiple
+  value={value}
+  onValueChange={(v) => setValue(v as string[])}
+>
+  <Accordion.Item value="what">
+    <Accordion.Trigger>What is bekk?</Accordion.Trigger>
+    <Accordion.Panel>…</Accordion.Panel>
+  </Accordion.Item>
+</Accordion.Root>`
     },
     {
       title: "Custom icon",
       description:
         "Override the default chevron via the `icon` prop on Trigger. Icon position and rotation are still managed by bekk.",
-      render: () => <CustomIcon />
+      render: () => <CustomIcon />,
+      code: `<Accordion.Root defaultValue={["what"]}>
+  <Accordion.Item value="what">
+    <Accordion.Trigger icon={<PlusMinusIcon />}>What is bekk?</Accordion.Trigger>
+    <Accordion.Panel>…</Accordion.Panel>
+  </Accordion.Item>
+</Accordion.Root>`
     }
   ],
   props: {

@@ -149,42 +149,98 @@ const docPage: DocPage = {
     {
       title: "Default",
       description: "A single Toggle. Uncontrolled — click to press, click again to release.",
-      render: () => <Default />
+      render: () => <Default />,
+      code: `<Toggle iconStart={<Heart aria-hidden />} aria-label="Favorite" />`
     },
     {
       title: "Variants × sizes",
       description:
         "Two variants (default, ghost) crossed with three sizes (sm, md, lg). The md row is pre-pressed to show the pressed look.",
-      render: () => <VariantsSizes />
+      render: () => <VariantsSizes />,
+      code: `<Toggle variant="default" size="md" iconStart={<Heart aria-hidden />} aria-label="Favorite" />
+<Toggle variant="ghost" size="sm" iconStart={<Heart aria-hidden />} aria-label="Favorite" />`
     },
     {
       title: "Single-select group",
       description:
         "Wrap Toggles in a ToggleGroup with no `multiple` to get a segmented control. Pressing a toggle releases the previous one.",
-      render: () => <SingleSelectGroup />
+      render: () => <SingleSelectGroup />,
+      code: `<ToggleGroup defaultValue={["left"]} aria-label="Text alignment">
+  <Toggle value="left" iconStart={<AlignLeft aria-hidden />} aria-label="Align left" />
+  <Toggle value="center" iconStart={<AlignCenter aria-hidden />} aria-label="Align center" />
+  <Toggle value="right" iconStart={<AlignRight aria-hidden />} aria-label="Align right" />
+</ToggleGroup>`
     },
     {
       title: "Multi-select group",
       description: "Pass `multiple` on ToggleGroup to allow several toggles pressed at once.",
-      render: () => <MultiSelectGroup />
+      render: () => <MultiSelectGroup />,
+      code: `<ToggleGroup multiple defaultValue={["bold", "italic"]} aria-label="Text formatting">
+  <Toggle value="bold" iconStart={<Bold aria-hidden />} aria-label="Bold" />
+  <Toggle value="italic" iconStart={<Italic aria-hidden />} aria-label="Italic" />
+  <Toggle value="underline" iconStart={<Underline aria-hidden />} aria-label="Underline" />
+</ToggleGroup>`
     },
     {
       title: "With text labels",
       description:
         "Combine `iconStart` with a text label as children. Variant `ghost` is a calmer fit for text toolbars.",
-      render: () => <TextLabels />
+      render: () => <TextLabels />,
+      code: `<ToggleGroup multiple defaultValue={["bold"]} aria-label="Text formatting">
+  <Toggle value="bold" variant="ghost" iconStart={<Bold aria-hidden />}>
+    Bold
+  </Toggle>
+  <Toggle value="italic" variant="ghost" iconStart={<Italic aria-hidden />}>
+    Italic
+  </Toggle>
+  <Toggle value="underline" variant="ghost" iconStart={<Underline aria-hidden />}>
+    Underline
+  </Toggle>
+</ToggleGroup>`
     },
     {
       title: "Disabled",
       description:
         "`disabled` on ToggleGroup disables every toggle inside it. `disabled` on Toggle disables just that one.",
-      render: () => <DisabledStates />
+      render: () => <DisabledStates />,
+      code: `<ToggleGroup disabled defaultValue={["center"]} aria-label="Text alignment">
+  <Toggle value="left" iconStart={<AlignLeft aria-hidden />} aria-label="Align left" />
+  <Toggle value="center" iconStart={<AlignCenter aria-hidden />} aria-label="Align center" />
+  <Toggle value="right" iconStart={<AlignRight aria-hidden />} aria-label="Align right" />
+</ToggleGroup>
+
+<ToggleGroup defaultValue={["left"]} aria-label="Text alignment">
+  <Toggle value="left" iconStart={<AlignLeft aria-hidden />} aria-label="Align left" />
+  <Toggle
+    value="center"
+    iconStart={<AlignCenter aria-hidden />}
+    aria-label="Align center"
+    disabled
+  />
+  <Toggle value="right" iconStart={<AlignRight aria-hidden />} aria-label="Align right" />
+</ToggleGroup>`
     },
     {
       title: "Controlled",
       description:
         "Drive a single Toggle with `pressed` + `onPressedChange`, or a group with `value` + `onValueChange`.",
-      render: () => <Controlled />
+      render: () => <Controlled />,
+      code: `const [pressed, setPressed] = useState(false)
+
+<Toggle
+  pressed={pressed}
+  onPressedChange={setPressed}
+  iconStart={<Heart aria-hidden />}
+  aria-label="Favorite"
+/>
+
+const [alignment, setAlignment] = useState<string[]>(["left"])
+
+<ToggleGroup value={alignment} onValueChange={setAlignment} aria-label="Alignment">
+  <Toggle value="left" iconStart={<AlignLeft aria-hidden />} aria-label="Align left" />
+  <Toggle value="center" iconStart={<AlignCenter aria-hidden />} aria-label="Align center" />
+  <Toggle value="right" iconStart={<AlignRight aria-hidden />} aria-label="Align right" />
+</ToggleGroup>`
     }
   ],
   props: {

@@ -338,10 +338,12 @@ For every component, the docs page should cover at minimum:
 
 1. **What it is** — a one-paragraph description.
 2. **Anatomy** — the namespace parts bekk exposes (and a note about what's intentionally hidden vs raw Base UI).
-3. **Examples** — at least a "default" example. Add examples for each variant, each size, each meaningful state (disabled, loading, open, etc.), and any edge cases discussed during planning (see § 9).
+3. **Examples** — at least a "default" example. Add examples for each variant, each size, each meaningful state (disabled, loading, open, etc.), and any edge cases discussed during planning (see § 9). **Every example must include a `code: string` field** showing the copy-pasteable JSX a consumer would write — rendered as a syntax-highlighted block under the preview by [`CodeBlock`](src/docs/CodeBlock.tsx) (shiki, dual-theme, with a copy-on-hover button).
 4. **Props table** — for each exposed part, a table of props, types, defaults, and one-line descriptions.
 
-The docs site is part of the dev experience but **not** part of the published library. When the library build is eventually wired up, the docs entrypoint won't be in the package output.
+**Authoring the `code` string.** Write the minimal JSX a consumer would copy into their own app — _not_ the demo source. Strip layout scaffolding (`LABEL_STYLE`, matrix wrappers, `Array.from({ length: N })` loops, etc.). Keep state hooks only when they're the point of the example (controlled state, derived UI). Match oxfmt style (double quotes, no semicolons, no trailing commas). For matrix examples (variants × sizes), one or two representative lines beats reproducing the whole grid. For overlay components, the trigger + content is the contract — don't include unrelated wrapping divs.
+
+The docs site is part of the dev experience but **not** part of the published library. When the library build is eventually wired up, the docs entrypoint won't be in the package output. Syntax highlighting comes from [`shiki`](https://shiki.style) (devDependency), themes `github-light` + `github-dark` with `defaultColor: false` so the dual-theme CSS variables map to bekk's `[data-theme]` semantics. The block's background uses `--color-bg-sunken` so it reads recessed below the example surface in both themes.
 
 ---
 
@@ -360,7 +362,8 @@ The docs site is part of the dev experience but **not** part of the published li
 > - [x] Dialog
 > - [x] AlertDialog
 > - [x] Popover
-> - [ ] Toast — last of the Tier 2 overlays
+> - [x] Toast
+> - [ ] Field + Input — Tier 3 forms cluster start; build the coupling primitive (Field) together with the first form control (Input)
 > - [ ] NavigationMenu — unlocks dogfooding the docs sidebar (§ 11)
 >
 > Before writing any code, ask the user the questions in § 9. This is not optional.
@@ -383,7 +386,7 @@ After those questions are answered:
    }
    ```
 
-5. **Add `<Name>.docs.tsx`** with the examples and prop tables agreed on in § 9. This is required, not optional — a component without a docs file is incomplete.
+5. **Add `<Name>.docs.tsx`** with the examples and prop tables agreed on in § 9. This is required, not optional — a component without a docs file is incomplete. Each example needs a `code: string` field (copy-pasteable JSX); see § 7 for the authoring rules.
 6. **Add `index.ts`** to re-export the namespace:
 
    ```ts
@@ -455,6 +458,8 @@ Apply these by default to every new component. Before writing the pre-component 
 
   Add component-specific examples beyond these when they demonstrate something the baseline doesn't (e.g. long content for height animation, edge-case states, special interactions).
 
+  **Every example must include a `code` string.** See § 7 "What a docs page must show" for authoring rules. The rendering (shiki, copy button, dual-theme) is already wired in `CodeBlock` — you only write the string.
+
 ### 9.1 What to ask the user about, per component
 
 After applying § 9.0, surface only:
@@ -495,7 +500,7 @@ When the work is ready: ask before running `git commit`, `git push`, or anything
 - **Token palette is a starting point.** Neutral gray + a single generically-named accent palette (currently glacier / hue 198) + a few status colors. Iterate as real components reveal what's missing.
 - **Docs app is hand-rolled HTML.** The sidebar, prop tables, theme toggle and example previews are bespoke markup in `src/docs/`. Eventually the docs app should dogfood bekk's own components (e.g. the theme toggle becomes `ToggleGroup`, the sidebar becomes `NavigationMenu`, prop tables get a real table component). Migrate piecewise once those components exist; don't gate the docs site on it.
 - **Docs site features still missing:**
-  - **"Show code" toggle per example** — consumers will want to copy markup.
+  - **"Show code" toggle per example** — code blocks are currently always shown under each example (with a copy-on-hover button). A toggle to collapse them would be nice once the pages get long. See [`CodeBlock`](src/docs/CodeBlock.tsx) and the `code` field on `DocExample`.
   - **Per-example theme override** — currently the theme toggle is global; useful to flip dark-mode on one example to verify it.
   - **Sidebar categorization** — fine at 1 component, awkward at 30. Group by domain (Form, Overlay, Layout, Feedback, …).
   - **Table of contents / anchor links** inside long component pages.
