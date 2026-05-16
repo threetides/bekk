@@ -195,7 +195,6 @@ Radio is always placed within Radio Group. Import the components and place them 
 ```jsx title="Anatomy"
 import { Radio } from "@base-ui/react/radio"
 import { RadioGroup } from "@base-ui/react/radio-group"
-
 ;<RadioGroup>
   <Radio.Root>
     <Radio.Indicator />

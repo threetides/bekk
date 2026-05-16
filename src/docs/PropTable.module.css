@@ -1,0 +1,30 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.table__head th {
+  text-align: left;
+  padding: var(--spacing-2) var(--spacing-3);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-subtle);
+  border-bottom: var(--border-width-1) solid var(--color-border-subtle);
+}
+
+.table__cell {
+  padding: var(--spacing-2) var(--spacing-3);
+  border-bottom: var(--border-width-1) solid var(--color-border-subtle);
+  vertical-align: top;
+  color: var(--color-text-secondary);
+}
+
+.table__code {
+  font-family: var(--font-family-mono);
+  font-size: 0.85em;
+  padding: 1px 4px;
+  background-color: var(--color-bg-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+}

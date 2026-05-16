@@ -1,0 +1,156 @@
+/* Block */
+.accordion {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: var(--font-family-sans);
+  color: var(--color-text-primary);
+}
+
+/* Variant: default */
+.accordion--default {
+  background-color: var(--color-bg-surface);
+  border: var(--border-width-1) solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* Variant: ghost */
+.accordion--ghost {
+  background-color: transparent;
+}
+
+/* Sizes set internal CSS variables consumed by elements */
+.accordion--sm {
+  --bekk-accordion-trigger-pad-y: var(--spacing-2);
+  --bekk-accordion-trigger-pad-x: var(--spacing-3);
+  --bekk-accordion-panel-pad-y: var(--spacing-2);
+  --bekk-accordion-panel-pad-x: var(--spacing-3);
+  --bekk-accordion-font-size: var(--font-size-sm);
+  --bekk-accordion-icon-size: var(--icon-size-sm);
+}
+
+.accordion--md {
+  --bekk-accordion-trigger-pad-y: var(--spacing-3);
+  --bekk-accordion-trigger-pad-x: var(--spacing-4);
+  --bekk-accordion-panel-pad-y: var(--spacing-3);
+  --bekk-accordion-panel-pad-x: var(--spacing-4);
+  --bekk-accordion-font-size: var(--font-size-md);
+  --bekk-accordion-icon-size: var(--icon-size-md);
+}
+
+.accordion--lg {
+  --bekk-accordion-trigger-pad-y: var(--spacing-4);
+  --bekk-accordion-trigger-pad-x: var(--spacing-5);
+  --bekk-accordion-panel-pad-y: var(--spacing-4);
+  --bekk-accordion-panel-pad-x: var(--spacing-5);
+  --bekk-accordion-font-size: var(--font-size-lg);
+  --bekk-accordion-icon-size: var(--icon-size-lg);
+}
+
+/* Element: item */
+.accordion__item {
+  border-bottom: var(--border-width-1) solid var(--color-border-default);
+}
+
+.accordion__item:last-child {
+  border-bottom: none;
+}
+
+.accordion--ghost .accordion__item {
+  border-bottom-color: var(--color-border-subtle);
+}
+
+/* Element: header (h-tag wrapper around the trigger) */
+.accordion__header {
+  margin: 0;
+  font: inherit;
+}
+
+/* Element: trigger (the toggle button) */
+.accordion__trigger {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+  width: 100%;
+  padding: var(--bekk-accordion-trigger-pad-y) var(--bekk-accordion-trigger-pad-x);
+  background-color: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: var(--bekk-accordion-font-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-primary);
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  transition: background-color var(--duration-fast) var(--easing-standard);
+}
+
+.accordion__trigger:hover:not([data-disabled]) {
+  background-color: var(--color-bg-subtle);
+}
+
+.accordion__trigger:active:not([data-disabled]) {
+  background-color: var(--color-bg-muted);
+}
+
+.accordion__trigger:focus-visible {
+  outline: var(--border-width-2) solid var(--color-focus-ring);
+  outline-offset: -2px;
+  z-index: 1;
+}
+
+.accordion__trigger[data-disabled] {
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+/* Element: trigger label (the text span) */
+.accordion__trigger-label {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Element: trigger icon (chevron) */
+.accordion__trigger-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--bekk-accordion-icon-size);
+  height: var(--bekk-accordion-icon-size);
+  color: var(--color-text-muted);
+  transition: transform var(--duration-fast) var(--easing-decelerate);
+}
+
+.accordion__trigger-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.accordion__trigger[data-panel-open] .accordion__trigger-icon {
+  transform: rotate(180deg);
+}
+
+/* Element: panel (animated container — height from Base UI's CSS variable) */
+.accordion__panel {
+  height: var(--accordion-panel-height);
+  overflow: hidden;
+  transition: height var(--duration-normal) var(--easing-decelerate);
+}
+
+.accordion__panel[data-starting-style],
+.accordion__panel[data-ending-style] {
+  height: 0;
+}
+
+/* Element: content (inside panel, provides padding) */
+.accordion__content {
+  padding: var(--bekk-accordion-panel-pad-y) var(--bekk-accordion-panel-pad-x);
+  color: var(--color-text-secondary);
+  font-size: var(--bekk-accordion-font-size);
+  line-height: var(--line-height-normal);
+}

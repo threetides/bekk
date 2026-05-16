@@ -103,7 +103,6 @@ Import the component and assemble its parts:
 
 ```jsx title="Anatomy"
 import { Meter } from "@base-ui/react/meter"
-
 ;<Meter.Root>
   <Meter.Label />
   <Meter.Track>

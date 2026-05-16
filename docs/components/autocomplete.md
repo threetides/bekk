@@ -329,7 +329,6 @@ Import the components and place them together:
 
 ```jsx title="Anatomy"
 import { Autocomplete } from "@base-ui/react/autocomplete"
-
 ;<Autocomplete.Root>
   <Autocomplete.InputGroup>
     <Autocomplete.Input />

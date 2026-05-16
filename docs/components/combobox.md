@@ -491,7 +491,6 @@ Import the components and place them together:
 
 ```jsx title="Anatomy"
 import { Combobox } from "@base-ui/react/combobox"
-
 ;<Combobox.Root>
   <Combobox.Label />
 

@@ -207,7 +207,6 @@ Import the component and assemble its parts:
 
 ```jsx title="Anatomy"
 import { AlertDialog } from "@base-ui/react/alert-dialog"
-
 ;<AlertDialog.Root>
   <AlertDialog.Trigger />
   <AlertDialog.Portal>

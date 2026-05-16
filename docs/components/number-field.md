@@ -295,7 +295,6 @@ Import the component and assemble its parts:
 
 ```jsx title="Anatomy"
 import { NumberField } from "@base-ui/react/number-field"
-
 ;<NumberField.Root>
   <NumberField.ScrubArea>
     <NumberField.ScrubAreaCursor />

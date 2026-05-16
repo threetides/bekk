@@ -126,7 +126,6 @@ Import the component and assemble its parts:
 
 ```jsx title="Anatomy"
 import { Field } from "@base-ui/react/field"
-
 ;<Field.Root>
   <Field.Label />
   <Field.Control />

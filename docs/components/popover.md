@@ -372,7 +372,6 @@ Import the component and assemble its parts:
 
 ```jsx title="Anatomy"
 import { Popover } from "@base-ui/react/popover"
-
 ;<Popover.Root>
   <Popover.Trigger />
   <Popover.Portal>

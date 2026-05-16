@@ -265,7 +265,6 @@ Import the component and assemble its parts:
 
 ```jsx title="Anatomy"
 import { Tabs } from "@base-ui/react/tabs"
-
 ;<Tabs.Root>
   <Tabs.List>
     <Tabs.Tab />
@@ -284,7 +283,6 @@ Use the `render` prop and set `nativeButton={false}` on `<Tabs.Tab>` to render t
 ```jsx title="Tabs as links"
 import { Tabs } from "@base-ui/react/tabs"
 import Link from "next/link"
-
 ;<Tabs.Root>
   <Tabs.List>
     {/* @highlight-start */}

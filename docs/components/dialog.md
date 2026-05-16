@@ -199,7 +199,6 @@ Import the component and assemble its parts:
 
 ```jsx title="Anatomy"
 import { Dialog } from "@base-ui/react/dialog"
-
 ;<Dialog.Root>
   <Dialog.Trigger />
   <Dialog.Portal>

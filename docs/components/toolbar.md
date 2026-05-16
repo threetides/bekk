@@ -536,7 +536,6 @@ Import the component and assemble its parts:
 
 ```jsx title="Anatomy"
 import { Toolbar } from "@base-ui/react/toolbar"
-
 ;<Toolbar.Root>
   <Toolbar.Button />
   <Toolbar.Link />

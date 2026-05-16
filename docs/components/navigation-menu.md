@@ -691,7 +691,6 @@ Import the component and assemble its parts:
 
 ```jsx title="Anatomy"
 import { NavigationMenu } from "@base-ui/react/navigation-menu"
-
 ;<NavigationMenu.Root>
   <NavigationMenu.List>
     <NavigationMenu.Item>

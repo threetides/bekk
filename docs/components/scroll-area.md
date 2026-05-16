@@ -177,7 +177,6 @@ Import the component and assemble its parts:
 
 ```jsx title="Anatomy"
 import { ScrollArea } from "@base-ui/react/scroll-area"
-
 ;<ScrollArea.Root>
   <ScrollArea.Viewport>
     <ScrollArea.Content />

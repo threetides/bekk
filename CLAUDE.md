@@ -25,6 +25,7 @@ A React component library built on top of [Base UI](https://base-ui.com). Bekk w
 
 - **React 19** (`ref` is a normal prop — do **not** use `forwardRef`)
 - **Base UI** — `@base-ui/react` (installed)
+- **Lucide** — `lucide-react` for default icons (installed)
 - **TypeScript** — strict, `verbatimModuleSyntax`, `noUncheckedIndexedAccess`
 - **CSS Modules** — pure CSS, no preprocessor, no CSS-in-JS, no Tailwind
 - **Vite 8** — dev server, hosts the docs site, and (eventually) the library build
@@ -74,18 +75,19 @@ All visual values live here. **Component CSS must never contain hardcoded colors
 
 ### Conventions
 
-| Category    | Unit      | Notes                                                           |
-| ----------- | --------- | --------------------------------------------------------------- |
-| Colors      | `oklch()` | Both palette and semantic tokens. No hex, no rgb.               |
-| Spacing     | `px`      | 4px-base numeric scale (`--spacing-1` = 4px, `-2` = 8px, …)     |
-| Radii       | `px`      | `--radius-sm/md/lg/xl/2xl/full`                                 |
-| Borders     | `px`      | `--border-width-1`, `--border-width-2`                          |
-| Font sizes  | `rem`     | Respect user font-size preferences                              |
-| Line height | unitless  | `--line-height-tight/normal/relaxed`                            |
-| Durations   | `ms`      | `--duration-fast/normal/slow`                                   |
-| Easings     | bezier    | `--easing-standard/emphasized/decelerate/accelerate`            |
-| Shadows     | layered   | `--shadow-sm/md/lg`, using `oklch(0% 0 0 / alpha)`              |
-| Z-index     | numeric   | Named scale `--z-base/raised/dropdown/overlay/modal/popover/…`  |
+| Category    | Unit      | Notes                                                          |
+| ----------- | --------- | -------------------------------------------------------------- |
+| Colors      | `oklch()` | Both palette and semantic tokens. No hex, no rgb.              |
+| Spacing     | `px`      | 4px-base numeric scale (`--spacing-1` = 4px, `-2` = 8px, …)    |
+| Radii       | `px`      | `--radius-sm/md/lg/xl/2xl/full`                                |
+| Borders     | `px`      | `--border-width-1`, `--border-width-2`                         |
+| Icon sizes  | `px`      | `--icon-size-sm/md/lg/xl` (12 / 16 / 20 / 24)                  |
+| Font sizes  | `rem`     | Respect user font-size preferences                             |
+| Line height | unitless  | `--line-height-tight/normal/relaxed`                           |
+| Durations   | `ms`      | `--duration-fast/normal/slow`                                  |
+| Easings     | bezier    | `--easing-standard/emphasized/decelerate/accelerate`           |
+| Shadows     | layered   | `--shadow-sm/md/lg`, using `oklch(0% 0 0 / alpha)`             |
+| Z-index     | numeric   | Named scale `--z-base/raised/dropdown/overlay/modal/popover/…` |
 
 ### Token layering
 
@@ -97,7 +99,7 @@ All visual values live here. **Component CSS must never contain hardcoded colors
 ### Theming
 
 - Default = light.
-- Dark applies automatically when `prefers-color-scheme: dark`, *unless* `html` is `[data-theme="light"]`.
+- Dark applies automatically when `prefers-color-scheme: dark`, _unless_ `html` is `[data-theme="light"]`.
 - `html[data-theme="dark"]` always forces dark, regardless of system preference.
 
 The same semantic-token names exist in all themes — components don't need to know which theme is active. The docs site should include a theme toggle so both themes are easy to verify.
@@ -130,20 +132,52 @@ Because CSS Modules already give us local scope, BEM here is **purely a readabil
 **Referencing classes from TS/JSX:** BEM names contain `--` and `__`, which are not valid JS identifiers — so always use bracket notation:
 
 ```tsx
+import { cx } from "@/utils/cx"
 import styles from "./Button.module.css"
-
-<button
-  className={[
+;<button
+  className={cx(
     styles.button,
     variant === "primary" && styles["button--primary"],
-    size === "sm" && styles["button--sm"],
-  ].filter(Boolean).join(" ")}
+    size === "sm" && styles["button--sm"]
+  )}
 >
   <span className={styles["button__icon"]}>…</span>
 </button>
 ```
 
-Add a tiny `clsx`-style helper if it feels noisy — not as a dependency, just a local utility.
+Use the shared [`cx`](src/utils/cx.ts) helper for class composition. It filters `false` / `undefined` / `null` and joins with spaces. Don't inline `.filter(Boolean).join(" ")` per-component.
+
+### Internal CSS variables
+
+Bekk has three layers of CSS variables. Keep them straight:
+
+1. **Token vars** (`--color-*`, `--spacing-*`, `--icon-size-*`, …) — defined in `tokens.css`, consumed by every component.
+2. **Component-internal vars** (`--bekk-<component>-<purpose>`) — defined by a component to coordinate values across its own elements (typically: per-size variables set by the size modifier, consumed by inner elements). Scoped to the component.
+3. **Base UI vars** (`--accordion-panel-height`, `--available-width`, …) — provided by Base UI on certain parts for animation and layout. Read-only; consume but never set.
+
+Always prefix component-internal vars with `--bekk-<component>-`. Never invent un-prefixed names; they risk colliding with tokens or other components.
+
+```css
+/* Good: scoped to the component, won't collide */
+.accordion--md {
+  --bekk-accordion-trigger-pad-x: var(--spacing-4);
+  --bekk-accordion-icon-size: var(--icon-size-md);
+}
+
+.accordion__trigger {
+  padding-inline: var(--bekk-accordion-trigger-pad-x);
+}
+```
+
+### Variant × size styling pattern
+
+A component with both `variant` and `size` props otherwise needs rules for every variant × size × element combination. Avoid the explosion with two layers:
+
+- **Size modifier classes set component-internal CSS variables.** All per-size differences (paddings, font sizes, icon sizes) collapse to variable values.
+- **Element selectors read the variables, agnostic to size.** One rule per element, not three.
+- **Variant modifier classes adjust the few properties variants actually change** (background, borders, dividers, hover treatment) — usually on the block or one or two elements. Variants don't multiply by size.
+
+Result: rule count stays roughly linear with elements + variants, not elements × variants × sizes. `Accordion.module.css` is the canonical example.
 
 ### Internal styling hooks
 
@@ -169,9 +203,10 @@ Inside a component's CSS module, **use Base UI's `data-*` state attributes** to 
 }
 ```
 
-These attributes are an **internal contract** between Base UI and our CSS. They are *not* part of the bekk public API — consumers should never need to read or target them.
+These attributes are an **internal contract** between Base UI and our CSS. They are _not_ part of the bekk public API — consumers should never need to read or target them.
 
 For variant/size props (which Base UI doesn't supply), expose them on our wrapper, then either:
+
 - Style them via BEM modifier classes (`.button--primary`), or
 - Add our own `data-*` attribute on the root and style it (`.button[data-variant="primary"]`).
 
@@ -238,6 +273,8 @@ Bekk wrappers **do not forward** Base UI's escape hatches:
 
 If a consumer needs behavior we don't expose, the answer is to **add a new prop to the bekk component**, not to leak Base UI through.
 
+**Inside the wrapper, however, Base UI's escape hatches are exactly the right tool.** Use Base UI's `render` prop, its `data-*` attributes, and its raw props freely within our implementation — they're _our_ tools for building typed, ergonomic surface props. Example: `Accordion.Trigger`'s `headingLevel` prop is implemented by passing the chosen `<hN />` element to Base UI Header's `render` prop. Consumer sees `headingLevel={2}`; Base UI's `render` is our implementation detail, not part of the public API.
+
 ### Allowed escape hatches
 
 Two props are forwarded to the **root element** of each component part:
@@ -249,7 +286,7 @@ These are not for restyling internals. They land on the outermost rendered eleme
 
 ### Default behavior
 
-Animations, transitions, sizes, and other visual defaults are baked in (using tokens). Consumers don't need to provide them. If a behavior is *configurable*, expose a small, named prop (e.g. `size="sm" | "md" | "lg"`, `variant="primary" | "secondary"`) — don't pass through every Base UI prop wholesale.
+Animations, transitions, sizes, and other visual defaults are baked in (using tokens). Consumers don't need to provide them. If a behavior is _configurable_, expose a small, named prop (e.g. `size="sm" | "md" | "lg"`, `variant="primary" | "secondary"`) — don't pass through every Base UI prop wholesale.
 
 ---
 
@@ -301,7 +338,7 @@ After those questions are answered:
      Content: DialogContent,
      Title: DialogTitle,
      Description: DialogDescription,
-     Close: DialogClose,
+     Close: DialogClose
    }
    ```
 
@@ -322,24 +359,46 @@ After those questions are answered:
 
 ## 9. Questions to ask before starting a new component
 
-**Required.** Open a new component task by asking the user the following, in batches. Don't write code until they're answered.
+**Required, but lean.** A lot of decisions are inherited from prior components and from the conventions in § 9.0 below — don't re-ask them. Ask only what's genuinely component-specific or genuinely novel.
 
-1. **Anatomy — which Base UI parts to expose vs absorb.**
-   Walk through the Base UI doc for the component (in `docs/components/<name>.md`) and propose, for each Base UI part: visible part of the bekk namespace, absorbed into a wrapper, or omitted. Confirm before proceeding. Anatomy decisions should never be made silently.
+### 9.0 Inherited defaults — don't re-ask the user about these
 
-2. **Props — what each exposed part should accept.**
-   The bekk-curated prop set, not Base UI passthrough. For each exposed part: which variants (e.g. `variant="primary" | "secondary"`), which sizes (`size="sm" | "md" | "lg"`), which behavior toggles, and what defaults. Be concrete — propose the prop names and value unions.
+Apply these by default to every new component. Before writing the pre-component questions, check this list AND read the most recently built component in `src/components/` to see how the same patterns were applied. Deviate only when the component genuinely demands it, and surface the deviation explicitly.
 
-3. **Token gaps — any new tokens needed.**
-   If the component visually requires values that don't exist in `tokens.css` (a new color role, a new spacing stop, a new shadow, a new duration), surface them up front with proposed names and values. Token decisions get made before code, not during.
+- **Anatomy.** Mirror Base UI's namespace, then pare down: absorb any part that exists only as Base UI implementation plumbing (Portal, Backdrop, Positioner, redundant heading wrappers around buttons, content-padding wrappers). Keep parts that carry meaningful content or have independent consumer variations. Aim for the smallest anatomy that doesn't lose expressiveness — usually 3–5 parts.
+- **Variants + sizes.** Every component with visual variation exposes `variant` and `size` props.
+  - Sizes: `"sm" | "md" | "lg"`. Default `"md"`.
+  - Variants: `"default"` (the canonical look) plus `"ghost"` when the component is likely to appear nested inside other containers. Default `"default"`.
+  - More variants/sizes get added only when a real use case demands it.
+- **Heading level.** Components that render a heading expose `headingLevel?: 2 | 3 | 4 | 5 | 6`, default `3`.
+- **Icons.** When a component renders an icon (chevron, plus, close, …), bake in a sensible default from [`lucide-react`](https://lucide.dev/icons/) and expose an `icon` prop on the part that owns it so consumers can swap it. Icon **position** is baked in, not configurable. Icon **size** comes from `--icon-size-*` tokens — wrap the lucide icon in a sized span and let CSS scale the SVG via `width/height: 100%`, rather than passing lucide's `size` prop.
+- **Behavioral props always exposed (when Base UI offers them):**
+  - `disabled` — on the root, and per-item where the component has items.
+  - Full controlled state — `value` / `defaultValue` / `onValueChange`, or `open` / `onOpenChange`, mirroring Base UI's controlled-state shape.
+  - `multiple` — when the component supports it.
+  - `hiddenUntilFound` — when Base UI offers it (SEO / in-page-search win).
+- **Behavioral props always hidden:** `loopFocus`, `keepMounted`, `render`, `nativeButton`, and any other Base UI escape hatch. Base UI's default behavior stays. Lift only on demonstrated need.
+- **Rare orientations / modes.** When Base UI offers a variant that's rare in practice (e.g. horizontal accordion), hardcode the common one and don't expose the prop. Add the alternative when a consumer actually needs it.
+- **Token usage.** Components consume **semantic** tokens only, never palette tokens. If a needed value has no semantic token, add one — and surface the addition to the user before writing the component CSS.
+- **Docs page baseline.** Every `<Name>.docs.tsx` always shows a "Default" example. Add these whenever the component has the relevant feature:
+  1. **Variants × sizes matrix** — visual reference.
+  2. **Disabled states** — root-level and per-item where meaningful.
+  3. **Controlled state** — controlled-state props with an external setter.
+  4. **Custom icon** — for any component that exposes an `icon` prop.
 
-4. **Docs coverage — examples to show in the docs site.**
-   Which scenarios the docs page should demonstrate: default usage, every variant, every size, every meaningful state (disabled, loading, controlled, open, etc.), and any tricky edge cases. This sets the scope of `<Name>.docs.tsx`.
+  Add component-specific examples beyond these when they demonstrate something the baseline doesn't (e.g. long content for height animation, edge-case states, special interactions).
 
-5. **Anything you're uncertain about.**
-   If anything in the Base UI doc or the requested behavior is fuzzy — naming, defaults, animation behavior, accessibility expectations, interaction with other components — ask. Don't guess. The user prefers explicit decisions over clever defaults.
+### 9.1 What to ask the user about, per component
 
-Ask these in batches, present tradeoffs where two reasonable options exist, and don't fill in defaults silently.
+After applying § 9.0, surface only:
+
+1. **Component-specific anatomy.** Which Base UI parts you propose absorbing vs exposing. Always confirm — anatomy decisions are never silent.
+2. **Token gaps.** Any value the component visually needs that has no semantic token yet. Propose names + values.
+3. **Component-specific docs examples.** Anything beyond the baseline (long content, edge cases, special states).
+4. **Genuine novelty.** Anything § 9.0 doesn't cover — a new prop name that future components will copy, a new cross-component pattern, a Base UI behavior that doesn't fit the defaults cleanly.
+5. **Uncertainty.** Anything in the Base UI doc that's ambiguous and you want a call on before guessing.
+
+Ask in batches, present tradeoffs where two reasonable options exist, don't fill in defaults silently. The first time a component introduces a pattern that should become a default for everyone, update § 9.0 itself.
 
 ---
 
@@ -367,3 +426,9 @@ When the work is ready: ask before running `git commit`, `git push`, or anything
 - **No `src/docs/` shell yet.** The docs-site infrastructure (sidebar, routing, prop-table rendering, theme toggle, `*.docs.tsx` auto-discovery) gets built alongside the first component. Confirm scope with the user when that work starts.
 - **No tests.** Components are verified manually via the docs site. If we adopt a test runner, that's a separate, deliberate decision.
 - **Token palette is a starting point.** Neutral gray + teal accent + a few status colors. Iterate as real components reveal what's missing.
+- **Docs app is hand-rolled HTML.** The sidebar, prop tables, theme toggle and example previews are bespoke markup in `src/docs/`. Eventually the docs app should dogfood bekk's own components (e.g. the theme toggle becomes `ToggleGroup`, the sidebar becomes `NavigationMenu`, prop tables get a real table component). Migrate piecewise once those components exist; don't gate the docs site on it.
+- **Docs site features still missing:**
+  - **"Show code" toggle per example** — consumers will want to copy markup.
+  - **Per-example theme override** — currently the theme toggle is global; useful to flip dark-mode on one example to verify it.
+  - **Sidebar categorization** — fine at 1 component, awkward at 30. Group by domain (Form, Overlay, Layout, Feedback, …).
+  - **Table of contents / anchor links** inside long component pages.

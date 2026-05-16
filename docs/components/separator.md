@@ -149,7 +149,6 @@ Import the component and use it as a single part:
 
 ```jsx title="Anatomy"
 import { Separator } from "@base-ui/react/separator"
-
 ;<Separator />
 ```
 

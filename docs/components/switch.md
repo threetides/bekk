@@ -171,7 +171,6 @@ Import the component and assemble its parts:
 
 ```jsx title="Anatomy"
 import { Switch } from "@base-ui/react/switch"
-
 ;<Switch.Root>
   <Switch.Thumb />
 </Switch.Root>

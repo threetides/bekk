@@ -129,7 +129,6 @@ Import the component and assemble its parts:
 
 ```jsx title="Anatomy"
 import { Progress } from "@base-ui/react/progress"
-
 ;<Progress.Root>
   <Progress.Label />
   <Progress.Track>

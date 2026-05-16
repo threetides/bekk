@@ -113,7 +113,6 @@ Import the component and assemble its parts:
 
 ```jsx title="Anatomy"
 import { Slider } from "@base-ui/react/slider"
-
 ;<Slider.Root>
   <Slider.Label />
   <Slider.Value />

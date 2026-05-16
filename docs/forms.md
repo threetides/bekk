@@ -1029,7 +1029,6 @@ You can implicitly label `<Checkbox>`, `<Radio>` and `<Switch>` components by en
 ```tsx title="Implicitly labeling a switch"
 import { Field } from "@base-ui/react/field"
 import { Switch } from "@base-ui/react/switch"
-
 ;<Field.Root>
   <Field.Label>
     <Switch.Root />
@@ -1059,7 +1058,6 @@ import { Form } from "@base-ui/react/form"
 import { Field } from "@base-ui/react/field"
 import { Select } from "@base-ui/react/select"
 import { Slider } from "@base-ui/react/slider"
-
 ;<Form>
   <Field.Root>
     <Select.Root>
@@ -1094,7 +1092,6 @@ import { Fieldset } from "@base-ui/react/fieldset"
 import { Radio } from "@base-ui/react/radio"
 import { RadioGroup } from "@base-ui/react/radio-group"
 import { Slider } from "@base-ui/react/slider"
-
 ;<Form>
   <Field.Root>
     {/* @highlight-start */}
@@ -1132,7 +1129,6 @@ import { Field } from "@base-ui/react/field"
 import { Fieldset } from "@base-ui/react/fieldset"
 import { Checkbox } from "@base-ui/react/checkbox"
 import { CheckboxGroup } from "@base-ui/react/checkbox-group"
-
 ;<Field.Root>
   <Fieldset.Root render={<CheckboxGroup />}>
     <Fieldset.Legend>Backup schedule</Fieldset.Legend>
@@ -1162,7 +1158,6 @@ Pass the `name` prop to `<Field.Root>` to include the wrapped control's value wh
 import { Form } from "@base-ui/react/form"
 import { Field } from "@base-ui/react/field"
 import { Combobox } from "@base-ui/react/combobox"
-
 ;<Form>
   {/* @highlight-start */}
   {/* @highlight-text "name" */}
@@ -1180,7 +1175,6 @@ You can take over form submission using the native `onSubmit`, or custom `onForm
 
 ```tsx title="Native submission using onSubmit"
 import { Form } from "@base-ui/react/form"
-
 ;<Form
   // @highlight-start
   onSubmit={async (event) => {
@@ -1202,7 +1196,6 @@ When using `onFormSubmit`, you receive form values as a JavaScript object, with 
 
 ```tsx title="Submission using onFormSubmit"
 import { Form } from "@base-ui/react/form"
-
 ;<Form
   // @highlight-start
   onFormSubmit={async (formValues) => {
@@ -1230,7 +1223,6 @@ Base UI form components support native HTML validation attributes for many valid
 
 ```tsx title="Defining constraint validation on a text field"
 import { Field } from "@base-ui/react/field"
-
 ;<Field.Root name="website">
   <Field.Control type="url" required pattern="https?://.*" />
   <Field.Error />
@@ -1243,7 +1235,6 @@ To anchor the hidden input near a control so the native validation bubble points
 ```tsx title="Positioning hidden inputs"
 import { Field } from "@base-ui/react/field"
 import { Select } from "@base-ui/react/select"
-
 ;<Field.Root name="apple">
   <Select.Root>
     <Select.Label>Apple</Select.Label>
@@ -1354,7 +1345,7 @@ const [state, formAction, loading] = React.useActionState(login, {})
 
 // app/actions.ts
 /* prettier-ignore */
-;'use server';
+;("use server")
 export async function login(formData: FormData) {
   const result = authenticateUser(formData)
 

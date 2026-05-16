@@ -181,7 +181,6 @@ Import the components and place them together:
 
 ```jsx title="Anatomy"
 import { ContextMenu } from "@base-ui/react/context-menu"
-
 ;<ContextMenu.Root>
   <ContextMenu.Trigger />
   <ContextMenu.Portal>

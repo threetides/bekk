@@ -324,7 +324,6 @@ Import the component and assemble its parts:
 
 ```jsx title="Anatomy"
 import { Menu } from "@base-ui/react/menu"
-
 ;<Menu.Root>
   <Menu.Trigger />
   <Menu.Portal>

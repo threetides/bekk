@@ -164,7 +164,6 @@ Import the component and assemble its parts:
 
 ```jsx title="Anatomy"
 import { OTPFieldPreview as OTPField } from "@base-ui/react/otp-field"
-
 ;<OTPField.Root>
   <OTPField.Input />
   <OTPField.Separator />

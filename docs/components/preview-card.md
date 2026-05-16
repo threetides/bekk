@@ -348,7 +348,6 @@ Import the component and assemble its parts:
 
 ```jsx title="Anatomy"
 import { PreviewCard } from "@base-ui/react/preview-card"
-
 ;<PreviewCard.Root>
   <PreviewCard.Trigger />
   <PreviewCard.Portal>

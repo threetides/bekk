@@ -442,7 +442,6 @@ Import the component and assemble its parts:
 
 ```jsx title="Anatomy"
 import { Select } from "@base-ui/react/select"
-
 ;<Select.Root>
   <Select.Label />
   <Select.Trigger>

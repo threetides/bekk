@@ -177,7 +177,6 @@ Import the component and assemble its parts:
 
 ```jsx title="Anatomy"
 import { Collapsible } from "@base-ui/react/collapsible"
-
 ;<Collapsible.Root>
   <Collapsible.Trigger />
   <Collapsible.Panel />

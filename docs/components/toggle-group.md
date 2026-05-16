@@ -247,7 +247,6 @@ Import the component and use it as a single part:
 
 ```jsx title="Anatomy"
 import { ToggleGroup } from "@base-ui/react/toggle-group"
-
 ;<ToggleGroup />
 ```
 

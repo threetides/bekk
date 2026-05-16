@@ -145,7 +145,6 @@ Import the component and assemble its parts:
 
 ```jsx title="Anatomy"
 import { Checkbox } from "@base-ui/react/checkbox"
-
 ;<Checkbox.Root>
   <Checkbox.Indicator />
 </Checkbox.Root>

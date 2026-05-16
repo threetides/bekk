@@ -267,7 +267,6 @@ Form is composed together with [Field](/react/components/field.md). Import the c
 ```jsx title="Anatomy"
 import { Field } from "@base-ui/react/field"
 import { Form } from "@base-ui/react/form"
-
 ;<Form>
   <Field.Root>
     <Field.Label />

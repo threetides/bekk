@@ -476,7 +476,6 @@ Import the component and assemble its parts:
 
 ```jsx title="Anatomy"
 import { Tooltip } from "@base-ui/react/tooltip"
-
 ;<Tooltip.Provider>
   <Tooltip.Root>
     <Tooltip.Trigger />

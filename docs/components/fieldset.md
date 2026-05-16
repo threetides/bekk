@@ -156,7 +156,6 @@ Import the component and assemble its parts:
 
 ```jsx title="Anatomy"
 import { Fieldset } from "@base-ui/react/fieldset"
-
 ;<Fieldset.Root>
   <Fieldset.Legend />
 </Fieldset.Root>

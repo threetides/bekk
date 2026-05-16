@@ -252,7 +252,6 @@ Import the component and assemble its parts:
 
 ```jsx title="Anatomy"
 import { Drawer } from "@base-ui/react/drawer"
-
 ;<Drawer.Provider>
   <Drawer.IndentBackground />
   <Drawer.Indent>
