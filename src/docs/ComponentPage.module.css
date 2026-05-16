@@ -1,10 +1,10 @@
 .page {
-  padding: var(--spacing-8);
+  padding: var(--spacing-4);
   max-width: 960px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-8);
+  gap: var(--spacing-6);
 }
 
 .page__head {
@@ -14,7 +14,7 @@
 }
 
 .page__name {
-  font-size: var(--font-size-3xl);
+  font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
   margin: 0;
 }
@@ -32,7 +32,7 @@
 }
 
 .page__section-title {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
   margin: 0;
 }
@@ -85,8 +85,9 @@
 }
 
 .page__example-preview {
-  padding: var(--spacing-6);
+  padding: var(--spacing-4);
   background-color: var(--color-bg-surface);
+  overflow-x: auto;
 }
 
 /* When a code block follows the preview inside the card, draw a divider between
@@ -101,9 +102,34 @@
   gap: var(--spacing-4);
 }
 
+.page__props-table {
+  overflow-x: auto;
+  border: var(--border-width-1) solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+}
+
 .page__props-part {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-semibold);
   margin: 0;
+}
+
+@media (min-width: 721px) {
+  .page {
+    padding: var(--spacing-8);
+    gap: var(--spacing-8);
+  }
+
+  .page__name {
+    font-size: var(--font-size-3xl);
+  }
+
+  .page__section-title {
+    font-size: var(--font-size-xl);
+  }
+
+  .page__example-preview {
+    padding: var(--spacing-6);
+  }
 }

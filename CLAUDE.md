@@ -363,8 +363,8 @@ The docs site is part of the dev experience but **not** part of the published li
 > - [x] AlertDialog
 > - [x] Popover
 > - [x] Toast
-> - [ ] Field + Input — Tier 3 forms cluster start; build the coupling primitive (Field) together with the first form control (Input)
-> - [ ] NavigationMenu — unlocks dogfooding the docs sidebar (§ 11)
+> - [x] NavigationMenu
+> - [x] Field + Input
 >
 > Before writing any code, ask the user the questions in § 9. This is not optional.
 
@@ -498,7 +498,7 @@ When the work is ready: ask before running `git commit`, `git push`, or anything
 - **No `src/docs/` shell yet.** The docs-site infrastructure (sidebar, routing, prop-table rendering, theme toggle, `*.docs.tsx` auto-discovery) gets built alongside the first component. Confirm scope with the user when that work starts.
 - **No tests.** Components are verified manually via the docs site. If we adopt a test runner, that's a separate, deliberate decision.
 - **Token palette is a starting point.** Neutral gray + a single generically-named accent palette (currently glacier / hue 198) + a few status colors. Iterate as real components reveal what's missing.
-- **Docs app is hand-rolled HTML.** The sidebar, prop tables, theme toggle and example previews are bespoke markup in `src/docs/`. Eventually the docs app should dogfood bekk's own components (e.g. the theme toggle becomes `ToggleGroup`, the sidebar becomes `NavigationMenu`, prop tables get a real table component). Migrate piecewise once those components exist; don't gate the docs site on it.
+- **Docs app dogfoods bekk where a primitive exists.** Sidebar uses `NavigationMenu` + `Button`, theme toggle uses `Toggle`/`ToggleGroup`, `CodeBlock` copy button is `Button`, `DocsApp` uses `Toast.Provider`/`Viewport` and `Button` for the mobile menu trigger. The only remaining migration is prop tables, which need a `Table` component that doesn't exist yet. The Overview cards and the mobile-drawer backdrop are intentionally raw — they're content/chrome that don't map onto a bekk primitive.
 - **Docs site features still missing:**
   - **"Show code" toggle per example** — code blocks are currently always shown under each example (with a copy-on-hover button). A toggle to collapse them would be nice once the pages get long. See [`CodeBlock`](src/docs/CodeBlock.tsx) and the `code` field on `DocExample`.
   - **Per-example theme override** — currently the theme toggle is global; useful to flip dark-mode on one example to verify it.

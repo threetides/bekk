@@ -346,11 +346,6 @@
   background-color: var(--color-bg-subtle);
 }
 
-.toast__action:focus-visible {
-  outline: var(--border-width-2) solid var(--color-focus-ring);
-  outline-offset: 2px;
-}
-
 .toast__close {
   flex-shrink: 0;
   align-self: flex-start;
@@ -372,11 +367,6 @@
 .toast__close:hover {
   background-color: var(--color-bg-subtle);
   color: var(--color-text-primary);
-}
-
-.toast__close:focus-visible {
-  outline: var(--border-width-2) solid var(--color-focus-ring);
-  outline-offset: 2px;
 }
 
 .toast__close svg {

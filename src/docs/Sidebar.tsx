@@ -1,15 +1,20 @@
 import type { FC } from "react"
-import type { DiscoveredPage } from "./discover"
+import { X } from "lucide-react"
+import { Button } from "@/components/Button"
+import { NavigationMenu } from "@/components/NavigationMenu"
+import type { CategoryGroup } from "./discover"
 import styles from "./Sidebar.module.css"
 
 interface SidebarProps {
-  pages: DiscoveredPage[]
+  groups: CategoryGroup[]
   currentSlug: string | undefined
+  open: boolean
+  onClose: () => void
 }
 
-export const Sidebar: FC<SidebarProps> = ({ pages, currentSlug }) => {
+export const Sidebar: FC<SidebarProps> = ({ groups, currentSlug, open, onClose }) => {
   return (
-    <nav className={styles.sidebar} aria-label="Components">
+    <div className={styles.sidebar} data-open={open ? "" : undefined}>
       <div className={styles["sidebar__brand"]}>
         <svg
           className={styles["sidebar__mark"]}
@@ -25,20 +30,54 @@ export const Sidebar: FC<SidebarProps> = ({ pages, currentSlug }) => {
           />
         </svg>
         <span>bekk</span>
+        <Button
+          className={styles["sidebar__close"]}
+          variant="ghost"
+          size="sm"
+          iconStart={<X aria-hidden />}
+          aria-label="Close navigation menu"
+          onClick={onClose}
+        />
       </div>
-      <ul className={styles["sidebar__list"]}>
-        {pages.map((p) => (
-          <li key={p.slug}>
-            <a
-              href={`#/${p.slug}`}
-              className={styles["sidebar__link"]}
-              data-active={p.slug === currentSlug ? "" : undefined}
-            >
-              {p.page.name}
-            </a>
-          </li>
+      <NavigationMenu.Root
+        orientation="vertical"
+        variant="ghost"
+        size="sm"
+        aria-label="Components"
+        className={styles["sidebar__nav"]}
+      >
+        <div className={styles["sidebar__group"]}>
+          <NavigationMenu.List>
+            <NavigationMenu.Item>
+              <NavigationMenu.Link
+                href="#/overview"
+                active={currentSlug === "overview"}
+                className={styles["sidebar__link"]}
+              >
+                Overview
+              </NavigationMenu.Link>
+            </NavigationMenu.Item>
+          </NavigationMenu.List>
+        </div>
+        {groups.map((group) => (
+          <div key={group.category} className={styles["sidebar__group"]}>
+            <h3 className={styles["sidebar__heading"]}>{group.category}</h3>
+            <NavigationMenu.List>
+              {group.pages.map((p) => (
+                <NavigationMenu.Item key={p.slug}>
+                  <NavigationMenu.Link
+                    href={`#/${p.slug}`}
+                    active={p.slug === currentSlug}
+                    className={styles["sidebar__link"]}
+                  >
+                    {p.page.name}
+                  </NavigationMenu.Link>
+                </NavigationMenu.Item>
+              ))}
+            </NavigationMenu.List>
+          </div>
         ))}
-      </ul>
-    </nav>
+      </NavigationMenu.Root>
+    </div>
   )
 }

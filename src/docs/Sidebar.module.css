@@ -1,17 +1,28 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  padding-block: var(--spacing-6);
+  padding-block: var(--spacing-4);
   border-right: var(--border-width-1) solid var(--color-border-subtle);
   background-color: var(--color-bg-surface);
   overflow-y: auto;
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: min(280px, 85vw);
+  z-index: calc(var(--z-overlay) + 1);
+  transform: translateX(-100%);
+  transition: transform var(--duration-normal) var(--easing-standard);
+  box-shadow: var(--shadow-lg);
+}
+
+.sidebar[data-open] {
+  transform: translateX(0);
 }
 
 .sidebar__brand {
   display: flex;
   align-items: center;
   gap: var(--spacing-3);
-  padding: 0 var(--spacing-6) var(--spacing-4);
+  padding: 0 var(--spacing-4) var(--spacing-4);
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
@@ -23,26 +34,48 @@
   color: var(--color-accent-fg);
 }
 
-.sidebar__list {
-  display: flex;
-  flex-direction: column;
+.sidebar__close {
+  margin-left: auto;
+}
+
+.sidebar__nav {
+  padding-inline: var(--spacing-3);
+}
+
+.sidebar__group + .sidebar__group {
+  margin-top: var(--spacing-4);
+}
+
+.sidebar__heading {
+  margin: 0;
+  padding: var(--spacing-1) var(--spacing-3);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
 }
 
 .sidebar__link {
-  display: block;
-  padding: var(--spacing-2) var(--spacing-6);
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  transition: background-color var(--duration-fast) var(--easing-standard);
+  width: 100%;
 }
 
-.sidebar__link:hover {
-  background-color: var(--color-bg-subtle);
-  color: var(--color-text-primary);
-}
+@media (min-width: 721px) {
+  .sidebar {
+    position: static;
+    width: auto;
+    padding-block: var(--spacing-6);
+    transform: none;
+    transition: none;
+    box-shadow: none;
+    z-index: auto;
+  }
 
-.sidebar__link[data-active] {
-  background-color: var(--color-bg-subtle);
-  color: var(--color-accent-fg);
+  .sidebar__brand {
+    padding: 0 var(--spacing-6) var(--spacing-4);
+  }
+
+  .sidebar__close {
+    display: none;
+  }
 }

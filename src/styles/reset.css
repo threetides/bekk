@@ -90,3 +90,12 @@ a {
 li {
   list-style: none;
 }
+
+/* 11. Unified focus indicator.
+   Every focusable element gets the same ring at the same offset/color so the
+   library reads as a single product. Components override only when they need
+   a different geometry (e.g. Accordion's inset trigger). */
+:focus-visible {
+  outline: var(--border-width-2) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}

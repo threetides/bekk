@@ -23,11 +23,6 @@
     border-color var(--duration-fast) var(--easing-standard);
 }
 
-.button:focus-visible {
-  outline: var(--border-width-2) solid var(--color-focus-ring);
-  outline-offset: 2px;
-}
-
 .button[data-disabled] {
   cursor: not-allowed;
 }

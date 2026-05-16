@@ -25,11 +25,6 @@
     color var(--duration-fast) var(--easing-standard);
 }
 
-.toggle:focus-visible {
-  outline: var(--border-width-2) solid var(--color-focus-ring);
-  outline-offset: 2px;
-}
-
 .toggle[data-disabled] {
   cursor: not-allowed;
   color: var(--color-text-disabled);

@@ -55,6 +55,33 @@ export type {
   PopoverTriggerProps
 } from "./components/Popover"
 
+export { Field } from "./components/Field"
+export type {
+  FieldDescriptionProps,
+  FieldErrorMatch,
+  FieldErrorProps,
+  FieldLabelProps,
+  FieldRootProps,
+  FieldValidationMode
+} from "./components/Field"
+
+export { Input } from "./components/Input"
+export type { InputProps, InputSize, InputVariant } from "./components/Input"
+
+export { NavigationMenu } from "./components/NavigationMenu"
+export type {
+  NavigationMenuAlign,
+  NavigationMenuContentProps,
+  NavigationMenuItemProps,
+  NavigationMenuLinkProps,
+  NavigationMenuListProps,
+  NavigationMenuOrientation,
+  NavigationMenuRootProps,
+  NavigationMenuSize,
+  NavigationMenuTriggerProps,
+  NavigationMenuVariant
+} from "./components/NavigationMenu"
+
 export { Toast, useToast } from "./components/Toast"
 export type {
   ToastAction,

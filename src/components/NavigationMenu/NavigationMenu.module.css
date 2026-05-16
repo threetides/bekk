@@ -1,0 +1,274 @@
+/* ============================================================
+   NavigationMenu
+   ------------------------------------------------------------
+   Two orientations share the same component:
+     - horizontal: a top-bar nav with optional dropdown panels
+     - vertical:   a sidebar; panels open to the side (or none at all)
+   Sizes set component-internal CSS variables consumed by every
+   inner element so per-size rules don't multiply across elements.
+   ============================================================ */
+
+/* Block — the <nav> root */
+.nav {
+  font-family: var(--font-family-sans);
+  color: var(--color-text-primary);
+}
+
+.nav--horizontal {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.nav--vertical {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Variants */
+.nav--default {
+  background-color: transparent;
+}
+
+.nav--ghost {
+  background-color: transparent;
+}
+
+/* Sizes — set internal variables used by triggers and links */
+.nav--sm {
+  --bekk-nav-item-pad-y: var(--spacing-1);
+  --bekk-nav-item-pad-x: var(--spacing-2);
+  --bekk-nav-item-gap: var(--spacing-1);
+  --bekk-nav-font-size: var(--font-size-sm);
+  --bekk-nav-icon-size: var(--icon-size-sm);
+  --bekk-nav-list-gap: var(--spacing-1);
+}
+
+.nav--md {
+  --bekk-nav-item-pad-y: var(--spacing-2);
+  --bekk-nav-item-pad-x: var(--spacing-3);
+  --bekk-nav-item-gap: var(--spacing-2);
+  --bekk-nav-font-size: var(--font-size-md);
+  --bekk-nav-icon-size: var(--icon-size-md);
+  --bekk-nav-list-gap: var(--spacing-1);
+}
+
+.nav--lg {
+  --bekk-nav-item-pad-y: var(--spacing-3);
+  --bekk-nav-item-pad-x: var(--spacing-4);
+  --bekk-nav-item-gap: var(--spacing-3);
+  --bekk-nav-font-size: var(--font-size-lg);
+  --bekk-nav-icon-size: var(--icon-size-lg);
+  --bekk-nav-list-gap: var(--spacing-1);
+}
+
+/* Element: list */
+.nav__list {
+  display: flex;
+  gap: var(--bekk-nav-list-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav--horizontal > .nav__list {
+  flex-direction: row;
+  align-items: center;
+}
+
+.nav--vertical .nav__list {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* Element: item */
+.nav__item {
+  position: relative;
+  display: flex;
+}
+
+.nav--horizontal .nav__item {
+  flex-direction: column;
+}
+
+.nav--vertical .nav__item {
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Shared base for trigger + link */
+.nav__trigger,
+.nav__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bekk-nav-item-gap);
+  padding: var(--bekk-nav-item-pad-y) var(--bekk-nav-item-pad-x);
+  background-color: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: var(--bekk-nav-font-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-secondary);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+  transition:
+    background-color var(--duration-fast) var(--easing-standard),
+    color var(--duration-fast) var(--easing-standard);
+}
+
+.nav--vertical .nav__trigger,
+.nav--vertical .nav__link {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.nav__trigger:hover:not([data-disabled]):not([aria-disabled="true"]),
+.nav__link:hover:not([data-disabled]):not([aria-disabled="true"]) {
+  background-color: var(--color-bg-subtle);
+  color: var(--color-text-primary);
+}
+
+.nav__trigger:active:not([data-disabled]):not([aria-disabled="true"]),
+.nav__link:active:not([data-disabled]):not([aria-disabled="true"]) {
+  background-color: var(--color-bg-muted);
+}
+
+.nav__trigger[data-disabled],
+.nav__link[data-disabled],
+.nav__link[aria-disabled="true"] {
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Active link — current page indicator */
+.nav__link[data-active] {
+  color: var(--color-accent-fg);
+  background-color: var(--color-bg-subtle);
+}
+
+.nav__link[data-active]:hover:not([data-disabled]) {
+  color: var(--color-accent-fg);
+}
+
+/* Trigger when its panel is the open one */
+.nav__trigger[data-popup-open] {
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-subtle);
+}
+
+/* Trigger label */
+.nav__trigger-label {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Trigger icon (chevron) */
+.nav__trigger-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--bekk-nav-icon-size);
+  height: var(--bekk-nav-icon-size);
+  color: var(--color-text-muted);
+  transition: transform var(--duration-fast) var(--easing-decelerate);
+}
+
+.nav__trigger-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Vertical mode rotates the chevron to point right; open state rotates 90deg */
+.nav--vertical .nav__trigger-icon {
+  transform: rotate(-90deg);
+}
+
+.nav--horizontal .nav__trigger[data-popup-open] .nav__trigger-icon {
+  transform: rotate(180deg);
+}
+
+.nav--vertical .nav__trigger[data-popup-open] .nav__trigger-icon {
+  transform: rotate(0deg);
+}
+
+/* Ghost variant — flatter idle look for nesting inside containers with their own
+   background. Active and hover states still surface so the user can see what
+   they're pointing at and which page they're on. */
+.nav--ghost .nav__trigger,
+.nav--ghost .nav__link {
+  color: var(--color-text-secondary);
+}
+
+.nav--ghost .nav__trigger:hover:not([data-disabled]):not([aria-disabled="true"]),
+.nav--ghost .nav__link:hover:not([data-disabled]):not([aria-disabled="true"]) {
+  background-color: var(--color-bg-subtle);
+}
+
+/* ============================================================
+   Popup / Positioner / Viewport — the floating panel.
+   These render via Portal so they escape overflow. They are
+   present even when no triggers are used; Base UI keeps them
+   inert until an item with Content becomes active.
+   ============================================================ */
+
+.nav__positioner {
+  z-index: var(--z-dropdown);
+  box-sizing: border-box;
+}
+
+.nav__popup {
+  position: relative;
+  box-sizing: border-box;
+  background-color: var(--color-bg-surface);
+  border: var(--border-width-1) solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-sans);
+  font-size: var(--bekk-nav-font-size);
+  line-height: var(--line-height-normal);
+  outline: none;
+  transform-origin: var(--transform-origin);
+  transition:
+    opacity var(--duration-fast) var(--easing-standard),
+    transform var(--duration-fast) var(--easing-standard);
+}
+
+.nav__popup[data-starting-style],
+.nav__popup[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.97);
+}
+
+/* Viewport — clips the active Content and animates its size when the
+   active item changes. Base UI sets --popup-width / --popup-height on
+   the Popup (which we inherit). Both are "auto" when idle, fixed pixels
+   while transitioning. */
+.nav__viewport {
+  position: relative;
+  width: var(--popup-width);
+  height: var(--popup-height);
+  overflow: hidden;
+  transition:
+    width var(--duration-normal) var(--easing-emphasized),
+    height var(--duration-normal) var(--easing-emphasized);
+}
+
+/* Content flows naturally so it sizes the Viewport. When a Content is
+   transitioning out, Base UI inlines `position: absolute; top: 0; left: 0`
+   on it — don't fight that here, just style the visible state. */
+.nav__content {
+  padding: var(--bekk-nav-item-pad-y) var(--bekk-nav-item-pad-x);
+  transition: opacity var(--duration-fast) var(--easing-standard);
+}
+
+.nav__content[data-starting-style],
+.nav__content[data-ending-style] {
+  opacity: 0;
+}

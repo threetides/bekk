@@ -16,13 +16,21 @@
   top: var(--spacing-2);
   right: var(--spacing-2);
   z-index: var(--z-raised);
-  opacity: 0;
+  opacity: 1;
   transition: opacity var(--duration-fast) var(--easing-standard);
 }
 
-.codeblock:hover .codeblock__toolbar,
-.codeblock:focus-within .codeblock__toolbar {
-  opacity: 1;
+/* On hover-capable devices, the copy button starts hidden and only appears
+   when the block is interacted with — keeps the syntax-highlighted code clean. */
+@media (hover: hover) and (min-width: 721px) {
+  .codeblock__toolbar {
+    opacity: 0;
+  }
+
+  .codeblock:hover .codeblock__toolbar,
+  .codeblock:focus-within .codeblock__toolbar {
+    opacity: 1;
+  }
 }
 
 /* Shiki layout — we keep its tokenized spans, but the bg comes from bekk so the

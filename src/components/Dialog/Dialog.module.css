@@ -111,11 +111,6 @@
   color: var(--color-text-primary);
 }
 
-.dialog__close-x:focus-visible {
-  outline: var(--border-width-2) solid var(--color-focus-ring);
-  outline-offset: 2px;
-}
-
 .dialog__close-x svg {
   width: var(--icon-size-md);
   height: var(--icon-size-md);

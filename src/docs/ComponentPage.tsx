@@ -51,7 +51,9 @@ export const ComponentPage: FC<ComponentPageProps> = ({ page }) => {
         {Object.entries(page.props).map(([part, props]) => (
           <div key={part} className={styles["page__props"]}>
             <h4 className={styles["page__props-part"]}>{part}</h4>
-            <PropTable props={props} />
+            <div className={styles["page__props-table"]}>
+              <PropTable props={props} />
+            </div>
           </div>
         ))}
       </section>

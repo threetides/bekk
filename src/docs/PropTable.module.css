@@ -2,6 +2,7 @@
   width: 100%;
   border-collapse: collapse;
   font-size: var(--font-size-sm);
+  table-layout: auto;
 }
 
 .table__head th {
@@ -20,6 +21,10 @@
   color: var(--color-text-secondary);
 }
 
+.table tbody tr:last-child .table__cell {
+  border-bottom: none;
+}
+
 .table__code {
   font-family: var(--font-family-mono);
   font-size: 0.85em;
@@ -27,4 +32,12 @@
   background-color: var(--color-bg-subtle);
   border-radius: var(--radius-sm);
   color: var(--color-text-primary);
+  overflow-wrap: anywhere;
+}
+
+/* Keep prop names tidy on a single line — they're short camelCase identifiers
+   and look better intact. The other code cells (types, defaults) wrap. */
+.table__cell:first-child .table__code {
+  white-space: nowrap;
+  overflow-wrap: normal;
 }

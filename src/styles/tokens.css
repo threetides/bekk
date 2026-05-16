@@ -168,6 +168,7 @@
   --color-accent-border: var(--accent-6);
 
   --color-focus-ring: var(--accent-6);
+  --focus-ring-offset: 2px;
 
   --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.06);
   --shadow-md: 0 4px 8px oklch(0% 0 0 / 0.08), 0 1px 2px oklch(0% 0 0 / 0.04);

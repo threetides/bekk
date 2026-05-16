@@ -1,0 +1,58 @@
+/* Field block — vertical stack with consistent gap between Label / Control /
+   Description / Error. Children pick their own order; Field just spaces them. */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  font-family: var(--font-family-sans);
+  color: var(--color-text-primary);
+}
+
+/* Label */
+.field__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  cursor: default;
+}
+
+.field__label[data-disabled] {
+  color: var(--color-text-disabled);
+}
+
+.field__label[data-required]::after {
+  content: "*";
+  margin-left: var(--spacing-1);
+  color: var(--color-status-danger);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1;
+}
+
+/* Description */
+.field__description {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-secondary);
+}
+
+.field__description[data-disabled] {
+  color: var(--color-text-disabled);
+}
+
+/* Error */
+.field__error {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  color: var(--color-status-danger);
+  transition: opacity var(--duration-fast) var(--easing-standard);
+}
+
+.field__error[data-starting-style],
+.field__error[data-ending-style] {
+  opacity: 0;
+}
