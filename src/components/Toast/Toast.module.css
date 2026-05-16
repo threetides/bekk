@@ -207,6 +207,27 @@
     );
 }
 
+/* While fading out, a limited toast follows the same translate-and-shrink path
+   the visible stack was on, but with the scale cap dropped so it keeps
+   shrinking past 0.8 instead of stalling at the cap and blinking out. */
+.toast__viewport--bottom-left .toast[data-limited],
+.toast__viewport--bottom-center .toast[data-limited],
+.toast__viewport--bottom-right .toast[data-limited] {
+  transform: translateY(
+      calc(var(--toast-swipe-movement-y, 0px) - var(--toast-index) * var(--bekk-toast-peek))
+    )
+    scale(calc(1 - var(--toast-index) * 0.05));
+}
+
+.toast__viewport--top-left .toast[data-limited],
+.toast__viewport--top-center .toast[data-limited],
+.toast__viewport--top-right .toast[data-limited] {
+  transform: translateY(
+      calc(var(--toast-swipe-movement-y, 0px) + var(--toast-index) * var(--bekk-toast-peek))
+    )
+    scale(calc(1 - var(--toast-index) * 0.05));
+}
+
 /* ============================================================
    Enter / exit animations.
    Direction matches the viewport anchor; swipe exits override.
