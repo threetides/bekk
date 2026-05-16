@@ -29,6 +29,7 @@ const SLUG_TO_CATEGORY: Record<string, Category> = {
   button: "Form",
   field: "Form",
   input: "Form",
+  select: "Form",
   toggle: "Form",
   accordion: "Disclosure",
   navigationmenu: "Navigation",

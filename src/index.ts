@@ -68,6 +68,20 @@ export type {
 export { Input } from "./components/Input"
 export type { InputProps, InputSize, InputVariant } from "./components/Input"
 
+export { Select } from "./components/Select"
+export type {
+  SelectAlign,
+  SelectContentProps,
+  SelectGroupLabelProps,
+  SelectGroupProps,
+  SelectItemProps,
+  SelectRootProps,
+  SelectSide,
+  SelectSize,
+  SelectTriggerProps,
+  SelectVariant
+} from "./components/Select"
+
 export { NavigationMenu } from "./components/NavigationMenu"
 export type {
   NavigationMenuAlign,

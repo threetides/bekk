@@ -1,0 +1,261 @@
+/* ============================================================
+   Select
+   ------------------------------------------------------------
+   Trigger visually matches Input (same border, sizes, focus
+   ring, ghost underline). Popup is a floating panel with
+   keyboard-navigable items and a checkmark on the active one.
+   ============================================================ */
+
+/* ---------- Trigger ---------- */
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bekk-select-gap);
+  width: 100%;
+  padding-inline: var(--bekk-select-pad-x);
+  height: var(--bekk-select-height);
+  background-color: var(--color-bg-surface);
+  border: var(--border-width-1) solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-sans);
+  font-size: var(--bekk-select-font-size);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color var(--duration-fast) var(--easing-standard),
+    background-color var(--duration-fast) var(--easing-standard);
+}
+
+.trigger:hover:not([data-disabled]) {
+  border-color: var(--color-border-strong);
+}
+
+.trigger[data-disabled] {
+  background-color: var(--color-bg-muted);
+  border-color: var(--color-border-subtle);
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+/* Field-driven invalid state (Field.Root sets data-invalid on descendants). */
+.trigger[data-invalid] {
+  border-color: var(--color-status-danger);
+}
+
+.trigger[data-popup-open] {
+  border-color: var(--color-accent-border);
+}
+
+/* Sizes set component-internal CSS variables */
+.trigger--sm {
+  --bekk-select-pad-x: var(--spacing-2);
+  --bekk-select-height: 28px;
+  --bekk-select-font-size: var(--font-size-sm);
+  --bekk-select-icon-size: var(--icon-size-sm);
+  --bekk-select-gap: var(--spacing-2);
+}
+
+.trigger--md {
+  --bekk-select-pad-x: var(--spacing-3);
+  --bekk-select-height: 36px;
+  --bekk-select-font-size: var(--font-size-md);
+  --bekk-select-icon-size: var(--icon-size-md);
+  --bekk-select-gap: var(--spacing-2);
+}
+
+.trigger--lg {
+  --bekk-select-pad-x: var(--spacing-4);
+  --bekk-select-height: 44px;
+  --bekk-select-font-size: var(--font-size-lg);
+  --bekk-select-icon-size: var(--icon-size-lg);
+  --bekk-select-gap: var(--spacing-3);
+}
+
+/* Ghost variant matches Input — no box, just an underline at the same weight
+   and color. Border-radius preserved so the global focus outline rounds. */
+.trigger--ghost {
+  background-color: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  padding-inline: var(--spacing-1);
+  position: relative;
+}
+
+.trigger--ghost::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--border-width-1);
+  background-color: var(--color-border-default);
+  transition: background-color var(--duration-fast) var(--easing-standard);
+}
+
+.trigger--ghost:hover:not([data-disabled])::after {
+  background-color: var(--color-border-strong);
+}
+
+.trigger--ghost[data-popup-open]::after {
+  background-color: var(--color-accent-border);
+}
+
+.trigger--ghost[data-invalid]::after {
+  background-color: var(--color-status-danger);
+}
+
+.trigger--ghost[data-disabled]::after {
+  background-color: var(--color-border-subtle);
+}
+
+/* Trigger inner parts */
+.trigger__value {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trigger__placeholder {
+  color: var(--color-text-muted);
+}
+
+.trigger__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--bekk-select-icon-size);
+  height: var(--bekk-select-icon-size);
+  color: var(--color-text-muted);
+  transition: transform var(--duration-fast) var(--easing-decelerate);
+}
+
+.trigger__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.trigger[data-popup-open] .trigger__icon {
+  transform: rotate(180deg);
+}
+
+/* ---------- Popup ---------- */
+
+.positioner {
+  z-index: var(--z-popover);
+}
+
+.popup {
+  min-width: var(--anchor-width);
+  max-height: min(var(--available-height), 320px);
+  background-color: var(--color-bg-surface);
+  border: var(--border-width-1) solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-sans);
+  outline: none;
+  overflow: hidden;
+  transform-origin: var(--transform-origin);
+  transition:
+    opacity var(--duration-fast) var(--easing-standard),
+    transform var(--duration-fast) var(--easing-standard);
+}
+
+.popup[data-starting-style],
+.popup[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.97);
+}
+
+.list {
+  max-height: inherit;
+  padding-block: var(--spacing-1);
+  overflow-y: auto;
+}
+
+/* ---------- Item ---------- */
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-3);
+  padding-inline-end: var(--spacing-4);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+}
+
+.item[data-highlighted] {
+  background-color: var(--color-bg-subtle);
+}
+
+.item[data-selected] {
+  color: var(--color-accent-fg);
+  font-weight: var(--font-weight-medium);
+}
+
+.item[data-disabled] {
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+/* Suppress global :focus-visible — keyboard navigation uses data-highlighted */
+.item:focus-visible {
+  outline: none;
+}
+
+.item__indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
+  color: var(--color-accent-fg);
+}
+
+.item__indicator svg {
+  width: 100%;
+  height: 100%;
+}
+
+.item__text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- Group ---------- */
+
+.group {
+  display: contents;
+}
+
+.group__label {
+  padding: var(--spacing-2) var(--spacing-3) var(--spacing-1);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+.group + .group .group__label {
+  margin-top: var(--spacing-1);
+  border-top: var(--border-width-1) solid var(--color-border-subtle);
+  padding-top: var(--spacing-2);
+}

@@ -365,6 +365,7 @@ The docs site is part of the dev experience but **not** part of the published li
 > - [x] Toast
 > - [x] NavigationMenu
 > - [x] Field + Input
+> - [x] Select
 >
 > Before writing any code, ask the user the questions in § 9. This is not optional.
 
