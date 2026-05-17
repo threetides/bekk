@@ -71,14 +71,10 @@ function SelectTrigger({
       style={style}
       disabled={disabled}
     >
-      <BaseSelect.Value className={styles["trigger__value"]}>
-        {(currentValue: unknown) => {
-          if (currentValue === null || currentValue === undefined || currentValue === "") {
-            return <span className={styles["trigger__placeholder"]}>{placeholder}</span>
-          }
-          return String(currentValue)
-        }}
-      </BaseSelect.Value>
+      {/* Base UI sets `data-placeholder` on Select.Value automatically when no
+          value is selected. We style that attribute in CSS so the placeholder
+          renders muted — no JSX gymnastics needed. */}
+      <BaseSelect.Value className={styles["trigger__value"]} placeholder={placeholder} />
       <span className={styles["trigger__icon"]} aria-hidden>
         {icon ?? <ChevronDown />}
       </span>

@@ -1,6 +1,7 @@
-/* Backdrop */
+/* Backdrop — `position: absolute` (not fixed) so iOS 26+ Safari paints it
+   under the URL chrome correctly. Requires `body { position: relative }`. */
 .alert-dialog__backdrop {
-  position: fixed;
+  position: absolute;
   inset: 0;
   background-color: var(--color-bg-backdrop);
   z-index: var(--z-overlay);
@@ -12,21 +13,26 @@
   opacity: 0;
 }
 
+/* Viewport — scrollable container around the popup, fixed to the visual
+   viewport. The popup gets centered via flex; tall content scrolls naturally. */
+.alert-dialog__viewport {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-4);
+  overflow-y: auto;
+}
+
 /* Popup */
 .alert-dialog__popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: var(--z-modal);
-
   display: flex;
   flex-direction: column;
   gap: var(--spacing-4);
 
-  width: 90vw;
-  max-height: calc(100dvh - var(--spacing-12));
-  overflow-y: auto;
+  width: min(90vw, 100%);
   padding: var(--spacing-6);
 
   background-color: var(--color-bg-surface);
@@ -45,7 +51,7 @@
 .alert-dialog__popup[data-starting-style],
 .alert-dialog__popup[data-ending-style] {
   opacity: 0;
-  transform: translate(-50%, -48%) scale(0.96);
+  transform: scale(0.96);
 }
 
 /* Sizes */

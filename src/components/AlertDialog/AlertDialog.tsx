@@ -45,17 +45,21 @@ function AlertDialogContent({
   return (
     <BaseAlertDialog.Portal>
       <BaseAlertDialog.Backdrop className={styles["alert-dialog__backdrop"]} />
-      <BaseAlertDialog.Popup
-        ref={ref}
-        className={cx(
-          styles["alert-dialog__popup"],
-          styles[`alert-dialog__popup--${size}`],
-          className
-        )}
-        style={style}
-      >
-        {children}
-      </BaseAlertDialog.Popup>
+      {/* Viewport handles scroll/centering for tall content. Without it,
+          long alerts get clipped at the viewport edge. */}
+      <BaseAlertDialog.Viewport className={styles["alert-dialog__viewport"]}>
+        <BaseAlertDialog.Popup
+          ref={ref}
+          className={cx(
+            styles["alert-dialog__popup"],
+            styles[`alert-dialog__popup--${size}`],
+            className
+          )}
+          style={style}
+        >
+          {children}
+        </BaseAlertDialog.Popup>
+      </BaseAlertDialog.Viewport>
     </BaseAlertDialog.Portal>
   )
 }

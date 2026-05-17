@@ -112,7 +112,8 @@
   background-color: var(--color-border-subtle);
 }
 
-/* Trigger inner parts */
+/* Trigger inner parts. `data-placeholder` is set by Base UI on Select.Value
+   when no value is selected — style that attribute to mute the placeholder. */
 .trigger__value {
   flex: 1;
   min-width: 0;
@@ -121,7 +122,7 @@
   white-space: nowrap;
 }
 
-.trigger__placeholder {
+.trigger__value[data-placeholder] {
   color: var(--color-text-muted);
 }
 

@@ -56,6 +56,22 @@ export interface FieldLabelProps {
   className?: string
   style?: CSSProperties
   children?: ReactNode
+  /**
+   * Whether the rendered element is a native `<label>`. Set to `false` when the
+   * associated control is a `<button>` (e.g. wrapping a `Select.Trigger`) — that
+   * avoids the label's `:hover` firing on the button and clicks on the label
+   * triggering the button. Defaults to `true`.
+   */
+  nativeLabel?: boolean
+}
+
+export interface FieldItemProps {
+  ref?: Ref<HTMLDivElement>
+  className?: string
+  style?: CSSProperties
+  children?: ReactNode
+  /** Disables the wrapped control. Field.Root's `disabled` still takes precedence. */
+  disabled?: boolean
 }
 
 export interface FieldDescriptionProps {

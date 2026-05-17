@@ -1,16 +1,34 @@
+/* Optional backdrop (opt-in via `backdrop` on Content). Uses `position: absolute`
+   so iOS 26+ Safari paints it under the URL chrome correctly. */
+.popover__backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-bg-backdrop);
+  z-index: var(--z-overlay);
+  transition: opacity var(--duration-normal) var(--easing-standard);
+}
+
+.popover__backdrop[data-starting-style],
+.popover__backdrop[data-ending-style] {
+  opacity: 0;
+}
+
 /* Positioner — invisible wrapper that Base UI positions */
 .popover__positioner {
   z-index: var(--z-popover);
 }
 
-/* Popup — the visible content box */
+/* Popup — the visible content box. `min(360px, --available-width)` keeps the
+   popup from overflowing the viewport when anchored near the edge. */
 .popover__popup {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-3);
 
   min-width: 200px;
-  max-width: 360px;
+  max-width: min(360px, var(--available-width));
+  max-height: var(--available-height);
+  overflow: auto;
   padding: var(--bekk-popover-pad-y) var(--bekk-popover-pad-x);
 
   background-color: var(--color-bg-surface);

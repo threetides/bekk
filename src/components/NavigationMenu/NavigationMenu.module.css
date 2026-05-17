@@ -220,11 +220,24 @@
 .nav__positioner {
   z-index: var(--z-dropdown);
   box-sizing: border-box;
+  /* Animate position so the popup slides smoothly between sibling triggers
+     instead of teleporting. `data-instant` is set by Base UI on first show. */
+  max-width: var(--available-width);
+  transition:
+    top var(--duration-normal) var(--easing-emphasized),
+    left var(--duration-normal) var(--easing-emphasized),
+    right var(--duration-normal) var(--easing-emphasized),
+    bottom var(--duration-normal) var(--easing-emphasized);
+}
+
+.nav__positioner[data-instant] {
+  transition: none;
 }
 
 .nav__popup {
   position: relative;
   box-sizing: border-box;
+  max-height: var(--available-height);
   background-color: var(--color-bg-surface);
   border: var(--border-width-1) solid var(--color-border-subtle);
   border-radius: var(--radius-lg);

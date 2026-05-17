@@ -3,10 +3,12 @@
   z-index: var(--z-tooltip);
 }
 
-/* Popup — the visible bubble */
+/* Popup — the visible bubble. `max-width: var(--available-width)` keeps long
+   tooltips from running off the viewport edge. */
 .tooltip__popup {
   display: flex;
   align-items: center;
+  max-width: min(280px, var(--available-width));
   padding: var(--bekk-tooltip-pad-y) var(--bekk-tooltip-pad-x);
   background-color: var(--color-bg-inverse);
   color: var(--color-text-on-inverse);

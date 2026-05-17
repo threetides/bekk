@@ -8,6 +8,15 @@
   color: var(--color-text-primary);
 }
 
+/* Field.Item — per-item wrapper used inside CheckboxGroup / RadioGroup so
+   each option can have its own description or scoped error. Renders the same
+   vertical stack as Field but tighter, since items live inside a group. */
+.field__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
 /* Label */
 .field__label {
   display: inline-flex;

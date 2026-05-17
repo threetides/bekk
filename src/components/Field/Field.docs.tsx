@@ -94,9 +94,14 @@ const docPage: DocPage = {
         "Container that holds the validation state, name, and `disabled` for every nested control. Cascades `required` and `disabled` to bekk controls. Wires `aria-describedby` between Label, Description, Error, and the control."
     },
     {
+      part: "Field.Item",
+      description:
+        "Per-item wrapper for use inside CheckboxGroup / RadioGroup. Lets each individual option carry its own Label, Description, or scoped Error without affecting the rest of the group."
+    },
+    {
       part: "Field.Label",
       description:
-        "Auto-associates with the nested control via `htmlFor`. Renders an asterisk when the Field is `required`."
+        "Auto-associates with the nested control via `htmlFor`. Renders an asterisk when the Field is `required`. Pass `nativeLabel={false}` when the associated control is a `<button>` (like `Select.Trigger`) — avoids the label firing `:hover` on the button."
     },
     {
       part: "Field.Description",

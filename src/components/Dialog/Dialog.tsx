@@ -44,23 +44,27 @@ function DialogContent({
   return (
     <BaseDialog.Portal>
       <BaseDialog.Backdrop className={styles["dialog__backdrop"]} />
-      <BaseDialog.Popup
-        ref={ref}
-        className={cx(
-          styles["dialog__popup"],
-          styles[`dialog__popup--${size}`],
-          showCloseButton && styles["dialog__popup--with-close"],
-          className
-        )}
-        style={style}
-      >
-        {children}
-        {showCloseButton && (
-          <BaseDialog.Close className={styles["dialog__close-x"]} aria-label="Close dialog">
-            <X aria-hidden />
-          </BaseDialog.Close>
-        )}
-      </BaseDialog.Popup>
+      {/* Viewport is the scrollable container around the popup. Without it,
+          dialogs taller than the viewport get clipped instead of scrolling. */}
+      <BaseDialog.Viewport className={styles["dialog__viewport"]}>
+        <BaseDialog.Popup
+          ref={ref}
+          className={cx(
+            styles["dialog__popup"],
+            styles[`dialog__popup--${size}`],
+            showCloseButton && styles["dialog__popup--with-close"],
+            className
+          )}
+          style={style}
+        >
+          {children}
+          {showCloseButton && (
+            <BaseDialog.Close className={styles["dialog__close-x"]} aria-label="Close dialog">
+              <X aria-hidden />
+            </BaseDialog.Close>
+          )}
+        </BaseDialog.Popup>
+      </BaseDialog.Viewport>
     </BaseDialog.Portal>
   )
 }

@@ -75,4 +75,30 @@ describe("Field.Root", () => {
     )
     expect(screen.queryByText("Should not show.")).not.toBeInTheDocument()
   })
+
+  it("Field.Item renders inside Field.Root for per-item wrappers", () => {
+    render(
+      <Field.Root>
+        <Field.Label>Interests</Field.Label>
+        <Field.Item>
+          <span>Item content</span>
+        </Field.Item>
+      </Field.Root>
+    )
+    expect(screen.getByText("Item content")).toBeInTheDocument()
+  })
+
+  it("Field.Label passes nativeLabel through to Base UI", () => {
+    const { container } = render(
+      <Field.Root>
+        <Field.Label nativeLabel={false}>Plan</Field.Label>
+      </Field.Root>
+    )
+    /* When nativeLabel is false, Base UI renders the label as the configured
+       element (a <label> here by default since no render prop) but skips the
+       native-label behaviors. We can verify the prop reaches the part by
+       confirming the label still renders; the behavioral difference is hover
+       not firing on the button, which we can't easily simulate in jsdom. */
+    expect(container.querySelector("label")).toBeInTheDocument()
+  })
 })

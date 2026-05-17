@@ -5,6 +5,7 @@ import styles from "./Field.module.css"
 import type {
   FieldDescriptionProps,
   FieldErrorProps,
+  FieldItemProps,
   FieldLabelProps,
   FieldRootProps
 } from "./Field.types"
@@ -54,7 +55,7 @@ function FieldRoot({
   )
 }
 
-function FieldLabel({ ref, className, style, children }: FieldLabelProps) {
+function FieldLabel({ ref, className, style, children, nativeLabel }: FieldLabelProps) {
   const ctx = useFieldContext()
   return (
     <BaseField.Label
@@ -62,9 +63,23 @@ function FieldLabel({ ref, className, style, children }: FieldLabelProps) {
       className={cx(styles["field__label"], className)}
       style={style}
       data-required={ctx?.required ? "" : undefined}
+      nativeLabel={nativeLabel}
     >
       {children}
     </BaseField.Label>
+  )
+}
+
+function FieldItem({ ref, className, style, children, disabled }: FieldItemProps) {
+  return (
+    <BaseField.Item
+      ref={ref}
+      className={cx(styles["field__item"], className)}
+      style={style}
+      disabled={disabled}
+    >
+      {children}
+    </BaseField.Item>
   )
 }
 
@@ -95,6 +110,7 @@ function FieldError({ ref, className, style, children, match }: FieldErrorProps)
 
 export const Field = {
   Root: FieldRoot,
+  Item: FieldItem,
   Label: FieldLabel,
   Description: FieldDescription,
   Error: FieldError

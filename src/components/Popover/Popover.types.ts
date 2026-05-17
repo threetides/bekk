@@ -28,6 +28,12 @@ export interface PopoverContentProps {
   sideOffset?: number
   alignOffset?: number
   arrow?: boolean
+  /**
+   * Render a dimming backdrop behind the popover. Useful for modal-like
+   * popovers that should hide the page until dismissed.
+   * @default false
+   */
+  backdrop?: boolean
 }
 
 export interface PopoverTitleProps {

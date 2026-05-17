@@ -1,6 +1,8 @@
-/* Backdrop — absorbed into Content */
+/* Backdrop — absorbed into Content. Uses `position: absolute` (not `fixed`)
+   so iOS 26+ Safari paints it under the URL/tab chrome correctly. Requires
+   `body { position: relative }` in the global styles. */
 .dialog__backdrop {
-  position: fixed;
+  position: absolute;
   inset: 0;
   background-color: var(--color-bg-backdrop);
   z-index: var(--z-overlay);
@@ -12,21 +14,27 @@
   opacity: 0;
 }
 
-/* Popup — the visible dialog box */
-.dialog__popup {
+/* Viewport — scrollable container that holds the popup, centered. Without
+   this, popups taller than the viewport get clipped instead of scrolling. */
+.dialog__viewport {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  inset: 0;
   z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-4);
+  overflow-y: auto;
+}
 
+/* Popup — the visible dialog box. Positioned by the viewport (flex centering),
+   so it just needs sizing and the surface styles. */
+.dialog__popup {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-4);
 
-  width: 90vw;
-  max-height: calc(100dvh - var(--spacing-12));
-  overflow-y: auto;
+  width: min(90vw, 100%);
   padding: var(--spacing-6);
 
   background-color: var(--color-bg-surface);
@@ -47,7 +55,7 @@
 .dialog__popup[data-starting-style],
 .dialog__popup[data-ending-style] {
   opacity: 0;
-  transform: translate(-50%, -48%) scale(0.96);
+  transform: scale(0.96);
 }
 
 /* Sizes set the max-width */

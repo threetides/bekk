@@ -53,10 +53,12 @@ function PopoverContent({
   align = "center",
   sideOffset = 12,
   alignOffset = 0,
-  arrow = true
+  arrow = true,
+  backdrop = false
 }: PopoverContentProps) {
   return (
     <BasePopover.Portal>
+      {backdrop && <BasePopover.Backdrop className={styles["popover__backdrop"]} />}
       <BasePopover.Positioner
         className={styles["popover__positioner"]}
         side={side}

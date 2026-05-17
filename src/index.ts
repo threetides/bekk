@@ -72,6 +72,7 @@ export type {
   FieldDescriptionProps,
   FieldErrorMatch,
   FieldErrorProps,
+  FieldItemProps,
   FieldLabelProps,
   FieldRootProps,
   FieldValidationMode
