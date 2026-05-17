@@ -1,6 +1,8 @@
 import { useState } from "react"
 import type { FC } from "react"
 import { Button } from "../Button"
+import { Field } from "../Field"
+import { Input } from "../Input"
 import { Dialog } from "./Dialog"
 import type { DialogSize } from "./Dialog.types"
 import type { DocPage } from "../../docs/types"
@@ -73,24 +75,10 @@ const FormInside: FC = () => {
           }}
           style={{ display: "flex", flexDirection: "column", gap: 12 }}
         >
-          <label style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-            <span style={{ fontSize: 13, color: "var(--color-text-secondary)" }}>
-              Workspace name
-            </span>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Acme Co"
-              autoFocus
-              style={{
-                padding: "8px 12px",
-                border: "1px solid var(--color-border-default)",
-                borderRadius: "var(--radius-md)",
-                fontSize: 14
-              }}
-            />
-          </label>
+          <Field.Root>
+            <Field.Label>Workspace name</Field.Label>
+            <Input value={name} onValueChange={setName} placeholder="Acme Co" autoFocus />
+          </Field.Root>
           <div style={{ display: "flex", justifyContent: "flex-end", gap: 12 }}>
             <Dialog.Close>
               <Button variant="ghost" type="button">
@@ -270,7 +258,10 @@ const docPage: DocPage = {
     <Dialog.Title>Create workspace</Dialog.Title>
     <Dialog.Description>Pick a name. You can change it later.</Dialog.Description>
     <form onSubmit={handleSubmit}>
-      <input value={name} onChange={(e) => setName(e.target.value)} autoFocus />
+      <Field.Root>
+        <Field.Label>Workspace name</Field.Label>
+        <Input value={name} onValueChange={setName} placeholder="Acme Co" autoFocus />
+      </Field.Root>
       <div style={{ display: "flex", justifyContent: "flex-end", gap: 12 }}>
         <Dialog.Close>
           <Button variant="ghost" type="button">Cancel</Button>

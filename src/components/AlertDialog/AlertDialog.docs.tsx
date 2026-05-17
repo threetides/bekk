@@ -27,22 +27,19 @@ const Default: FC = () => {
         </AlertDialog.Content>
       </AlertDialog.Root>
       {deleted && (
-        <span style={{ fontSize: 13, color: "var(--color-text-muted)" }}>
+        <span
+          style={{
+            fontSize: 13,
+            color: "var(--color-text-muted)",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8
+          }}
+        >
           Project deleted. (Click reset to try again.)
-          <button
-            type="button"
-            onClick={() => setDeleted(false)}
-            style={{
-              marginLeft: 8,
-              background: "none",
-              border: "none",
-              color: "var(--color-accent-fg)",
-              cursor: "pointer",
-              textDecoration: "underline"
-            }}
-          >
+          <Button variant="ghost" size="sm" onClick={() => setDeleted(false)}>
             reset
-          </button>
+          </Button>
         </span>
       )}
     </div>

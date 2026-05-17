@@ -1,0 +1,131 @@
+/* ============================================================
+   Switch
+   ------------------------------------------------------------
+   A pill-shaped track with a circular thumb that slides on
+   toggle. Root rendered as a <label> so the row is clickable.
+   Three sizes set component-internal CSS variables consumed
+   by the track and thumb.
+   ============================================================ */
+
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bekk-switch-gap);
+  font-family: var(--font-family-sans);
+  font-size: var(--bekk-switch-font-size);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+.switch[data-disabled] {
+  cursor: not-allowed;
+  color: var(--color-text-disabled);
+}
+
+.switch[data-readonly] {
+  cursor: default;
+}
+
+/* Label placement — flips the visual order without changing the DOM */
+.switch--label-start {
+  flex-direction: row-reverse;
+}
+
+/* Sizes set internal vars */
+.switch--sm {
+  --bekk-switch-track-w: 28px;
+  --bekk-switch-track-h: 16px;
+  --bekk-switch-thumb-size: 12px;
+  --bekk-switch-thumb-inset: 2px;
+  --bekk-switch-font-size: var(--font-size-sm);
+  --bekk-switch-gap: var(--spacing-2);
+}
+
+.switch--md {
+  --bekk-switch-track-w: 36px;
+  --bekk-switch-track-h: 20px;
+  --bekk-switch-thumb-size: 16px;
+  --bekk-switch-thumb-inset: 2px;
+  --bekk-switch-font-size: var(--font-size-md);
+  --bekk-switch-gap: var(--spacing-2);
+}
+
+.switch--lg {
+  --bekk-switch-track-w: 44px;
+  --bekk-switch-track-h: 24px;
+  --bekk-switch-thumb-size: 20px;
+  --bekk-switch-thumb-inset: 2px;
+  --bekk-switch-font-size: var(--font-size-lg);
+  --bekk-switch-gap: var(--spacing-3);
+}
+
+/* Track — the pill */
+.switch__track {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  width: var(--bekk-switch-track-w);
+  height: var(--bekk-switch-track-h);
+  background-color: var(--color-bg-emphasized);
+  border-radius: var(--radius-full);
+  transition: background-color var(--duration-fast) var(--easing-standard);
+}
+
+.switch:hover:not([data-disabled]):not([data-readonly]) .switch__track {
+  background-color: var(--color-border-strong);
+}
+
+.switch[data-checked] .switch__track {
+  background-color: var(--color-accent-bg);
+}
+
+.switch[data-checked]:hover:not([data-disabled]):not([data-readonly]) .switch__track {
+  background-color: var(--color-accent-bg-hover);
+}
+
+.switch[data-disabled] .switch__track {
+  background-color: var(--color-bg-muted);
+}
+
+.switch[data-checked][data-disabled] .switch__track {
+  background-color: var(--color-bg-muted);
+}
+
+/* Thumb — the sliding circle */
+.switch__thumb {
+  position: absolute;
+  top: var(--bekk-switch-thumb-inset);
+  left: var(--bekk-switch-thumb-inset);
+  width: var(--bekk-switch-thumb-size);
+  height: var(--bekk-switch-thumb-size);
+  background-color: var(--color-bg-surface);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--duration-fast) var(--easing-standard);
+}
+
+.switch[data-checked] .switch__thumb {
+  transform: translateX(
+    calc(
+      var(--bekk-switch-track-w) - var(--bekk-switch-thumb-size) - var(--bekk-switch-thumb-inset) *
+        2
+    )
+  );
+}
+
+.switch[data-disabled] .switch__thumb {
+  background-color: var(--color-bg-subtle);
+  box-shadow: none;
+}
+
+/* The label text */
+.switch__label {
+  user-select: none;
+}
+
+/* Focus ring lands on the track via :has() — the input is hidden */
+.switch:has(input:focus-visible) .switch__track {
+  outline: var(--border-width-2) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}

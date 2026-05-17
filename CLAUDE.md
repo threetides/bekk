@@ -366,6 +366,10 @@ The docs site is part of the dev experience but **not** part of the published li
 > - [x] NavigationMenu
 > - [x] Field + Input
 > - [x] Select
+> - [x] Checkbox + CheckboxGroup
+> - [x] Radio + RadioGroup
+> - [x] Switch
+> - [x] Textarea
 >
 > Before writing any code, ask the user the questions in § 9. This is not optional.
 

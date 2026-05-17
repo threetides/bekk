@@ -1,0 +1,132 @@
+/* ============================================================
+   Textarea
+   ------------------------------------------------------------
+   Multi-line text input. Mirrors Input's surface (border, focus
+   ring, ghost variant) so a form mixing Input + Textarea reads
+   as one family. Resizes vertically by default; consumers can
+   override via inline style or className.
+   ============================================================ */
+
+.textarea {
+  display: flex;
+  width: 100%;
+  background-color: var(--color-bg-surface);
+  border: var(--border-width-1) solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-sans);
+  color: var(--color-text-primary);
+  transition:
+    border-color var(--duration-fast) var(--easing-standard),
+    background-color var(--duration-fast) var(--easing-standard);
+  cursor: text;
+}
+
+.textarea:hover:not(:has([data-disabled])) {
+  border-color: var(--color-border-strong);
+}
+
+.textarea:focus-within {
+  border-color: var(--color-accent-border);
+  outline: var(--border-width-2) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.textarea:has([data-disabled]) {
+  background-color: var(--color-bg-muted);
+  border-color: var(--color-border-subtle);
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+.textarea:has([data-invalid]) {
+  border-color: var(--color-status-danger);
+}
+
+.textarea:has([data-invalid]):focus-within {
+  outline-color: var(--color-status-danger);
+}
+
+/* Sizes set internal CSS variables */
+.textarea--sm {
+  --bekk-textarea-pad-x: var(--spacing-2);
+  --bekk-textarea-pad-y: var(--spacing-2);
+  --bekk-textarea-font-size: var(--font-size-sm);
+}
+
+.textarea--md {
+  --bekk-textarea-pad-x: var(--spacing-3);
+  --bekk-textarea-pad-y: var(--spacing-2);
+  --bekk-textarea-font-size: var(--font-size-md);
+}
+
+.textarea--lg {
+  --bekk-textarea-pad-x: var(--spacing-4);
+  --bekk-textarea-pad-y: var(--spacing-3);
+  --bekk-textarea-font-size: var(--font-size-lg);
+}
+
+/* Ghost variant — matches Input's ghost: no box, bottom-line via pseudo so the
+   underline stays straight even with rounded outline corners. */
+.textarea--ghost {
+  background-color: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  position: relative;
+}
+
+.textarea--ghost::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--border-width-1);
+  background-color: var(--color-border-default);
+  transition: background-color var(--duration-fast) var(--easing-standard);
+}
+
+.textarea--ghost:hover:not(:has([data-disabled]))::after {
+  background-color: var(--color-border-strong);
+}
+
+.textarea--ghost:focus-within::after {
+  background-color: var(--color-accent-border);
+}
+
+.textarea--ghost:has([data-invalid])::after {
+  background-color: var(--color-status-danger);
+}
+
+.textarea--ghost:has([data-disabled])::after {
+  background-color: var(--color-border-subtle);
+}
+
+/* The actual <textarea> — borderless, fills the wrapper */
+.textarea__control {
+  width: 100%;
+  min-width: 0;
+  padding: var(--bekk-textarea-pad-y) var(--bekk-textarea-pad-x);
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: var(--bekk-textarea-font-size);
+  line-height: var(--line-height-normal);
+  color: inherit;
+  resize: vertical;
+  outline: none;
+}
+
+.textarea__control::placeholder {
+  color: var(--color-text-muted);
+}
+
+.textarea__control[data-disabled] {
+  cursor: not-allowed;
+  resize: none;
+}
+
+/* Suppress the global :focus-visible on the inner textarea — the wrapper paints
+   the ring via :focus-within so we don't double up. */
+.textarea__control:focus-visible {
+  outline: none;
+}

@@ -1,0 +1,134 @@
+/* ============================================================
+   Radio + RadioGroup
+   ------------------------------------------------------------
+   Mirrors Checkbox in shape — Root rendered as a <label> so the
+   whole row is clickable, a styled "dot" wraps the indicator.
+   Visually a circle with a centered filled dot when selected.
+   ============================================================ */
+
+.radio {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bekk-radio-gap);
+  font-family: var(--font-family-sans);
+  font-size: var(--bekk-radio-font-size);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+.radio[data-disabled] {
+  cursor: not-allowed;
+  color: var(--color-text-disabled);
+}
+
+.radio[data-readonly] {
+  cursor: default;
+}
+
+/* Sizes set internal vars */
+.radio--sm {
+  --bekk-radio-box-size: 14px;
+  --bekk-radio-dot-size: 6px;
+  --bekk-radio-font-size: var(--font-size-sm);
+  --bekk-radio-gap: var(--spacing-2);
+}
+
+.radio--md {
+  --bekk-radio-box-size: 18px;
+  --bekk-radio-dot-size: 8px;
+  --bekk-radio-font-size: var(--font-size-md);
+  --bekk-radio-gap: var(--spacing-2);
+}
+
+.radio--lg {
+  --bekk-radio-box-size: 22px;
+  --bekk-radio-dot-size: 10px;
+  --bekk-radio-font-size: var(--font-size-lg);
+  --bekk-radio-gap: var(--spacing-3);
+}
+
+/* The outer circle */
+.radio__dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--bekk-radio-box-size);
+  height: var(--bekk-radio-box-size);
+  background-color: var(--color-bg-surface);
+  border: var(--border-width-1) solid var(--color-border-default);
+  border-radius: var(--radius-full);
+  transition:
+    background-color var(--duration-fast) var(--easing-standard),
+    border-color var(--duration-fast) var(--easing-standard);
+}
+
+.radio:hover:not([data-disabled]):not([data-readonly]) .radio__dot {
+  border-color: var(--color-border-strong);
+}
+
+.radio[data-checked] .radio__dot {
+  border-color: var(--color-accent-bg);
+}
+
+.radio[data-disabled] .radio__dot {
+  background-color: var(--color-bg-muted);
+  border-color: var(--color-border-subtle);
+}
+
+.radio[data-invalid] .radio__dot {
+  border-color: var(--color-status-danger);
+}
+
+/* The inner indicator (filled dot). Always mounted so the dot's flex baseline
+   stays stable — only opacity changes between states. */
+.radio__indicator {
+  display: inline-block;
+  width: var(--bekk-radio-dot-size);
+  height: var(--bekk-radio-dot-size);
+  background-color: var(--color-accent-bg);
+  border-radius: var(--radius-full);
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity var(--duration-fast) var(--easing-standard),
+    transform var(--duration-fast) var(--easing-emphasized);
+}
+
+.radio__indicator[data-checked] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.radio[data-disabled] .radio__indicator[data-checked] {
+  background-color: var(--color-text-disabled);
+}
+
+/* The label text */
+.radio__label {
+  user-select: none;
+}
+
+/* Focus ring on the visible dot via :has() — see Checkbox for the same pattern */
+.radio:has(input:focus-visible) .radio__dot {
+  outline: var(--border-width-2) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* ---------- RadioGroup ---------- */
+
+.group {
+  display: flex;
+}
+
+.group--vertical {
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.group--horizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--spacing-3) var(--spacing-4);
+}

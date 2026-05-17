@@ -27,9 +27,13 @@ export type Category = (typeof CATEGORIES)[number] | "Other"
 
 const SLUG_TO_CATEGORY: Record<string, Category> = {
   button: "Form",
+  checkbox: "Form",
   field: "Form",
   input: "Form",
+  radio: "Form",
   select: "Form",
+  switch: "Form",
+  textarea: "Form",
   toggle: "Form",
   accordion: "Disclosure",
   navigationmenu: "Navigation",

@@ -55,6 +55,18 @@ export type {
   PopoverTriggerProps
 } from "./components/Popover"
 
+export { Switch } from "./components/Switch"
+export type { SwitchProps, SwitchSize } from "./components/Switch"
+
+export { Textarea } from "./components/Textarea"
+export type { TextareaProps, TextareaSize, TextareaVariant } from "./components/Textarea"
+
+export { Radio, RadioGroup } from "./components/Radio"
+export type { RadioGroupProps, RadioProps, RadioSize } from "./components/Radio"
+
+export { Checkbox, CheckboxGroup } from "./components/Checkbox"
+export type { CheckboxGroupProps, CheckboxProps, CheckboxSize } from "./components/Checkbox"
+
 export { Field } from "./components/Field"
 export type {
   FieldDescriptionProps,
