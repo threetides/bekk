@@ -21,9 +21,7 @@ const HEADING_ELEMENTS: Record<PopoverHeadingLevel, ReactElement> = {
 }
 
 function ArrowSvg() {
-  // Open path (no Z) — the wide edge meets the popover body, so it intentionally
-  // has no stroke. Fill still fills the triangle; stroke draws only the two slanted
-  // edges, which visually continue the popover's border into the arrow.
+  // Open path (no Z) so the stroke draws only the two slanted edges, continuing the popover border.
   return (
     <svg viewBox="0 0 12 8" aria-hidden overflow="visible">
       <path d="M0 0 L6 8 L12 0" />

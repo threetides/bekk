@@ -53,7 +53,7 @@
 /* Sizes set component-internal CSS variables */
 .trigger--sm {
   --bekk-select-pad-x: var(--spacing-2);
-  --bekk-select-height: 28px;
+  --bekk-select-height: var(--control-height-sm);
   --bekk-select-font-size: var(--font-size-sm);
   --bekk-select-icon-size: var(--icon-size-sm);
   --bekk-select-gap: var(--spacing-2);
@@ -61,7 +61,7 @@
 
 .trigger--md {
   --bekk-select-pad-x: var(--spacing-3);
-  --bekk-select-height: 36px;
+  --bekk-select-height: var(--control-height-md);
   --bekk-select-font-size: var(--font-size-md);
   --bekk-select-icon-size: var(--icon-size-md);
   --bekk-select-gap: var(--spacing-2);
@@ -69,7 +69,7 @@
 
 .trigger--lg {
   --bekk-select-pad-x: var(--spacing-4);
-  --bekk-select-height: 44px;
+  --bekk-select-height: var(--control-height-lg);
   --bekk-select-font-size: var(--font-size-lg);
   --bekk-select-icon-size: var(--icon-size-lg);
   --bekk-select-gap: var(--spacing-3);
@@ -153,8 +153,9 @@
 }
 
 .popup {
+  --bekk-select-popup-max-h: 320px;
   min-width: var(--anchor-width);
-  max-height: min(var(--available-height), 320px);
+  max-height: min(var(--available-height), var(--bekk-select-popup-max-h));
   background-color: var(--color-bg-surface);
   border: var(--border-width-1) solid var(--color-border-subtle);
   border-radius: var(--radius-lg);
@@ -250,7 +251,7 @@
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.06em; /* tracking — eyebrow caps */
   color: var(--color-text-muted);
   pointer-events: none;
 }

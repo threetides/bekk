@@ -1,6 +1,7 @@
 import { useState } from "react"
 import type { FC } from "react"
 import { Flame } from "lucide-react"
+import { LABEL_STYLE } from "@/docs/labelStyle"
 import { Field } from "../Field"
 import { Select } from "./Select"
 import type { SelectSize, SelectVariant } from "./Select.types"
@@ -8,13 +9,6 @@ import type { DocPage } from "../../docs/types"
 
 const SIZES: SelectSize[] = ["sm", "md", "lg"]
 const VARIANTS: SelectVariant[] = ["default", "ghost"]
-
-const LABEL_STYLE = {
-  fontSize: 13,
-  fontFamily: "var(--font-family-mono)",
-  color: "var(--color-text-muted)",
-  marginBottom: 8
-} as const
 
 const TRIGGER_STYLE = { maxWidth: 280 } as const
 
@@ -151,12 +145,30 @@ const Controlled: FC = () => {
   const [value, setValue] = useState<string | null>(null)
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 8, maxWidth: 280 }}>
-      <Select.Root value={value} onValueChange={setValue}>
+      <Select.Root value={value} onValueChange={(v) => setValue(v as string | null)}>
         <Select.Trigger placeholder="Choose…" />
         <Select.Content>
           <Select.Item value="one">One</Select.Item>
           <Select.Item value="two">Two</Select.Item>
           <Select.Item value="three">Three</Select.Item>
+        </Select.Content>
+      </Select.Root>
+      <div style={LABEL_STYLE}>value: {JSON.stringify(value)}</div>
+    </div>
+  )
+}
+
+const Multiple: FC = () => {
+  const [value, setValue] = useState<string[]>(["typescript"])
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 8, maxWidth: 280 }}>
+      <Select.Root multiple value={value} onValueChange={(v) => setValue(v as string[])}>
+        <Select.Trigger placeholder="Pick languages" />
+        <Select.Content>
+          <Select.Item value="typescript">TypeScript</Select.Item>
+          <Select.Item value="javascript">JavaScript</Select.Item>
+          <Select.Item value="rust">Rust</Select.Item>
+          <Select.Item value="go">Go</Select.Item>
         </Select.Content>
       </Select.Root>
       <div style={LABEL_STYLE}>value: {JSON.stringify(value)}</div>
@@ -236,17 +248,28 @@ const docPage: DocPage = {
       title: "Sizes",
       description: "Three sizes mirror Input — same heights, paddings, and font scale.",
       render: () => <Sizes />,
-      code: `<Select.Trigger size="sm" />
-<Select.Trigger size="md" />
-<Select.Trigger size="lg" />`
+      code: `<Select.Root>
+  <Select.Trigger size="sm" placeholder="Priority" />
+  <Select.Content>
+    <Select.Item value="low">Low</Select.Item>
+    <Select.Item value="medium">Medium</Select.Item>
+    <Select.Item value="high">High</Select.Item>
+  </Select.Content>
+</Select.Root>`
     },
     {
       title: "Variants",
       description:
         "`default` is the bordered look. `ghost` is an underline-only trigger for inline use, matching Input's ghost variant.",
       render: () => <Variants />,
-      code: `<Select.Trigger variant="default" />
-<Select.Trigger variant="ghost" />`
+      code: `<Select.Root defaultValue="auto">
+  <Select.Trigger variant="ghost" placeholder="Theme" />
+  <Select.Content>
+    <Select.Item value="auto">Auto</Select.Item>
+    <Select.Item value="light">Light</Select.Item>
+    <Select.Item value="dark">Dark</Select.Item>
+  </Select.Content>
+</Select.Root>`
     },
     {
       title: "With groups",
@@ -272,21 +295,38 @@ const docPage: DocPage = {
       description:
         "Placeholder vs filled, root-level disabled, per-item disabled. The chevron rotates when the popup is open.",
       render: () => <States />,
-      code: `<Select.Root disabled defaultValue="a">…</Select.Root>
+      code: `<Select.Root disabled defaultValue="a">
+  <Select.Trigger placeholder="Empty" />
+  <Select.Content>
+    <Select.Item value="a">A</Select.Item>
+    <Select.Item value="b">B</Select.Item>
+  </Select.Content>
+</Select.Root>
 
-<Select.Content>
-  <Select.Item value="free">Free</Select.Item>
-  <Select.Item value="pro">Pro</Select.Item>
-  <Select.Item value="enterprise" disabled>
-    Enterprise (contact sales)
-  </Select.Item>
-</Select.Content>`
+<Select.Root>
+  <Select.Trigger placeholder="Pick one" />
+  <Select.Content>
+    <Select.Item value="free">Free</Select.Item>
+    <Select.Item value="pro">Pro</Select.Item>
+    <Select.Item value="enterprise" disabled>
+      Enterprise (contact sales)
+    </Select.Item>
+  </Select.Content>
+</Select.Root>`
     },
     {
       title: "Custom icon",
       description: "Pass `icon` to swap the default chevron.",
       render: () => <CustomIcon />,
-      code: `<Select.Trigger placeholder="Heat level" icon={<Flame aria-hidden />} />`
+      code: `<Select.Root>
+  <Select.Trigger placeholder="Heat level" icon={<Flame aria-hidden />} />
+  <Select.Content>
+    <Select.Item value="mild">Mild</Select.Item>
+    <Select.Item value="medium">Medium</Select.Item>
+    <Select.Item value="hot">Hot</Select.Item>
+    <Select.Item value="inferno">Inferno</Select.Item>
+  </Select.Content>
+</Select.Root>`
     },
     {
       title: "Controlled",
@@ -295,12 +335,29 @@ const docPage: DocPage = {
       render: () => <Controlled />,
       code: `const [value, setValue] = useState<string | null>(null)
 
-<Select.Root value={value} onValueChange={setValue}>
+<Select.Root value={value} onValueChange={(v) => setValue(v as string | null)}>
   <Select.Trigger placeholder="Choose…" />
   <Select.Content>
     <Select.Item value="one">One</Select.Item>
     <Select.Item value="two">Two</Select.Item>
     <Select.Item value="three">Three</Select.Item>
+  </Select.Content>
+</Select.Root>`
+    },
+    {
+      title: "Multiple",
+      description:
+        "Pass `multiple` to allow more than one selection. `value` / `defaultValue` / `onValueChange` switch to arrays. The trigger renders the joined labels; clicking a selected item toggles it off.",
+      render: () => <Multiple />,
+      code: `const [value, setValue] = useState<string[]>(["typescript"])
+
+<Select.Root multiple value={value} onValueChange={(v) => setValue(v as string[])}>
+  <Select.Trigger placeholder="Pick languages" />
+  <Select.Content>
+    <Select.Item value="typescript">TypeScript</Select.Item>
+    <Select.Item value="javascript">JavaScript</Select.Item>
+    <Select.Item value="rust">Rust</Select.Item>
+    <Select.Item value="go">Go</Select.Item>
   </Select.Content>
 </Select.Root>`
     },
@@ -324,16 +381,26 @@ const docPage: DocPage = {
   ],
   props: {
     "Select.Root": [
-      { name: "value", type: "Value | null", description: "Controlled value." },
+      {
+        name: "value",
+        type: "Value | Value[] | null",
+        description: "Controlled value. Becomes `Value[]` when `multiple` is true."
+      },
       {
         name: "defaultValue",
-        type: "Value | null",
-        description: "Uncontrolled initial value."
+        type: "Value | Value[] | null",
+        description: "Uncontrolled initial value. Shape mirrors `value`."
       },
       {
         name: "onValueChange",
         type: "(value, eventDetails) => void",
         description: "Called when the selection changes."
+      },
+      {
+        name: "multiple",
+        type: "boolean",
+        default: "false",
+        description: "Allow more than one selection. Switches value shape to an array."
       },
       {
         name: "open",
@@ -384,6 +451,18 @@ const docPage: DocPage = {
         name: "autoComplete",
         type: "string",
         description: "Autofill hint forwarded to the hidden input."
+      },
+      {
+        name: "modal",
+        type: "boolean",
+        default: "true",
+        description:
+          "When true, opening the popup locks page scroll and disables outside pointer interaction. Set `false` for non-modal dropdowns."
+      },
+      {
+        name: "inputRef",
+        type: "Ref<HTMLInputElement>",
+        description: "Ref to the hidden form input — useful for form-library integration."
       }
     ],
     "Select.Trigger": [

@@ -1,5 +1,6 @@
 import { useState } from "react"
 import type { FC } from "react"
+import { LABEL_STYLE } from "@/docs/labelStyle"
 import { Field } from "../Field"
 import { Textarea } from "./Textarea"
 import type { TextareaSize, TextareaVariant } from "./Textarea.types"
@@ -7,13 +8,6 @@ import type { DocPage } from "../../docs/types"
 
 const SIZES: TextareaSize[] = ["sm", "md", "lg"]
 const VARIANTS: TextareaVariant[] = ["default", "ghost"]
-
-const LABEL_STYLE = {
-  fontSize: 13,
-  fontFamily: "var(--font-family-mono)",
-  color: "var(--color-text-muted)",
-  marginBottom: 8
-} as const
 
 const WRAPPER_STYLE = { maxWidth: 420 } as const
 

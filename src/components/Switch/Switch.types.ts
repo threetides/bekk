@@ -1,9 +1,17 @@
-import type { AriaAttributes, CSSProperties, ReactNode, Ref } from "react"
+import type { CSSProperties, ReactNode, Ref } from "react"
 import type { Switch as BaseSwitch } from "@base-ui/react/switch"
 
 export type SwitchSize = "sm" | "md" | "lg"
 
-export interface SwitchProps extends AriaAttributes {
+/* Extends Base UI's SwitchRoot props so consumers get `id`, `name`, `form`,
+   `data-*`, `onMouseEnter`, `aria-*`, plus input-shaped
+   `disabled`/`readOnly`/`required` that Base UI declares on the root. We Omit
+   `render` (escape hatch we hide), `size` (we curate `"sm" | "md" | "lg"`),
+   and `className`/`style` (forwarded to the root). */
+export interface SwitchProps extends Omit<
+  BaseSwitch.Root.Props,
+  "render" | "size" | "className" | "style"
+> {
   ref?: Ref<HTMLLabelElement>
   className?: string
   style?: CSSProperties
@@ -21,12 +29,6 @@ export interface SwitchProps extends AriaAttributes {
   defaultChecked?: boolean
   /** Called when the switch is flipped on or off. */
   onCheckedChange?: (checked: boolean, eventDetails: BaseSwitch.Root.ChangeEventDetails) => void
-  disabled?: boolean
-  readOnly?: boolean
-  required?: boolean
-  name?: string
-  form?: string
-  id?: string
   /** Value submitted when the switch is on. Defaults to "on". */
   value?: string
   /** Value submitted when the switch is off. Defaults to nothing. */

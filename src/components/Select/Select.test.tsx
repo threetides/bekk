@@ -46,7 +46,7 @@ describe("Select — selection flow", () => {
         <Select.Root
           value={value}
           onValueChange={(next, details) => {
-            setValue(next)
+            setValue(next as string | null)
             onValueChange(next, details)
           }}
         >

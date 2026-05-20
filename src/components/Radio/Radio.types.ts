@@ -1,9 +1,18 @@
-import type { AriaAttributes, CSSProperties, ReactNode, Ref } from "react"
+import type { CSSProperties, ReactNode, Ref } from "react"
+import type { Radio as BaseRadio } from "@base-ui/react/radio"
 import type { RadioGroup as BaseRadioGroup } from "@base-ui/react/radio-group"
 
 export type RadioSize = "sm" | "md" | "lg"
 
-export interface RadioProps<Value = string> extends AriaAttributes {
+/* Extends Base UI's RadioRoot props so consumers get `id`, `data-*`,
+   `onMouseEnter`, `aria-*`, plus input-shaped `disabled`/`readOnly`/`required`
+   that Base UI declares on the root. We Omit `render` (escape hatch we hide),
+   `size` (we curate `"sm" | "md" | "lg"`), `value` (we re-type as generic
+   `Value`), and `className`/`style` (forwarded to the root). */
+export interface RadioProps<Value = string> extends Omit<
+  BaseRadio.Root.Props<Value>,
+  "render" | "size" | "value" | "className" | "style"
+> {
   ref?: Ref<HTMLLabelElement>
   className?: string
   style?: CSSProperties
@@ -12,10 +21,6 @@ export interface RadioProps<Value = string> extends AriaAttributes {
   size?: RadioSize
   /** Identifier for this radio in its group. Required. */
   value: Value
-  disabled?: boolean
-  readOnly?: boolean
-  required?: boolean
-  id?: string
 }
 
 export interface RadioGroupProps<Value = string> {

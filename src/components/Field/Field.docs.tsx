@@ -2,6 +2,7 @@ import { useState } from "react"
 import type { FC } from "react"
 import { Mail } from "lucide-react"
 import { Button } from "../Button"
+import { Checkbox, CheckboxGroup } from "../Checkbox"
 import { Input } from "../Input"
 import { Field } from "./Field"
 import type { DocPage } from "../../docs/types"
@@ -82,6 +83,26 @@ const ExternalInvalid: FC = () => {
     </div>
   )
 }
+
+const PerItem: FC = () => (
+  <Field.Root style={{ maxWidth: 360 }}>
+    <Field.Label>Interests</Field.Label>
+    <CheckboxGroup defaultValue={["design"]}>
+      <Field.Item>
+        <Checkbox value="dev">Development</Checkbox>
+        <Field.Description>Building, shipping, and reviewing code.</Field.Description>
+      </Field.Item>
+      <Field.Item>
+        <Checkbox value="design">Design</Checkbox>
+        <Field.Description>Visual, UX, and design-system work.</Field.Description>
+      </Field.Item>
+      <Field.Item disabled>
+        <Checkbox value="ops">Operations</Checkbox>
+        <Field.Description>Disabled per-item without disabling the whole group.</Field.Description>
+      </Field.Item>
+    </CheckboxGroup>
+  </Field.Root>
+)
 
 const docPage: DocPage = {
   name: "Field",
@@ -192,6 +213,29 @@ const docPage: DocPage = {
   <Input defaultValue="sk-XXXXXXXXX" />
   <Field.Error match>This key has been revoked.</Field.Error>
 </Field.Root>`
+    },
+    {
+      title: "Per-item descriptions inside a group",
+      description:
+        "Inside `CheckboxGroup` or `RadioGroup`, wrap each option in `Field.Item` to attach its own Description or scoped Error. `Field.Item disabled` disables just that row without disabling the whole group.",
+      render: () => <PerItem />,
+      code: `<Field.Root>
+  <Field.Label>Interests</Field.Label>
+  <CheckboxGroup defaultValue={["design"]}>
+    <Field.Item>
+      <Checkbox value="dev">Development</Checkbox>
+      <Field.Description>Building, shipping, and reviewing code.</Field.Description>
+    </Field.Item>
+    <Field.Item>
+      <Checkbox value="design">Design</Checkbox>
+      <Field.Description>Visual, UX, and design-system work.</Field.Description>
+    </Field.Item>
+    <Field.Item disabled>
+      <Checkbox value="ops">Operations</Checkbox>
+      <Field.Description>Disabled per-item without disabling the whole group.</Field.Description>
+    </Field.Item>
+  </CheckboxGroup>
+</Field.Root>`
     }
   ],
   props: {
@@ -239,7 +283,29 @@ const docPage: DocPage = {
       { name: "className", type: "string", description: "Forwarded to the `<div>` wrapper." },
       { name: "style", type: "CSSProperties", description: "Forwarded to the `<div>` wrapper." }
     ],
+    "Field.Item": [
+      {
+        name: "disabled",
+        type: "boolean",
+        default: "false",
+        description: "Disables the wrapped control. Field.Root's `disabled` still takes precedence."
+      },
+      {
+        name: "children",
+        type: "ReactNode",
+        description: "The per-item control plus its own Description/Error parts."
+      },
+      { name: "className", type: "string", description: "Forwarded to the `<div>` wrapper." },
+      { name: "style", type: "CSSProperties", description: "Forwarded to the `<div>` wrapper." }
+    ],
     "Field.Label": [
+      {
+        name: "nativeLabel",
+        type: "boolean",
+        default: "true",
+        description:
+          "Whether the rendered element behaves as a native `<label>`. Set to `false` when the associated control is a `<button>` (e.g. `Select.Trigger`) — avoids the label firing `:hover` on the button and label clicks triggering the button."
+      },
       { name: "className", type: "string", description: "Forwarded to the `<label>` element." },
       { name: "style", type: "CSSProperties", description: "Forwarded to the `<label>` element." }
     ],

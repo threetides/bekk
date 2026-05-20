@@ -5,16 +5,10 @@ import { Button } from "../Button"
 import { Tooltip } from "./Tooltip"
 import type { TooltipSide, TooltipSize } from "./Tooltip.types"
 import type { DocPage } from "../../docs/types"
+import { LABEL_STYLE } from "../../docs/labelStyle"
 
 const SIZES: TooltipSize[] = ["sm", "md", "lg"]
 const SIDES: TooltipSide[] = ["top", "right", "bottom", "left"]
-
-const LABEL_STYLE = {
-  fontSize: 13,
-  fontFamily: "var(--font-family-mono)",
-  color: "var(--color-text-muted)",
-  marginBottom: 8
-} as const
 
 const Default: FC = () => (
   <Tooltip.Root>
@@ -132,6 +126,11 @@ const docPage: DocPage = {
     "A small contextual label that appears next to an element on hover or focus. Built on Base UI's Tooltip with a pared-down anatomy: Root, Trigger, and Content (which absorbs Portal, Positioner, Popup, and Arrow). Tooltips are visual-only — always pair them with an accessible label (e.g. `aria-label` on icon-only triggers).",
   anatomy: [
     {
+      part: "Tooltip.Provider",
+      description:
+        "Optional wrapper that shares delay/closeDelay/timeout across nested tooltips. When one tooltip has just closed, the next opens instantly (within `timeout`) instead of waiting for `delay` again. Mount near the root of any region with multiple tooltips."
+    },
+    {
       part: "Tooltip.Root",
       description: "State container. Doesn't render its own DOM. Holds open/close state and timing."
     },
@@ -234,6 +233,25 @@ const docPage: DocPage = {
     }
   ],
   props: {
+    "Tooltip.Provider": [
+      {
+        name: "delay",
+        type: "number",
+        description: "Shared open delay (ms) for tooltips inside this provider."
+      },
+      {
+        name: "closeDelay",
+        type: "number",
+        description: "Shared close delay (ms) for tooltips inside this provider."
+      },
+      {
+        name: "timeout",
+        type: "number",
+        default: "400",
+        description:
+          "Window (ms) after one tooltip closes during which the next tooltip opens instantly instead of waiting for `delay`."
+      }
+    ],
     "Tooltip.Root": [
       {
         name: "open",

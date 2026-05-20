@@ -1,25 +1,14 @@
 import { useRef, useState } from "react"
-import type { MouseEventHandler, Ref } from "react"
+import type { MouseEventHandler, PointerEventHandler } from "react"
 import { Input as BaseInput } from "@base-ui/react/input"
 import { Eye, EyeOff, X } from "lucide-react"
 import { cx } from "@/utils/cx"
+import { mergeRefs } from "@/utils/mergeRefs"
 import { useFieldContext } from "../Field/Field"
 import styles from "./Input.module.css"
 import type { InputProps } from "./Input.types"
 
-function mergeRefs<T>(...refs: Array<Ref<T> | undefined>): (node: T | null) => void {
-  return (node) => {
-    for (const ref of refs) {
-      if (typeof ref === "function") ref(node)
-      else if (ref) (ref as { current: T | null }).current = node
-    }
-  }
-}
-
-/* React tracks an internal "last value" on inputs. To clear an uncontrolled
-   input *and* let React fire its synthetic onChange (so onValueChange runs
-   for both modes), call the prototype setter then dispatch a native input
-   event. Standard trick — see React source for `_valueTracker`. */
+/* Bypass React's value tracker so an uncontrolled clear still fires onChange. */
 function setInputValue(input: HTMLInputElement, value: string): void {
   const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")?.set
   setter?.call(input, value)
@@ -64,6 +53,18 @@ export function Input({
   const effectiveType = isPasswordType && revealed ? "text" : type
 
   const showClearButton = clearable && hasValue && !disabled && !readOnly
+  const showRevealToggle = showPasswordToggle && !readOnly
+
+  /* The wrapper is styled `cursor: text` to read as one input; clicks on
+     padding/icons should focus the inner <input>. Skip when the click started
+     on an action button — those manage their own focus. */
+  const handleWrapperPointerDown: PointerEventHandler<HTMLDivElement> = (event) => {
+    const target = event.target as HTMLElement
+    if (target === innerRef.current) return
+    if (target.closest("button")) return
+    event.preventDefault()
+    innerRef.current?.focus()
+  }
 
   const handleValueChange = (
     next: string,
@@ -98,6 +99,7 @@ export function Input({
     <div
       className={cx(styles.input, styles[`input--${variant}`], styles[`input--${size}`], className)}
       style={style}
+      onPointerDown={handleWrapperPointerDown}
     >
       {iconStart && (
         <span className={styles["input__icon"]} aria-hidden>
@@ -128,14 +130,14 @@ export function Input({
           <X aria-hidden />
         </button>
       )}
-      {showPasswordToggle && (
+      {showRevealToggle && (
         <button
           type="button"
           className={styles["input__action"]}
           onMouseDown={handleRevealMouseDown}
           onClick={handleRevealClick}
           aria-label={revealed ? "Hide password" : "Show password"}
-          aria-pressed={revealed}
+          tabIndex={-1}
           disabled={disabled}
         >
           {revealed ? <EyeOff aria-hidden /> : <Eye aria-hidden />}

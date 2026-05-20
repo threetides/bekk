@@ -3,16 +3,10 @@ import type { FC } from "react"
 import { Field } from "../Field"
 import { Switch } from "./Switch"
 import type { SwitchSize } from "./Switch.types"
+import { LABEL_STYLE } from "../../docs/labelStyle"
 import type { DocPage } from "../../docs/types"
 
 const SIZES: SwitchSize[] = ["sm", "md", "lg"]
-
-const LABEL_STYLE = {
-  fontSize: 13,
-  fontFamily: "var(--font-family-mono)",
-  color: "var(--color-text-muted)",
-  marginBottom: 8
-} as const
 
 const Default: FC = () => <Switch defaultChecked>Notifications</Switch>
 
@@ -52,12 +46,10 @@ const NoLabel: FC = () => (
 
 const LabelStart: FC = () => (
   <div style={{ display: "flex", flexDirection: "column", gap: 8, maxWidth: 280 }}>
-    <Switch defaultChecked labelPlacement="start" style={{ justifyContent: "space-between" }}>
+    <Switch defaultChecked labelPlacement="start">
       Email notifications
     </Switch>
-    <Switch labelPlacement="start" style={{ justifyContent: "space-between" }}>
-      Push notifications
-    </Switch>
+    <Switch labelPlacement="start">Push notifications</Switch>
   </div>
 )
 
@@ -121,11 +113,9 @@ const docPage: DocPage = {
     {
       title: "Label on the start",
       description:
-        '`labelPlacement="start"` flips the label to the left of the track — useful for settings rows where the control sits at the trailing edge. Combine with `justify-content: space-between` to push them apart.',
+        '`labelPlacement="start"` flips the label to the left of the track — useful for settings rows where the control sits at the trailing edge. The row pushes label and track to opposite ends automatically.',
       render: () => <LabelStart />,
-      code: `<Switch labelPlacement="start" style={{ justifyContent: "space-between" }}>
-  Email notifications
-</Switch>`
+      code: `<Switch labelPlacement="start">Email notifications</Switch>`
     },
     {
       title: "No label",

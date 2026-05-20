@@ -15,10 +15,15 @@ interface FieldContextValue {
 }
 
 /* Internal context — not part of the public API. Bekk controls (Input,
-   future Textarea/Select/Checkbox/…) read `required` from here so they
-   pick up the Field's required state without the consumer wiring it twice. */
+   Textarea, Select, Checkbox, Radio, Switch) read `required` from here so
+   they pick up the Field's required state without the consumer wiring it
+   twice. We don't propagate `disabled` because Base UI's Field.Root already
+   cascades it natively to every primitive bekk wraps. */
+
+/** @internal */
 export const FieldContext = createContext<FieldContextValue | null>(null)
 
+/** @internal */
 export function useFieldContext(): FieldContextValue | null {
   return useContext(FieldContext)
 }

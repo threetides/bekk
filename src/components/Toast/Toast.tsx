@@ -7,6 +7,7 @@ import type {
   ToastAddOptions,
   ToastProviderProps,
   ToastType,
+  ToastUpdateOptions,
   ToastViewportProps
 } from "./Toast.types"
 
@@ -30,7 +31,6 @@ const DEFAULT_DURATIONS: Record<ToastType, number> = {
  */
 interface ToastData {
   type: ToastType
-  action?: { label: string; onClick: () => void }
 }
 
 function ToastProvider({ children, limit = 5 }: ToastProviderProps) {
@@ -66,7 +66,6 @@ interface ToastItemProps {
 
 function ToastItem({ toast }: ToastItemProps) {
   const type: ToastType = toast.data?.type ?? "info"
-  const action = toast.data?.action
   const Icon = ICON_MAP[type]
   return (
     <BaseToast.Root toast={toast} className={cx(styles.toast, styles[`toast--${type}`])}>
@@ -77,17 +76,7 @@ function ToastItem({ toast }: ToastItemProps) {
         <BaseToast.Title className={styles["toast__title"]} />
         <BaseToast.Description className={styles["toast__description"]} />
       </div>
-      {action && (
-        <button
-          type="button"
-          className={styles["toast__action"]}
-          onClick={() => {
-            action.onClick()
-          }}
-        >
-          {action.label}
-        </button>
-      )}
+      {toast.actionProps && <BaseToast.Action className={styles["toast__action"]} />}
       <BaseToast.Close className={styles["toast__close"]} aria-label="Close">
         <X aria-hidden />
       </BaseToast.Close>
@@ -103,30 +92,50 @@ export function useToast() {
   const manager = BaseToast.useToastManager()
   return useMemo(
     () => ({
+      /**
+       * Show a toast. Returns the toast's id so you can `update()` or `close()` it later.
+       * Pass the same `id` again to dedupe — the manager will replace the existing toast
+       * in place rather than stacking a duplicate.
+       */
       add(options: ToastAddOptions): string {
         const type = options.type ?? "info"
         const duration = options.duration ?? DEFAULT_DURATIONS[type]
-        const data: ToastData = { type }
-        if (options.action) data.action = options.action
         return manager.add({
           id: options.id,
           title: options.title,
           description: options.description,
           timeout: duration > 0 ? duration : undefined,
-          data
+          data: { type },
+          ...(options.action && {
+            actionProps: {
+              children: options.action.label,
+              onClick: options.action.onClick
+            }
+          })
         })
       },
+      /** Close a toast by id. */
       close(id: string) {
         manager.close(id)
       },
-      update(id: string, options: Omit<ToastAddOptions, "id" | "duration">) {
-        const data: Partial<ToastData> = {}
-        if (options.type) data.type = options.type
-        if (options.action) data.action = options.action
+      /**
+       * Update an existing toast in place. Only the fields you pass are changed;
+       * the rest (including `type` and any existing action) are preserved.
+       */
+      update(id: string, options: ToastUpdateOptions) {
+        const existing = manager.toasts.find((t) => t.id === id)
+        const existingType = existing?.data?.type ?? "info"
+        const nextType = options.type ?? existingType
         manager.update(id, {
-          title: options.title,
-          description: options.description,
-          data: Object.keys(data).length > 0 ? data : undefined
+          ...(options.title !== undefined && { title: options.title }),
+          ...(options.description !== undefined && { description: options.description }),
+          data: { type: nextType },
+          ...(options.action !== undefined && {
+            actionProps: {
+              children: options.action.label,
+              onClick: options.action.onClick
+            }
+          })
         })
       }
     }),

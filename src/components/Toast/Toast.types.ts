@@ -35,6 +35,23 @@ export interface ToastAddOptions {
   action?: ToastAction
 }
 
+/**
+ * Options accepted by `useToast().update(id, { ... })`. All fields are
+ * optional — only the ones you pass are changed. Omitted fields keep their
+ * current value (so updating `description` alone leaves `type` and `action`
+ * intact).
+ */
+export interface ToastUpdateOptions {
+  title?: string
+  description?: string
+  type?: ToastType
+  /**
+   * Replace the action button. Pass `undefined` (or omit) to leave the
+   * current action unchanged.
+   */
+  action?: ToastAction
+}
+
 export interface ToastProviderProps {
   children?: ReactNode
   /**

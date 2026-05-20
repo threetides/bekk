@@ -1,19 +1,13 @@
 import { useState } from "react"
 import type { FC } from "react"
 import { Mail, Search } from "lucide-react"
+import { LABEL_STYLE } from "@/docs/labelStyle"
 import { Input } from "./Input"
 import type { InputSize, InputVariant } from "./Input.types"
 import type { DocPage } from "../../docs/types"
 
 const SIZES: InputSize[] = ["sm", "md", "lg"]
 const VARIANTS: InputVariant[] = ["default", "ghost"]
-
-const LABEL_STYLE = {
-  fontSize: 13,
-  fontFamily: "var(--font-family-mono)",
-  color: "var(--color-text-muted)",
-  marginBottom: 8
-} as const
 
 const Default: FC = () => <Input placeholder="Type something…" style={{ maxWidth: 320 }} />
 

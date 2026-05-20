@@ -90,6 +90,15 @@
   --icon-size-lg: 20px;
   --icon-size-xl: 24px;
 
+  /* ---------- Form control sizing ---------- */
+  --control-height-sm: 28px;
+  --control-height-md: 36px;
+  --control-height-lg: 44px;
+
+  --control-box-size-sm: 14px;
+  --control-box-size-md: 18px;
+  --control-box-size-lg: 22px;
+
   /* ---------- Typography ---------- */
   --font-family-sans: "PlusJakartaSans", system-ui, sans-serif;
   --font-family-mono: ui-monospace, "SF Mono", Menlo, monospace;
@@ -169,6 +178,7 @@
 
   --color-focus-ring: var(--accent-6);
   --focus-ring-offset: 2px;
+  --focus-ring-width: 2px;
 
   --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.06);
   --shadow-md: 0 4px 8px oklch(0% 0 0 / 0.08), 0 1px 2px oklch(0% 0 0 / 0.04);

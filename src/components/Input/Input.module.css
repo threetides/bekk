@@ -51,7 +51,7 @@
 /* Sizes set component-internal CSS variables */
 .input--sm {
   --bekk-input-pad-x: var(--spacing-2);
-  --bekk-input-height: 28px;
+  --bekk-input-height: var(--control-height-sm);
   --bekk-input-font-size: var(--font-size-sm);
   --bekk-input-icon-size: var(--icon-size-sm);
   --bekk-input-gap: var(--spacing-2);
@@ -59,7 +59,7 @@
 
 .input--md {
   --bekk-input-pad-x: var(--spacing-3);
-  --bekk-input-height: 36px;
+  --bekk-input-height: var(--control-height-md);
   --bekk-input-font-size: var(--font-size-md);
   --bekk-input-icon-size: var(--icon-size-md);
   --bekk-input-gap: var(--spacing-2);
@@ -67,7 +67,7 @@
 
 .input--lg {
   --bekk-input-pad-x: var(--spacing-4);
-  --bekk-input-height: 44px;
+  --bekk-input-height: var(--control-height-lg);
   --bekk-input-font-size: var(--font-size-lg);
   --bekk-input-icon-size: var(--icon-size-lg);
   --bekk-input-gap: var(--spacing-3);

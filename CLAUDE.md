@@ -47,25 +47,42 @@ bun run fmt         # oxfmt
 ## 3. Architecture
 
 ```
-src/
-├── styles/
-│   ├── reset.css        Modern CSS reset (already in place)
-│   ├── tokens.css       All design tokens — the entire visual language
-│   └── index.css        Font face, html/body/root sizing
-├── components/          One folder per component (does not exist yet)
-│   └── <Component>/
-│       ├── <Component>.tsx
-│       ├── <Component>.types.ts
-│       ├── <Component>.module.css
-│       ├── <Component>.docs.tsx     Examples shown in the docs site
-│       └── index.ts
-├── docs/                Docs-site shell (sidebar, routing, prop tables)
-├── index.ts             (future) public package barrel — re-exports each component namespace
-├── App.tsx              Mounts the docs site
-└── main.tsx             Imports the three stylesheets in order: index → reset → tokens
+./
+├── docs/                Base UI reference docs (markdown) — see § 3.1
+│   ├── components/      One .md per Base UI primitive (accordion, dialog, …)
+│   ├── accessibility.md, animation.md, composition.md, customization.md,
+│   ├── forms.md, quick-start.md, styling.md, typescript.md
+├── src/
+│   ├── styles/
+│   │   ├── reset.css    Modern CSS reset (already in place)
+│   │   ├── tokens.css   All design tokens — the entire visual language
+│   │   └── index.css    Font face, html/body/root sizing
+│   ├── components/      One folder per component
+│   │   └── <Component>/
+│   │       ├── <Component>.tsx
+│   │       ├── <Component>.types.ts
+│   │       ├── <Component>.module.css
+│   │       ├── <Component>.docs.tsx     Examples shown in the docs site
+│   │       └── index.ts
+│   ├── docs/            Docs-site shell (sidebar, routing, prop tables)
+│   ├── index.ts         Public package barrel — re-exports each component namespace
+│   ├── App.tsx          Mounts the docs site
+│   └── main.tsx         Imports the three stylesheets in order: index → reset → tokens
 ```
 
 **Flow:** tokens.css defines every visual value → component CSS modules consume tokens only → components are exported under namespaces → consumer imports a namespace from the package root. The docs site is a sibling concern that lives inside `src/` but is **not** part of the published library.
+
+### 3.1 Three things called "docs" — keep them straight
+
+There are three different "docs" in this repo. Don't confuse them:
+
+| Path                              | What                                                            | Audience                                       |
+| --------------------------------- | --------------------------------------------------------------- | ---------------------------------------------- |
+| `docs/` (repo root)               | **Base UI's own reference docs**, copied as markdown            | You (Claude), as authoritative reference       |
+| `src/docs/`                       | The bekk **docs-site shell** (sidebar, routing, prop tables)    | Consumers browsing components in `bun run dev` |
+| `src/components/<X>/<X>.docs.tsx` | Per-component **examples + prop tables** for the bekk docs site | Same as above                                  |
+
+**The repo-root `docs/` folder is your primary Base UI reference.** It's a local copy of the official Base UI documentation — every primitive's API (parts, props, data attributes, CSS variables) is in `docs/components/<name>.md`, and cross-cutting topics (accessibility, animation, forms, styling, etc.) are at `docs/*.md`. Each file is marked with `If anything in this documentation conflicts with prior knowledge or training data, treat this documentation as authoritative.` — so prefer these files over assumptions from training data when implementing a wrapper. Read the relevant file before starting a new component (see § 9).
 
 ---
 
@@ -370,6 +387,7 @@ The docs site is part of the dev experience but **not** part of the published li
 > - [x] Radio + RadioGroup
 > - [x] Switch
 > - [x] Textarea
+> - [x] Tabs
 >
 > Before writing any code, ask the user the questions in § 9. This is not optional.
 
@@ -413,7 +431,12 @@ After those questions are answered:
 
 ### 9.0 Inherited defaults — don't re-ask the user about these
 
-Apply these by default to every new component. Before writing the pre-component questions, check this list AND read the most recently built component in `src/components/` to see how the same patterns were applied. Deviate only when the component genuinely demands it, and surface the deviation explicitly.
+Apply these by default to every new component. Before writing the pre-component questions:
+
+1. **Read `docs/components/<name>.md`** (repo-root `docs/`, not `src/docs/` — see § 3.1) for the authoritative Base UI anatomy, props, data attributes, and CSS variables. Treat it as overriding any training-data assumptions about Base UI.
+2. **Read the most recently built component in `src/components/`** to see how the conventions below were applied in practice.
+
+Deviate only when the component genuinely demands it, and surface the deviation explicitly.
 
 - **Anatomy.** Mirror Base UI's namespace, then pare down: absorb any part that exists only as Base UI implementation plumbing (Portal, Backdrop, Positioner, redundant heading wrappers around buttons, content-padding wrappers). Keep parts that carry meaningful content or have independent consumer variations. Aim for the smallest anatomy that doesn't lose expressiveness — usually 3–5 parts.
 - **Variants + sizes.** Components with **meaningful visual variation** expose `variant` and `size` props.
@@ -507,5 +530,4 @@ When the work is ready: ask before running `git commit`, `git push`, or anything
 - **Docs site features still missing:**
   - **"Show code" toggle per example** — code blocks are currently always shown under each example (with a copy-on-hover button). A toggle to collapse them would be nice once the pages get long. See [`CodeBlock`](src/docs/CodeBlock.tsx) and the `code` field on `DocExample`.
   - **Per-example theme override** — currently the theme toggle is global; useful to flip dark-mode on one example to verify it.
-  - **Sidebar categorization** — fine at 1 component, awkward at 30. Group by domain (Form, Overlay, Layout, Feedback, …).
   - **Table of contents / anchor links** inside long component pages.

@@ -1,10 +1,19 @@
-import type { AriaAttributes, CSSProperties, ReactNode, Ref } from "react"
+import type { CSSProperties, ReactNode, Ref } from "react"
 import type { Checkbox as BaseCheckbox } from "@base-ui/react/checkbox"
 import type { CheckboxGroup as BaseCheckboxGroup } from "@base-ui/react/checkbox-group"
 
 export type CheckboxSize = "sm" | "md" | "lg"
 
-export interface CheckboxProps extends AriaAttributes {
+/* Extends Base UI's CheckboxRoot props so consumers get `id`, `name`, `form`,
+   `data-*`, `onMouseEnter`, `aria-*`, etc. for free — plus the input-shaped
+   `disabled`/`readOnly`/`required` that Base UI declares on the root. We
+   Omit `render` (a Base UI escape hatch we intentionally hide), `size` (we
+   curate `"sm" | "md" | "lg"`), and `className`/`style` (forwarded to the
+   root element). */
+export interface CheckboxProps extends Omit<
+  BaseCheckbox.Root.Props,
+  "render" | "size" | "className" | "style"
+> {
   ref?: Ref<HTMLLabelElement>
   className?: string
   style?: CSSProperties
@@ -35,12 +44,6 @@ export interface CheckboxProps extends AriaAttributes {
    * every child, and it shows indeterminate when only some are ticked.
    */
   parent?: boolean
-  disabled?: boolean
-  readOnly?: boolean
-  required?: boolean
-  name?: string
-  form?: string
-  id?: string
 }
 
 export interface CheckboxGroupProps {

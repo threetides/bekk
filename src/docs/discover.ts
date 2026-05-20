@@ -36,6 +36,7 @@ const SLUG_TO_CATEGORY: Record<string, Category> = {
   textarea: "Form",
   toggle: "Form",
   accordion: "Disclosure",
+  tabs: "Disclosure",
   navigationmenu: "Navigation",
   alertdialog: "Overlay",
   dialog: "Overlay",

@@ -14,6 +14,11 @@ export interface TextareaProps extends Omit<
   variant?: TextareaVariant
   size?: TextareaSize
   /**
+   * Initial height in rows. Defaults to `4` (bekk default; native HTML
+   * default is `2`).
+   */
+  rows?: number
+  /**
    * Called when the value changes. Receives the new string directly.
    * Native `onChange` is still available via `...rest` for consumers who
    * need the SyntheticEvent.

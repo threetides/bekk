@@ -1,7 +1,20 @@
 import { Tooltip as BaseTooltip } from "@base-ui/react/tooltip"
 import { cx } from "@/utils/cx"
 import styles from "./Tooltip.module.css"
-import type { TooltipContentProps, TooltipRootProps, TooltipTriggerProps } from "./Tooltip.types"
+import type {
+  TooltipContentProps,
+  TooltipProviderProps,
+  TooltipRootProps,
+  TooltipTriggerProps
+} from "./Tooltip.types"
+
+function TooltipProvider({ children, delay, closeDelay, timeout }: TooltipProviderProps) {
+  return (
+    <BaseTooltip.Provider delay={delay} closeDelay={closeDelay} timeout={timeout}>
+      {children}
+    </BaseTooltip.Provider>
+  )
+}
 
 function TooltipRoot({ children, open, defaultOpen, onOpenChange, disabled }: TooltipRootProps) {
   return (
@@ -67,6 +80,7 @@ function TooltipContent({
 }
 
 export const Tooltip = {
+  Provider: TooltipProvider,
   Root: TooltipRoot,
   Trigger: TooltipTrigger,
   Content: TooltipContent

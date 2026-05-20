@@ -28,21 +28,21 @@
 
 /* Sizes set internal vars */
 .radio--sm {
-  --bekk-radio-box-size: 14px;
+  --bekk-radio-box-size: var(--control-box-size-sm);
   --bekk-radio-dot-size: 6px;
   --bekk-radio-font-size: var(--font-size-sm);
   --bekk-radio-gap: var(--spacing-2);
 }
 
 .radio--md {
-  --bekk-radio-box-size: 18px;
+  --bekk-radio-box-size: var(--control-box-size-md);
   --bekk-radio-dot-size: 8px;
   --bekk-radio-font-size: var(--font-size-md);
   --bekk-radio-gap: var(--spacing-2);
 }
 
 .radio--lg {
-  --bekk-radio-box-size: 22px;
+  --bekk-radio-box-size: var(--control-box-size-lg);
   --bekk-radio-dot-size: 10px;
   --bekk-radio-font-size: var(--font-size-lg);
   --bekk-radio-gap: var(--spacing-3);

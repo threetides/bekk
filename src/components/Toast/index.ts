@@ -5,5 +5,6 @@ export type {
   ToastPosition,
   ToastProviderProps,
   ToastType,
+  ToastUpdateOptions,
   ToastViewportProps
 } from "./Toast.types"

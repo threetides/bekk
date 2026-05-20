@@ -130,19 +130,16 @@ describe("Input — password toggle", () => {
     expect(screen.queryByRole("button", { name: /password/i })).not.toBeInTheDocument()
   })
 
-  it("toggles between password and text on click and updates aria-pressed", async () => {
+  it("toggles between password and text on click and swaps the aria-label", async () => {
     const user = userEvent.setup()
     const { container } = render(<Input type="password" defaultValue="secret" />)
     const input = container.querySelector("input") as HTMLInputElement
     expect(input.type).toBe("password")
     const toggle = screen.getByRole("button", { name: "Show password" })
-    expect(toggle).toHaveAttribute("aria-pressed", "false")
+    expect(toggle).not.toHaveAttribute("aria-pressed")
     await user.click(toggle)
     expect(input.type).toBe("text")
-    expect(screen.getByRole("button", { name: "Hide password" })).toHaveAttribute(
-      "aria-pressed",
-      "true"
-    )
+    expect(screen.getByRole("button", { name: "Hide password" })).toBeInTheDocument()
   })
 
   it("allows clear + password toggle to coexist", () => {

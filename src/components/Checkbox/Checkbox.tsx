@@ -25,7 +25,7 @@ export function Checkbox({
   name,
   form,
   id,
-  ...aria
+  ...rest
 }: CheckboxProps) {
   const field = useFieldContext()
   const isRequired = required ?? field?.required
@@ -52,7 +52,7 @@ export function Checkbox({
       form={form}
       id={id}
       render={<label />}
-      {...aria}
+      {...rest}
     >
       <span className={styles["checkbox__box"]} aria-hidden>
         {/* keepMounted so the indicator stays in the DOM even when unchecked —

@@ -250,7 +250,7 @@ const [alignment, setAlignment] = useState<string[]>(["left"])
         type: '"default" | "ghost"',
         default: '"default"',
         description:
-          "Visual variant. `default` fills with the accent color when pressed; `ghost` fills with a subtle bg."
+          "Visual variant. `default` — transparent until pressed, then fills with accent. (Distinct from Button's `default` which is filled at idle.) `ghost` — transparent until pressed, then fills with a subtle bg."
       },
       {
         name: "size",

@@ -22,7 +22,7 @@ export function Switch({
   id,
   value,
   uncheckedValue,
-  ...aria
+  ...rest
 }: SwitchProps) {
   const field = useFieldContext()
   const isRequired = required ?? field?.required
@@ -50,7 +50,7 @@ export function Switch({
       value={value}
       uncheckedValue={uncheckedValue}
       render={<label />}
-      {...aria}
+      {...rest}
     >
       <span className={styles["switch__track"]} aria-hidden>
         <BaseSwitch.Thumb className={styles["switch__thumb"]} />

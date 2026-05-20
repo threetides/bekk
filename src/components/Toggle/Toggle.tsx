@@ -13,15 +13,13 @@ export function Toggle({
   size = "md",
   iconStart,
   iconEnd,
-  value,
-  pressed,
-  defaultPressed,
-  onPressedChange,
+  type = "button",
   ...rest
 }: ToggleProps) {
   return (
     <BaseToggle
       ref={ref}
+      type={type}
       className={cx(
         styles.toggle,
         styles[`toggle--${variant}`],
@@ -29,10 +27,6 @@ export function Toggle({
         className
       )}
       style={style}
-      value={value}
-      pressed={pressed}
-      defaultPressed={defaultPressed}
-      onPressedChange={onPressedChange}
       {...rest}
     >
       {iconStart && <span className={styles["toggle__icon"]}>{iconStart}</span>}
@@ -42,29 +36,13 @@ export function Toggle({
   )
 }
 
-export function ToggleGroup({
-  ref,
-  className,
-  style,
-  children,
-  multiple,
-  disabled,
-  value,
-  defaultValue,
-  onValueChange,
-  "aria-label": ariaLabel
-}: ToggleGroupProps) {
+export function ToggleGroup({ ref, className, style, children, ...rest }: ToggleGroupProps) {
   return (
     <BaseToggleGroup
       ref={ref}
       className={cx(styles["toggle-group"], className)}
       style={style}
-      multiple={multiple}
-      disabled={disabled}
-      value={value}
-      defaultValue={defaultValue}
-      onValueChange={onValueChange}
-      aria-label={ariaLabel}
+      {...rest}
     >
       {children}
     </BaseToggleGroup>

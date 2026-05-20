@@ -6,16 +6,10 @@ import { Toggle, ToggleGroup } from "../Toggle"
 import { Popover } from "./Popover"
 import type { PopoverSide, PopoverSize } from "./Popover.types"
 import type { DocPage } from "../../docs/types"
+import { LABEL_STYLE } from "../../docs/labelStyle"
 
 const SIZES: PopoverSize[] = ["sm", "md", "lg"]
 const SIDES: PopoverSide[] = ["top", "right", "bottom", "left"]
-
-const LABEL_STYLE = {
-  fontSize: 13,
-  fontFamily: "var(--font-family-mono)",
-  color: "var(--color-text-muted)",
-  marginBottom: 8
-} as const
 
 const Default: FC = () => (
   <Popover.Root>

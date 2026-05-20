@@ -30,21 +30,21 @@
 
 /* Sizes set internal vars consumed by box + label */
 .checkbox--sm {
-  --bekk-checkbox-box-size: 14px;
+  --bekk-checkbox-box-size: var(--control-box-size-sm);
   --bekk-checkbox-icon-size: 10px;
   --bekk-checkbox-font-size: var(--font-size-sm);
   --bekk-checkbox-gap: var(--spacing-2);
 }
 
 .checkbox--md {
-  --bekk-checkbox-box-size: 18px;
+  --bekk-checkbox-box-size: var(--control-box-size-md);
   --bekk-checkbox-icon-size: 14px;
   --bekk-checkbox-font-size: var(--font-size-md);
   --bekk-checkbox-gap: var(--spacing-2);
 }
 
 .checkbox--lg {
-  --bekk-checkbox-box-size: 22px;
+  --bekk-checkbox-box-size: var(--control-box-size-lg);
   --bekk-checkbox-icon-size: 18px;
   --bekk-checkbox-font-size: var(--font-size-lg);
   --bekk-checkbox-gap: var(--spacing-3);

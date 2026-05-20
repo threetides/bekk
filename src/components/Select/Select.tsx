@@ -1,3 +1,4 @@
+import type { ComponentProps } from "react"
 import { Select as BaseSelect } from "@base-ui/react/select"
 import { Check, ChevronDown } from "lucide-react"
 import { cx } from "@/utils/cx"
@@ -17,36 +18,42 @@ function SelectRoot<Value = string>({
   value,
   defaultValue,
   onValueChange,
+  multiple,
   required,
   disabled,
   readOnly,
   name,
   form,
   autoComplete,
+  modal,
+  inputRef,
   open,
   defaultOpen,
   onOpenChange
 }: SelectRootProps<Value>) {
   const field = useFieldContext()
   const isRequired = required ?? field?.required
-  return (
-    <BaseSelect.Root<Value>
-      value={value}
-      defaultValue={defaultValue}
-      onValueChange={onValueChange}
-      required={isRequired}
-      disabled={disabled}
-      readOnly={readOnly}
-      name={name}
-      form={form}
-      autoComplete={autoComplete}
-      open={open}
-      defaultOpen={defaultOpen}
-      onOpenChange={onOpenChange}
-    >
-      {children}
-    </BaseSelect.Root>
-  )
+  /* Base UI's Root is typed as a discriminated union over `multiple`, so we
+     cast the props bag once and let Base UI sort it at runtime. */
+  const baseProps = {
+    value,
+    defaultValue,
+    onValueChange,
+    multiple,
+    required: isRequired,
+    disabled,
+    readOnly,
+    name,
+    form,
+    autoComplete,
+    modal,
+    inputRef,
+    open,
+    defaultOpen,
+    onOpenChange,
+    children
+  } as unknown as ComponentProps<typeof BaseSelect.Root<Value>>
+  return <BaseSelect.Root<Value> {...baseProps} />
 }
 
 function SelectTrigger({
@@ -127,6 +134,8 @@ function SelectItem<Value = string>({
       disabled={disabled}
       label={label}
     >
+      {/* Wrapper reserves a fixed-size slot so the checkmark sizes via CSS
+          even when ItemIndicator unmounts (it only renders when selected). */}
       <span className={styles["item__indicator"]} aria-hidden>
         <BaseSelect.ItemIndicator>
           <Check />

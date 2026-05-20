@@ -3,16 +3,10 @@ import type { FC } from "react"
 import { Field } from "../Field"
 import { Checkbox, CheckboxGroup } from "./Checkbox"
 import type { CheckboxSize } from "./Checkbox.types"
+import { LABEL_STYLE } from "../../docs/labelStyle"
 import type { DocPage } from "../../docs/types"
 
 const SIZES: CheckboxSize[] = ["sm", "md", "lg"]
-
-const LABEL_STYLE = {
-  fontSize: 13,
-  fontFamily: "var(--font-family-mono)",
-  color: "var(--color-text-muted)",
-  marginBottom: 8
-} as const
 
 const Default: FC = () => <Checkbox defaultChecked>I agree to the terms</Checkbox>
 

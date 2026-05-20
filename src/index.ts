@@ -116,6 +116,7 @@ export type {
   ToastPosition,
   ToastProviderProps,
   ToastType,
+  ToastUpdateOptions,
   ToastViewportProps
 } from "./components/Toast"
 
@@ -123,8 +124,21 @@ export { Tooltip } from "./components/Tooltip"
 export type {
   TooltipAlign,
   TooltipContentProps,
+  TooltipProviderProps,
   TooltipRootProps,
   TooltipSide,
   TooltipSize,
   TooltipTriggerProps
 } from "./components/Tooltip"
+
+export { Tabs } from "./components/Tabs"
+export type {
+  TabsListProps,
+  TabsOrientation,
+  TabsPanelProps,
+  TabsRootProps,
+  TabsSize,
+  TabsTabProps,
+  TabsValue,
+  TabsVariant
+} from "./components/Tabs"

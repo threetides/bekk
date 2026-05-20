@@ -1,0 +1,269 @@
+/* ============================================================
+   Tabs
+   ------------------------------------------------------------
+   Anatomy: Root → List → Tab(s) + Panel(s).
+   Base UI's Indicator is rendered internally by List using
+   `--active-tab-left/width/top/height` CSS vars set by Base UI
+   on the Indicator element.
+
+   Variants:
+     - default: underline bar indicator at the active edge of List
+     - ghost:   soft pill fill behind the active tab
+
+   Sizes set component-internal vars consumed by both Tab and
+   Indicator so per-size rules don't multiply across elements.
+   ============================================================ */
+
+/* Block — the Root container */
+.tabs {
+  display: flex;
+  font-family: var(--font-family-sans);
+  color: var(--color-text-primary);
+  /* Indicator bar thickness is constant across sizes. */
+  --bekk-tabs-indicator-bar: 2px;
+}
+
+.tabs--horizontal {
+  flex-direction: column;
+}
+
+.tabs--vertical {
+  flex-direction: row;
+  align-items: stretch;
+}
+
+/* Sizes — set internal vars used by Tab + Indicator */
+.tabs--sm {
+  --bekk-tabs-tab-pad-y: var(--spacing-1);
+  --bekk-tabs-tab-pad-x: var(--spacing-2);
+  --bekk-tabs-tab-gap: var(--spacing-1);
+  --bekk-tabs-tab-height: 28px;
+  --bekk-tabs-font-size: var(--font-size-sm);
+  --bekk-tabs-icon-size: var(--icon-size-sm);
+  --bekk-tabs-list-gap: var(--spacing-1);
+}
+
+.tabs--md {
+  --bekk-tabs-tab-pad-y: var(--spacing-2);
+  --bekk-tabs-tab-pad-x: var(--spacing-3);
+  --bekk-tabs-tab-gap: var(--spacing-2);
+  --bekk-tabs-tab-height: 36px;
+  --bekk-tabs-font-size: var(--font-size-md);
+  --bekk-tabs-icon-size: var(--icon-size-md);
+  --bekk-tabs-list-gap: var(--spacing-1);
+}
+
+.tabs--lg {
+  --bekk-tabs-tab-pad-y: var(--spacing-3);
+  --bekk-tabs-tab-pad-x: var(--spacing-4);
+  --bekk-tabs-tab-gap: var(--spacing-2);
+  --bekk-tabs-tab-height: 44px;
+  --bekk-tabs-font-size: var(--font-size-lg);
+  --bekk-tabs-icon-size: var(--icon-size-lg);
+  --bekk-tabs-list-gap: var(--spacing-2);
+}
+
+/* ============================================================
+   List — the strip of Tab buttons + the Indicator
+   ============================================================ */
+
+.tabs__list {
+  position: relative;
+  /* Local stacking context so the ghost-variant indicator's z-index: -1
+     stays under the tabs without escaping into the parent. */
+  z-index: 0;
+  display: flex;
+  gap: var(--bekk-tabs-list-gap);
+  margin: 0;
+  padding: 0;
+}
+
+.tabs--horizontal > .tabs__list {
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.tabs--vertical > .tabs__list {
+  flex-direction: column;
+  align-items: stretch;
+  flex-shrink: 0;
+}
+
+/* default variant: bottom border on the list (right border in vertical),
+   indicator is a colored bar aligned to the active tab's edge */
+.tabs--default.tabs--horizontal > .tabs__list {
+  box-shadow: inset 0 calc(var(--bekk-tabs-indicator-bar) * -1) 0 var(--color-border-subtle);
+  padding-bottom: 0;
+}
+
+.tabs--default.tabs--vertical > .tabs__list {
+  box-shadow: inset calc(var(--bekk-tabs-indicator-bar) * -1) 0 0 var(--color-border-subtle);
+}
+
+/* ============================================================
+   Tab — the button
+   ============================================================ */
+
+.tabs__tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--bekk-tabs-tab-gap);
+  height: var(--bekk-tabs-tab-height);
+  padding: var(--bekk-tabs-tab-pad-y) var(--bekk-tabs-tab-pad-x);
+  margin: 0;
+  background: none;
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  font-family: inherit;
+  font-size: var(--bekk-tabs-font-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  transition:
+    color var(--duration-fast) var(--easing-standard),
+    background-color var(--duration-fast) var(--easing-standard);
+}
+
+.tabs--vertical .tabs__tab {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.tabs__tab:hover:not([data-disabled]):not([data-active]) {
+  color: var(--color-text-primary);
+}
+
+.tabs__tab[data-active] {
+  color: var(--color-text-primary);
+}
+
+.tabs__tab[data-disabled] {
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+.tabs__tab:focus-visible {
+  box-shadow: 0 0 0 var(--focus-ring-width) var(--color-focus-ring);
+}
+
+/* Tab label + icons */
+.tabs__tab-label {
+  min-width: 0;
+}
+
+.tabs__tab-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--bekk-tabs-icon-size);
+  height: var(--bekk-tabs-icon-size);
+}
+
+.tabs__tab-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* default variant — active tab gets accent text color */
+.tabs--default .tabs__tab[data-active] {
+  color: var(--color-accent-fg);
+}
+
+/* ghost variant — active tab keeps primary text, hover gets a soft fill */
+.tabs--ghost .tabs__tab:hover:not([data-disabled]):not([data-active]) {
+  background-color: var(--color-bg-subtle);
+}
+
+/* ============================================================
+   Indicator — the moving highlight
+   Base UI provides --active-tab-{left|right|top|bottom|width|height}
+   on this element. Its absolute position relative to List, in pixels.
+   ============================================================ */
+
+.tabs__indicator {
+  position: absolute;
+  pointer-events: none;
+  transition:
+    translate var(--duration-normal) var(--easing-emphasized),
+    width var(--duration-normal) var(--easing-emphasized),
+    height var(--duration-normal) var(--easing-emphasized);
+}
+
+/* First paint: Base UI hasn't measured tabs yet, so --active-tab-* are
+   undefined. data-activation-direction="none" means "no previous tab" —
+   suppress the transition so the indicator snaps to position instead of
+   sliding from 0. */
+.tabs__indicator[data-activation-direction="none"] {
+  transition: none;
+}
+
+/* default: a bar sitting on the active edge of the list */
+.tabs--default .tabs__indicator {
+  background-color: var(--color-accent-fg);
+  border-radius: var(--radius-full);
+}
+
+.tabs--default.tabs--horizontal .tabs__indicator {
+  left: 0;
+  bottom: 0;
+  width: var(--active-tab-width);
+  height: var(--bekk-tabs-indicator-bar);
+  translate: var(--active-tab-left) 0;
+}
+
+.tabs--default.tabs--vertical .tabs__indicator {
+  top: 0;
+  right: 0;
+  width: var(--bekk-tabs-indicator-bar);
+  height: var(--active-tab-height);
+  translate: 0 var(--active-tab-top);
+}
+
+/* ghost: a rounded pill behind the active tab */
+.tabs--ghost .tabs__indicator {
+  left: 0;
+  top: 0;
+  width: var(--active-tab-width);
+  height: var(--active-tab-height);
+  translate: var(--active-tab-left) var(--active-tab-top);
+  background-color: var(--color-bg-muted);
+  border-radius: var(--radius-md);
+  z-index: -1;
+}
+
+/* ============================================================
+   Panel
+   ============================================================ */
+
+.tabs__panel {
+  min-width: 0;
+  padding: var(--spacing-4) 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-normal);
+  outline: none;
+}
+
+.tabs--vertical .tabs__panel {
+  flex: 1;
+  padding: 0 var(--spacing-4);
+}
+
+.tabs__panel:focus-visible {
+  border-radius: var(--radius-md);
+  box-shadow: 0 0 0 var(--focus-ring-width) var(--color-focus-ring);
+}
+
+/* Base UI sets the native `hidden` attribute on inactive panels (in addition
+   to `data-hidden`); matching `[hidden]` keeps us aligned with the Base UI
+   docs and with the platform default. */
+.tabs__panel[hidden] {
+  display: none;
+}

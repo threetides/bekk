@@ -257,6 +257,24 @@ toast.add({ title: "Toast #2", description: "And so on." })`
         type: "{ label: string, onClick: () => void }",
         description: "Optional inline action button (e.g. Undo)."
       }
+    ],
+    "useToast() returns": [
+      {
+        name: "add",
+        type: "(options: ToastAddOptions) => string",
+        description: "Show a toast. Returns its id so you can `update()` or `close()` it later."
+      },
+      {
+        name: "close",
+        type: "(id: string) => void",
+        description: "Programmatically dismiss a toast by id."
+      },
+      {
+        name: "update",
+        type: "(id: string, options: ToastUpdateOptions) => void",
+        description:
+          "Update an existing toast in place. Only the fields you pass change; omitted fields (including `type` and any existing action) keep their current value."
+      }
     ]
   }
 }

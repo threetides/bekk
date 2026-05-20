@@ -27,14 +27,17 @@
   cursor: default;
 }
 
-/* Label placement — flips the visual order without changing the DOM */
+/* Label placement — flips the visual order without changing the DOM.
+   `justify-content: space-between` baked in so a settings-row layout (label
+   left, control right) works without consumers reaching for inline styles. */
 .switch--label-start {
   flex-direction: row-reverse;
+  justify-content: space-between;
 }
 
 /* Sizes set internal vars */
 .switch--sm {
-  --bekk-switch-track-w: 28px;
+  --bekk-switch-track-w: var(--control-height-sm);
   --bekk-switch-track-h: 16px;
   --bekk-switch-thumb-size: 12px;
   --bekk-switch-thumb-inset: 2px;
@@ -43,7 +46,7 @@
 }
 
 .switch--md {
-  --bekk-switch-track-w: 36px;
+  --bekk-switch-track-w: var(--control-height-md);
   --bekk-switch-track-h: 20px;
   --bekk-switch-thumb-size: 16px;
   --bekk-switch-thumb-inset: 2px;
@@ -52,7 +55,7 @@
 }
 
 .switch--lg {
-  --bekk-switch-track-w: 44px;
+  --bekk-switch-track-w: var(--control-height-lg);
   --bekk-switch-track-h: 24px;
   --bekk-switch-thumb-size: 20px;
   --bekk-switch-thumb-inset: 2px;
@@ -88,8 +91,10 @@
   background-color: var(--color-bg-muted);
 }
 
-.switch[data-checked][data-disabled] .switch__track {
-  background-color: var(--color-bg-muted);
+/* When the Switch sits inside an invalid Field.Root, Base UI sets
+   `data-invalid` on the Root. Surface that on the track. */
+.switch[data-invalid] .switch__track {
+  background-color: var(--color-status-danger);
 }
 
 /* Thumb — the sliding circle */
@@ -108,8 +113,8 @@
 .switch[data-checked] .switch__thumb {
   transform: translateX(
     calc(
-      var(--bekk-switch-track-w) - var(--bekk-switch-thumb-size) - var(--bekk-switch-thumb-inset) *
-        2
+      var(--bekk-switch-track-w) - var(--bekk-switch-thumb-size) -
+        (var(--bekk-switch-thumb-inset) * 2)
     )
   );
 }

@@ -10,6 +10,7 @@
 
 /* Block — the <nav> root */
 .nav {
+  background-color: transparent;
   font-family: var(--font-family-sans);
   color: var(--color-text-primary);
 }
@@ -25,14 +26,8 @@
   width: 100%;
 }
 
-/* Variants */
-.nav--default {
-  background-color: transparent;
-}
-
-.nav--ghost {
-  background-color: transparent;
-}
+/* Variants — visual treatment is mostly applied to triggers/links (see below).
+   The root background stays transparent for both. */
 
 /* Sizes — set internal variables used by triggers and links */
 .nav--sm {
@@ -76,7 +71,7 @@
   align-items: center;
 }
 
-.nav--vertical .nav__list {
+.nav--vertical > .nav__list {
   flex-direction: column;
   align-items: stretch;
 }
@@ -184,7 +179,13 @@
   height: 100%;
 }
 
-/* Vertical mode rotates the chevron to point right; open state rotates 90deg */
+/* Chevron orientation. The Trigger always renders a `ChevronDown`; we rotate
+   in CSS so the Trigger itself doesn't need to know about its parent's
+   orientation (which would require threading context down purely for icon
+   rendering). The base icon is the closed-horizontal pose:
+     - vertical closed: rotate -90deg so it points right (collapse to the side)
+     - vertical open:   rotate 0deg, back to down (panel below the row)
+     - horizontal open: rotate 180deg (point up, indicating "now open"). */
 .nav--vertical .nav__trigger-icon {
   transform: rotate(-90deg);
 }

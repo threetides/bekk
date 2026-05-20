@@ -167,7 +167,7 @@ const docPage: DocPage = {
       },
       {
         name: "onClick",
-        type: "(event) => void",
+        type: "MouseEventHandler<HTMLButtonElement>",
         description: "Standard click handler. All native button props are forwarded."
       },
       {

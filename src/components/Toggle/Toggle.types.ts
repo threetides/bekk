@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, CSSProperties, ReactNode, Ref } from "react"
+import type { ButtonHTMLAttributes, CSSProperties, HTMLAttributes, ReactNode, Ref } from "react"
 import type { ToggleGroup as BaseToggleGroup } from "@base-ui/react/toggle-group"
 import type { Toggle as BaseToggle } from "@base-ui/react/toggle"
 
@@ -23,7 +23,10 @@ export interface ToggleProps extends Omit<
   onPressedChange?: (pressed: boolean, eventDetails: BaseToggle.ChangeEventDetails) => void
 }
 
-export interface ToggleGroupProps {
+export interface ToggleGroupProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  "className" | "style" | "defaultValue" | "onChange"
+> {
   ref?: Ref<HTMLDivElement>
   className?: string
   style?: CSSProperties
@@ -33,5 +36,4 @@ export interface ToggleGroupProps {
   value?: string[]
   defaultValue?: string[]
   onValueChange?: (value: string[], eventDetails: BaseToggleGroup.ChangeEventDetails) => void
-  "aria-label"?: string
 }

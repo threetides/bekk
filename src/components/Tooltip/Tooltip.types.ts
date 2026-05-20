@@ -5,6 +5,20 @@ export type TooltipSize = "sm" | "md" | "lg"
 export type TooltipSide = "top" | "right" | "bottom" | "left"
 export type TooltipAlign = "start" | "center" | "end"
 
+export interface TooltipProviderProps {
+  children?: ReactNode
+  /** Shared open delay (ms) for tooltips inside this provider. */
+  delay?: number
+  /** Shared close delay (ms) for tooltips inside this provider. */
+  closeDelay?: number
+  /**
+   * Window (ms) after one tooltip closes during which the next tooltip opens
+   * instantly instead of waiting for `delay`.
+   * @default 400
+   */
+  timeout?: number
+}
+
 export interface TooltipRootProps {
   children?: ReactNode
   open?: boolean

@@ -7,18 +7,12 @@ import type {
   NavigationMenuSize,
   NavigationMenuVariant
 } from "./NavigationMenu.types"
+import { LABEL_STYLE } from "../../docs/labelStyle"
 import type { DocPage } from "../../docs/types"
 
 const SIZES: NavigationMenuSize[] = ["sm", "md", "lg"]
 const VARIANTS: NavigationMenuVariant[] = ["default", "ghost"]
 const ORIENTATIONS: NavigationMenuOrientation[] = ["horizontal", "vertical"]
-
-const LABEL_STYLE = {
-  fontSize: 13,
-  fontFamily: "var(--font-family-mono)",
-  color: "var(--color-text-muted)",
-  marginBottom: 8
-} as const
 
 const PANEL_LINK_STYLE = {
   display: "block",
@@ -310,7 +304,19 @@ const Disabled: FC = () => (
         <NavigationMenu.Link href="#">Available</NavigationMenu.Link>
       </NavigationMenu.Item>
       <NavigationMenu.Item>
-        <NavigationMenu.Link aria-disabled>Coming soon</NavigationMenu.Link>
+        {/* `aria-disabled` on an `<a>` only carries meaning to AT when there is
+            still a valid href; otherwise the link isn't interactive in the
+            first place. Pair it with a no-op handler so click/Enter don't
+            navigate. */}
+        <NavigationMenu.Link
+          href="#"
+          aria-disabled
+          onClick={(event) => {
+            event.preventDefault()
+          }}
+        >
+          Coming soon
+        </NavigationMenu.Link>
       </NavigationMenu.Item>
       <NavigationMenu.Item>
         <NavigationMenu.Trigger disabled>Beta</NavigationMenu.Trigger>
@@ -506,10 +512,16 @@ const docPage: DocPage = {
     {
       title: "Disabled",
       description:
-        "Triggers accept `disabled` natively. For links, pass `aria-disabled` — bekk styles it like the disabled trigger.",
+        "Triggers accept `disabled` natively. For links, pass `aria-disabled` along with an `onClick` that prevents navigation — keep the `href` so the element is still a real link to assistive tech.",
       render: () => <Disabled />,
       code: `<NavigationMenu.Link href="#">Available</NavigationMenu.Link>
-<NavigationMenu.Link aria-disabled>Coming soon</NavigationMenu.Link>
+<NavigationMenu.Link
+  href="#"
+  aria-disabled
+  onClick={(event) => event.preventDefault()}
+>
+  Coming soon
+</NavigationMenu.Link>
 <NavigationMenu.Trigger disabled>Beta</NavigationMenu.Trigger>`
     }
   ],

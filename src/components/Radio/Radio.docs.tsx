@@ -3,16 +3,10 @@ import type { FC } from "react"
 import { Field } from "../Field"
 import { Radio, RadioGroup } from "./Radio"
 import type { RadioSize } from "./Radio.types"
+import { LABEL_STYLE } from "../../docs/labelStyle"
 import type { DocPage } from "../../docs/types"
 
 const SIZES: RadioSize[] = ["sm", "md", "lg"]
-
-const LABEL_STYLE = {
-  fontSize: 13,
-  fontFamily: "var(--font-family-mono)",
-  color: "var(--color-text-muted)",
-  marginBottom: 8
-} as const
 
 const Default: FC = () => (
   <RadioGroup defaultValue="medium">

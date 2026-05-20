@@ -16,7 +16,7 @@ export function Radio<Value = string>({
   readOnly,
   required,
   id,
-  ...aria
+  ...rest
 }: RadioProps<Value>) {
   const field = useFieldContext()
   const isRequired = required ?? field?.required
@@ -34,7 +34,7 @@ export function Radio<Value = string>({
       required={isRequired}
       id={id}
       render={<label />}
-      {...aria}
+      {...rest}
     >
       <span className={styles["radio__dot"]} aria-hidden>
         {/* keepMounted so the box's flex baseline doesn't shift when the

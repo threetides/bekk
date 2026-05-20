@@ -28,8 +28,10 @@
 }
 
 /* Popup — the visible dialog box. Positioned by the viewport (flex centering),
-   so it just needs sizing and the surface styles. */
+   so it just needs sizing and the surface styles. `position: relative` so the
+   absolutely-positioned close-X anchors to the popup, not the fixed viewport. */
 .dialog__popup {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-4);

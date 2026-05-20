@@ -26,8 +26,10 @@
   overflow-y: auto;
 }
 
-/* Popup */
+/* Popup — `position: relative` so any absolutely-positioned children (e.g. a
+   future close-X) anchor to the popup, not the fixed viewport. */
 .alert-dialog__popup {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-4);

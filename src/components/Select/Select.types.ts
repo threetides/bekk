@@ -8,12 +8,20 @@ export type SelectAlign = "start" | "center" | "end"
 
 export interface SelectRootProps<Value = string> {
   children?: ReactNode
-  /** Controlled value. */
-  value?: Value | null
-  /** Uncontrolled initial value. */
-  defaultValue?: Value | null
+  /**
+   * Controlled value. When `multiple` is true, pass `Value[]`; otherwise
+   * `Value | null` where `null` is the empty state.
+   */
+  value?: Value | Value[] | null
+  /** Uncontrolled initial value. Shape mirrors `value` (see `multiple`). */
+  defaultValue?: Value | Value[] | null
   /** Called when the selection changes. */
-  onValueChange?: (value: Value | null, eventDetails: BaseSelect.Root.ChangeEventDetails) => void
+  onValueChange?: (
+    value: Value | Value[] | null,
+    eventDetails: BaseSelect.Root.ChangeEventDetails
+  ) => void
+  /** Whether multiple items can be selected. */
+  multiple?: boolean
   /** Whether the user must choose a value before submitting a form. */
   required?: boolean
   /** Whether the select ignores user interaction. */
@@ -26,6 +34,13 @@ export interface SelectRootProps<Value = string> {
   form?: string
   /** Autofill hint for the hidden input. */
   autoComplete?: string
+  /**
+   * Modal popup locks page scroll and disables outside pointer interaction
+   * while open. Defaults to `true` to match Base UI.
+   */
+  modal?: boolean
+  /** Ref to the hidden form input — useful for form-library integration. */
+  inputRef?: Ref<HTMLInputElement>
   /** Controlled open state. */
   open?: boolean
   /** Uncontrolled initial open state. */
