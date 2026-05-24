@@ -69,6 +69,7 @@ export type { CheckboxGroupProps, CheckboxProps, CheckboxSize } from "./componen
 
 export { Field } from "./components/Field"
 export type {
+  FieldChangeEventDetails,
   FieldDescriptionProps,
   FieldErrorMatch,
   FieldErrorProps,

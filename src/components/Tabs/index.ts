@@ -1,2 +1,11 @@
 export { Tabs } from "./Tabs"
-export type * from "./Tabs.types"
+export type {
+  TabsListProps,
+  TabsOrientation,
+  TabsPanelProps,
+  TabsRootProps,
+  TabsSize,
+  TabsTabProps,
+  TabsValue,
+  TabsVariant
+} from "./Tabs.types"

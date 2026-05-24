@@ -1,24 +1,15 @@
-import type { ReactElement } from "react"
 import { Popover as BasePopover } from "@base-ui/react/popover"
 import { cx } from "@/utils/cx"
+import { headingElementFor } from "@/utils/headingElement"
 import styles from "./Popover.module.css"
 import type {
   PopoverCloseProps,
   PopoverContentProps,
   PopoverDescriptionProps,
-  PopoverHeadingLevel,
   PopoverRootProps,
   PopoverTitleProps,
   PopoverTriggerProps
 } from "./Popover.types"
-
-const HEADING_ELEMENTS: Record<PopoverHeadingLevel, ReactElement> = {
-  2: <h2 />,
-  3: <h3 />,
-  4: <h4 />,
-  5: <h5 />,
-  6: <h6 />
-}
 
 function ArrowSvg() {
   // Open path (no Z) so the stroke draws only the two slanted edges, continuing the popover border.
@@ -87,7 +78,7 @@ function PopoverTitle({ ref, className, style, children, headingLevel = 3 }: Pop
       ref={ref}
       className={cx(styles["popover__title"], className)}
       style={style}
-      render={HEADING_ELEMENTS[headingLevel]}
+      render={headingElementFor(headingLevel)}
     >
       {children}
     </BasePopover.Title>

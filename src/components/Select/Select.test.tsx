@@ -28,10 +28,11 @@ describe("Select — trigger rendering", () => {
     expect(screen.getByText("Pick a fruit")).toBeInTheDocument()
   })
 
-  it("shows the value when a defaultValue is set", () => {
+  it("shows the item's text label when a defaultValue is set", () => {
     render(<Fixture defaultValue="banana" />)
-    /* Trigger Value renders the value as text (no items prop for label lookup) */
-    expect(screen.getByRole("combobox")).toHaveTextContent("banana")
+    /* Root walks children synchronously to map value → label, so the trigger
+       shows "Banana" on the very first render — no flicker, no async wait. */
+    expect(screen.getByRole("combobox")).toHaveTextContent("Banana")
   })
 })
 
@@ -63,7 +64,8 @@ describe("Select — selection flow", () => {
     await user.click(screen.getByRole("combobox"))
     await user.click(await screen.findByRole("option", { name: "Banana" }))
     expect(onValueChange).toHaveBeenCalledWith("banana", expect.anything())
-    expect(screen.getByRole("combobox")).toHaveTextContent("banana")
+    /* Trigger shows the item's text label ("Banana"), not the raw value. */
+    expect(screen.getByRole("combobox")).toHaveTextContent("Banana")
   })
 
   it("does not open when disabled", async () => {

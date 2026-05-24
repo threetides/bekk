@@ -1,6 +1,6 @@
-import type { ReactElement } from "react"
 import { AlertDialog as BaseAlertDialog } from "@base-ui/react/alert-dialog"
 import { cx } from "@/utils/cx"
+import { headingElementFor } from "@/utils/headingElement"
 import { Button } from "../Button"
 import styles from "./AlertDialog.module.css"
 import type {
@@ -9,19 +9,10 @@ import type {
   AlertDialogCancelProps,
   AlertDialogContentProps,
   AlertDialogDescriptionProps,
-  AlertDialogHeadingLevel,
   AlertDialogRootProps,
   AlertDialogTitleProps,
   AlertDialogTriggerProps
 } from "./AlertDialog.types"
-
-const HEADING_ELEMENTS: Record<AlertDialogHeadingLevel, ReactElement> = {
-  2: <h2 />,
-  3: <h3 />,
-  4: <h4 />,
-  5: <h5 />,
-  6: <h6 />
-}
 
 function AlertDialogRoot({ children, open, defaultOpen, onOpenChange }: AlertDialogRootProps) {
   return (
@@ -76,7 +67,7 @@ function AlertDialogTitle({
       ref={ref}
       className={cx(styles["alert-dialog__title"], className)}
       style={style}
-      render={HEADING_ELEMENTS[headingLevel]}
+      render={headingElementFor(headingLevel)}
     >
       {children}
     </BaseAlertDialog.Title>

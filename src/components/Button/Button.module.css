@@ -5,6 +5,7 @@
   justify-content: center;
   gap: var(--bekk-button-gap);
   padding: var(--bekk-button-pad-y) var(--bekk-button-pad-x);
+  border: var(--border-width-1) solid transparent;
   border-radius: var(--radius-md);
   background-color: transparent;
   color: var(--color-text-primary);

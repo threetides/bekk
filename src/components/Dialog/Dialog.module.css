@@ -37,6 +37,7 @@
   gap: var(--spacing-4);
 
   width: min(90vw, 100%);
+  max-width: var(--bekk-dialog-popup-max-w);
   padding: var(--spacing-6);
 
   background-color: var(--color-bg-surface);
@@ -60,17 +61,17 @@
   transform: scale(0.96);
 }
 
-/* Sizes set the max-width */
+/* Sizes set component-internal variables; the popup element reads them. */
 .dialog__popup--sm {
-  max-width: 400px;
+  --bekk-dialog-popup-max-w: 400px;
 }
 
 .dialog__popup--md {
-  max-width: 520px;
+  --bekk-dialog-popup-max-w: 520px;
 }
 
 .dialog__popup--lg {
-  max-width: 720px;
+  --bekk-dialog-popup-max-w: 720px;
 }
 
 /* When the close X is shown, reserve room next to the title */

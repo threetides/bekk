@@ -444,7 +444,7 @@ Deviate only when the component genuinely demands it, and surface the deviation 
   - Variants: `"default"` (the canonical look) plus `"ghost"` when the component is likely to appear nested inside other containers. Default `"default"`.
   - **If there's only one tasteful look** (e.g. Tooltip — there's no plausible second style), skip `variant` entirely. Don't invent variation that has no use case. `size` can also be skipped if the component has only one sensible size.
   - More variants/sizes get added only when a real use case demands it.
-- **Heading level.** Components that render a heading expose `headingLevel?: 2 | 3 | 4 | 5 | 6`, default `3`.
+- **Heading level.** Components that render a heading expose `headingLevel?: 2 | 3 | 4 | 5 | 6`. Default `3` for components that live inline in page content (Accordion, Popover). Default `2` for modal overlays that take over the viewport and introduce their own heading hierarchy (Dialog, AlertDialog) — the title is the topmost heading inside the modal subtree. Use `headingElementFor(level)` from `@/utils/headingElement` to render the chosen tag via Base UI's `render` prop; don't redefine the lookup per component.
 - **Icons.** Two patterns, by role:
   - **Baked-in icon** (Accordion's chevron, future Dialog close button): the icon is part of the visual identity. Bake in a sensible default from [`lucide-react`](https://lucide.dev/icons/) and expose an `icon` prop on the part that owns it so consumers can swap it. Position is fixed.
   - **Icon slots** (Button, Toggle, future Input adornments): the icon flanks user content. Expose `iconStart?: ReactNode` and `iconEnd?: ReactNode` props. Position is fixed by the prop name. Either may be omitted; both may be present alongside `children`.

@@ -1,4 +1,3 @@
-import { useMemo } from "react"
 import { Toast as BaseToast } from "@base-ui/react/toast"
 import { AlertCircle, AlertTriangle, CheckCircle2, Info, X } from "lucide-react"
 import { cx } from "@/utils/cx"
@@ -90,57 +89,54 @@ function ToastItem({ toast }: ToastItemProps) {
  */
 export function useToast() {
   const manager = BaseToast.useToastManager()
-  return useMemo(
-    () => ({
-      /**
-       * Show a toast. Returns the toast's id so you can `update()` or `close()` it later.
-       * Pass the same `id` again to dedupe — the manager will replace the existing toast
-       * in place rather than stacking a duplicate.
-       */
-      add(options: ToastAddOptions): string {
-        const type = options.type ?? "info"
-        const duration = options.duration ?? DEFAULT_DURATIONS[type]
-        return manager.add({
-          id: options.id,
-          title: options.title,
-          description: options.description,
-          timeout: duration > 0 ? duration : undefined,
-          data: { type },
-          ...(options.action && {
-            actionProps: {
-              children: options.action.label,
-              onClick: options.action.onClick
-            }
-          })
+  return {
+    /**
+     * Show a toast. Returns the toast's id so you can `update()` or `close()` it later.
+     * Pass the same `id` again to dedupe — the manager will replace the existing toast
+     * in place rather than stacking a duplicate.
+     */
+    add(options: ToastAddOptions): string {
+      const type = options.type ?? "info"
+      const duration = options.duration ?? DEFAULT_DURATIONS[type]
+      return manager.add({
+        id: options.id,
+        title: options.title,
+        description: options.description,
+        timeout: duration > 0 ? duration : undefined,
+        data: { type },
+        ...(options.action && {
+          actionProps: {
+            children: options.action.label,
+            onClick: options.action.onClick
+          }
         })
-      },
-      /** Close a toast by id. */
-      close(id: string) {
-        manager.close(id)
-      },
-      /**
-       * Update an existing toast in place. Only the fields you pass are changed;
-       * the rest (including `type` and any existing action) are preserved.
-       */
-      update(id: string, options: ToastUpdateOptions) {
-        const existing = manager.toasts.find((t) => t.id === id)
-        const existingType = existing?.data?.type ?? "info"
-        const nextType = options.type ?? existingType
-        manager.update(id, {
-          ...(options.title !== undefined && { title: options.title }),
-          ...(options.description !== undefined && { description: options.description }),
-          data: { type: nextType },
-          ...(options.action !== undefined && {
-            actionProps: {
-              children: options.action.label,
-              onClick: options.action.onClick
-            }
-          })
+      })
+    },
+    /** Close a toast by id. */
+    close(id: string) {
+      manager.close(id)
+    },
+    /**
+     * Update an existing toast in place. Only the fields you pass are changed;
+     * the rest (including `type` and any existing action) are preserved.
+     */
+    update(id: string, options: ToastUpdateOptions) {
+      const existing = manager.toasts.find((t) => t.id === id)
+      const existingType = existing?.data?.type ?? "info"
+      const nextType = options.type ?? existingType
+      manager.update(id, {
+        ...(options.title !== undefined && { title: options.title }),
+        ...(options.description !== undefined && { description: options.description }),
+        data: { type: nextType },
+        ...(options.action !== undefined && {
+          actionProps: {
+            children: options.action.label,
+            onClick: options.action.onClick
+          }
         })
-      }
-    }),
-    [manager]
-  )
+      })
+    }
+  }
 }
 
 export const Toast = {

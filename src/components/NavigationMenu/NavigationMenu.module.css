@@ -66,12 +66,12 @@
   list-style: none;
 }
 
-.nav--horizontal > .nav__list {
+.nav--horizontal .nav__list {
   flex-direction: row;
   align-items: center;
 }
 
-.nav--vertical > .nav__list {
+.nav--vertical .nav__list {
   flex-direction: column;
   align-items: stretch;
 }

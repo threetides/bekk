@@ -35,6 +35,7 @@
   gap: var(--spacing-4);
 
   width: min(90vw, 100%);
+  max-width: var(--bekk-alert-dialog-popup-max-w);
   padding: var(--spacing-6);
 
   background-color: var(--color-bg-surface);
@@ -56,17 +57,17 @@
   transform: scale(0.96);
 }
 
-/* Sizes */
+/* Sizes set component-internal variables; the popup element reads them. */
 .alert-dialog__popup--sm {
-  max-width: 400px;
+  --bekk-alert-dialog-popup-max-w: 400px;
 }
 
 .alert-dialog__popup--md {
-  max-width: 520px;
+  --bekk-alert-dialog-popup-max-w: 520px;
 }
 
 .alert-dialog__popup--lg {
-  max-width: 720px;
+  --bekk-alert-dialog-popup-max-w: 720px;
 }
 
 /* Title */

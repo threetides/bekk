@@ -24,18 +24,22 @@ npm install @base-ui/react bekk
 ```
 
 ```tsx
-import { Dialog } from "bekk"
+import { Button, Dialog } from "bekk"
 
 export function Example() {
   return (
     <Dialog.Root>
-      <Dialog.Trigger>Open dialog</Dialog.Trigger>
+      <Dialog.Trigger>
+        <Button>Open dialog</Button>
+      </Dialog.Trigger>
       <Dialog.Content>
         <Dialog.Title>Welcome</Dialog.Title>
         <Dialog.Description>
           A polished, accessible dialog with sensible defaults.
         </Dialog.Description>
-        <Dialog.Close>Close</Dialog.Close>
+        <Dialog.Close>
+          <Button>Close</Button>
+        </Dialog.Close>
       </Dialog.Content>
     </Dialog.Root>
   )

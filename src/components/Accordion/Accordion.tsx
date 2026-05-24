@@ -1,23 +1,14 @@
-import type { ReactElement } from "react"
 import { Accordion as BaseAccordion } from "@base-ui/react/accordion"
 import { ChevronDown } from "lucide-react"
 import { cx } from "@/utils/cx"
+import { headingElementFor } from "@/utils/headingElement"
 import styles from "./Accordion.module.css"
 import type {
-  AccordionHeadingLevel,
   AccordionItemProps,
   AccordionPanelProps,
   AccordionRootProps,
   AccordionTriggerProps
 } from "./Accordion.types"
-
-const HEADING_ELEMENTS: Record<AccordionHeadingLevel, ReactElement> = {
-  2: <h2 />,
-  3: <h3 />,
-  4: <h4 />,
-  5: <h5 />,
-  6: <h6 />
-}
 
 function AccordionRoot({
   ref,
@@ -89,7 +80,7 @@ function AccordionTrigger({
   return (
     <BaseAccordion.Header
       className={styles["accordion__header"]}
-      render={HEADING_ELEMENTS[headingLevel]}
+      render={headingElementFor(headingLevel)}
     >
       <BaseAccordion.Trigger
         ref={ref}

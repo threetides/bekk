@@ -6,11 +6,12 @@ export type SwitchSize = "sm" | "md" | "lg"
 /* Extends Base UI's SwitchRoot props so consumers get `id`, `name`, `form`,
    `data-*`, `onMouseEnter`, `aria-*`, plus input-shaped
    `disabled`/`readOnly`/`required` that Base UI declares on the root. We Omit
-   `render` (escape hatch we hide), `size` (we curate `"sm" | "md" | "lg"`),
-   and `className`/`style` (forwarded to the root). */
+   Base UI's escape hatches (`render`, `nativeButton`, `inputRef`), `size` (we
+   curate `"sm" | "md" | "lg"`), and `className`/`style` (forwarded to the
+   root). */
 export interface SwitchProps extends Omit<
   BaseSwitch.Root.Props,
-  "render" | "size" | "className" | "style"
+  "render" | "nativeButton" | "inputRef" | "size" | "className" | "style"
 > {
   ref?: Ref<HTMLLabelElement>
   className?: string

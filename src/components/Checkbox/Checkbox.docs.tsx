@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import type { FC } from "react"
 import { Field } from "../Field"
 import { Checkbox, CheckboxGroup } from "./Checkbox"
@@ -80,9 +80,8 @@ const Group: FC = () => {
 
 const SelectAll: FC = () => {
   const [value, setValue] = useState<string[]>(["banana"])
-  const allValues = useMemo(() => [...FRUITS], [])
   return (
-    <CheckboxGroup value={value} onValueChange={setValue} allValues={allValues}>
+    <CheckboxGroup value={value} onValueChange={setValue} allValues={[...FRUITS]}>
       <Checkbox parent>Select all</Checkbox>
       <div
         style={{

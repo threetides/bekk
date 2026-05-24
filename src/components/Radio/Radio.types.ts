@@ -6,12 +6,13 @@ export type RadioSize = "sm" | "md" | "lg"
 
 /* Extends Base UI's RadioRoot props so consumers get `id`, `data-*`,
    `onMouseEnter`, `aria-*`, plus input-shaped `disabled`/`readOnly`/`required`
-   that Base UI declares on the root. We Omit `render` (escape hatch we hide),
-   `size` (we curate `"sm" | "md" | "lg"`), `value` (we re-type as generic
-   `Value`), and `className`/`style` (forwarded to the root). */
+   that Base UI declares on the root. We Omit Base UI's escape hatches
+   (`render`, `nativeButton`, `inputRef`), `size` (we curate `"sm" | "md" |
+   "lg"`), `value` (we re-type as generic `Value`), and `className`/`style`
+   (forwarded to the root). */
 export interface RadioProps<Value = string> extends Omit<
   BaseRadio.Root.Props<Value>,
-  "render" | "size" | "value" | "className" | "style"
+  "render" | "nativeButton" | "inputRef" | "size" | "value" | "className" | "style"
 > {
   ref?: Ref<HTMLLabelElement>
   className?: string

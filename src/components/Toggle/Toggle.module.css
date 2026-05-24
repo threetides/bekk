@@ -4,6 +4,7 @@
   justify-content: center;
   gap: var(--bekk-toggle-gap);
   padding: var(--bekk-toggle-pad-y) var(--bekk-toggle-pad-x);
+  border: var(--border-width-1) solid transparent;
   border-radius: var(--radius-md);
   background-color: transparent;
   color: var(--color-text-primary);

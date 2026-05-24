@@ -1,25 +1,16 @@
-import type { ReactElement } from "react"
 import { Dialog as BaseDialog } from "@base-ui/react/dialog"
 import { X } from "lucide-react"
 import { cx } from "@/utils/cx"
+import { headingElementFor } from "@/utils/headingElement"
 import styles from "./Dialog.module.css"
 import type {
   DialogCloseProps,
   DialogContentProps,
   DialogDescriptionProps,
-  DialogHeadingLevel,
   DialogRootProps,
   DialogTitleProps,
   DialogTriggerProps
 } from "./Dialog.types"
-
-const HEADING_ELEMENTS: Record<DialogHeadingLevel, ReactElement> = {
-  2: <h2 />,
-  3: <h3 />,
-  4: <h4 />,
-  5: <h5 />,
-  6: <h6 />
-}
 
 function DialogRoot({ children, open, defaultOpen, onOpenChange }: DialogRootProps) {
   return (
@@ -75,7 +66,7 @@ function DialogTitle({ ref, className, style, children, headingLevel = 2 }: Dial
       ref={ref}
       className={cx(styles["dialog__title"], className)}
       style={style}
-      render={HEADING_ELEMENTS[headingLevel]}
+      render={headingElementFor(headingLevel)}
     >
       {children}
     </BaseDialog.Title>

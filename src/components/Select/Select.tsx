@@ -1,4 +1,5 @@
-import type { ComponentProps } from "react"
+import { Children, createContext, isValidElement, useContext } from "react"
+import type { ComponentProps, ReactNode } from "react"
 import { Select as BaseSelect } from "@base-ui/react/select"
 import { Check, ChevronDown } from "lucide-react"
 import { cx } from "@/utils/cx"
@@ -12,6 +13,28 @@ import type {
   SelectRootProps,
   SelectTriggerProps
 } from "./Select.types"
+
+/* Base UI's `Select.Value` renders the raw selected value unless a function
+   child or the Root `items` prop maps value → label. Bekk's Item already has
+   both (`value` + `children`), so Root walks its children tree synchronously
+   on every render to collect a value→label map, and the Trigger's Value looks
+   each value up. Walking at Root (instead of registering from each Item) is
+   necessary because Base UI doesn't mount items until the popup opens — so an
+   effect-based registry would briefly show the raw value on initial render. */
+const SelectLabelsContext = createContext<Map<unknown, ReactNode> | null>(null)
+
+function collectItemLabels(node: ReactNode, out: Map<unknown, ReactNode>): void {
+  Children.forEach(node, (child) => {
+    if (!isValidElement(child)) return
+    if (child.type === SelectItem) {
+      const { value, children } = child.props as { value: unknown; children?: ReactNode }
+      if (children !== undefined) out.set(value, children)
+      return
+    }
+    const nested = (child.props as { children?: ReactNode }).children
+    if (nested !== undefined) collectItemLabels(nested, out)
+  })
+}
 
 function SelectRoot<Value = string>({
   children,
@@ -33,6 +56,10 @@ function SelectRoot<Value = string>({
 }: SelectRootProps<Value>) {
   const field = useFieldContext()
   const isRequired = required ?? field?.required
+
+  const labels = new Map<unknown, ReactNode>()
+  collectItemLabels(children, labels)
+
   /* Base UI's Root is typed as a discriminated union over `multiple`, so we
      cast the props bag once and let Base UI sort it at runtime. */
   const baseProps = {
@@ -53,7 +80,11 @@ function SelectRoot<Value = string>({
     onOpenChange,
     children
   } as unknown as ComponentProps<typeof BaseSelect.Root<Value>>
-  return <BaseSelect.Root<Value> {...baseProps} />
+  return (
+    <SelectLabelsContext.Provider value={labels}>
+      <BaseSelect.Root<Value> {...baseProps} />
+    </SelectLabelsContext.Provider>
+  )
 }
 
 function SelectTrigger({
@@ -66,6 +97,24 @@ function SelectTrigger({
   icon,
   disabled
 }: SelectTriggerProps) {
+  const labels = useContext(SelectLabelsContext)
+  /* Render the selected item's `children` (collected by Select.Root) instead
+     of the raw value. For multi-select, join the labels with ", ". When nothing
+     is selected, render the placeholder ourselves — Base UI ignores its own
+     `placeholder` prop once children is provided. (`data-placeholder` on the
+     Value element is still set by Base UI based on the value, so the muted
+     placeholder styling in CSS keeps working.) */
+  const renderValue = (current: unknown): ReactNode => {
+    const emptyScalar = current === null || current === undefined || current === ""
+    const emptyArray = Array.isArray(current) && current.length === 0
+    if (emptyScalar || emptyArray) return placeholder ?? null
+    if (Array.isArray(current)) {
+      return current
+        .map((v) => labels?.get(v) ?? String(v))
+        .reduce<ReactNode[]>((acc, label, i) => (i === 0 ? [label] : [...acc, ", ", label]), [])
+    }
+    return labels?.get(current) ?? String(current)
+  }
   return (
     <BaseSelect.Trigger
       ref={ref}
@@ -78,10 +127,13 @@ function SelectTrigger({
       style={style}
       disabled={disabled}
     >
-      {/* Base UI sets `data-placeholder` on Select.Value automatically when no
-          value is selected. We style that attribute in CSS so the placeholder
-          renders muted — no JSX gymnastics needed. */}
-      <BaseSelect.Value className={styles["trigger__value"]} placeholder={placeholder} />
+      {/* Base UI sets `data-placeholder` on Select.Value when no value is
+          selected — we style that attribute in CSS so the placeholder renders
+          muted. The function child looks up each value in the labels registry
+          populated by Select.Item, and renders the placeholder itself when no
+          value (since Base UI's own `placeholder` prop is ignored once children
+          is provided). */}
+      <BaseSelect.Value className={styles["trigger__value"]}>{renderValue}</BaseSelect.Value>
       <span className={styles["trigger__icon"]} aria-hidden>
         {icon ?? <ChevronDown />}
       </span>
@@ -125,6 +177,10 @@ function SelectItem<Value = string>({
   disabled,
   label
 }: SelectItemProps<Value>) {
+  /* No label-registration here — `Select.Root` walks the React children tree
+     synchronously to collect `value → children` mappings. Doing it here via an
+     effect would briefly show the raw value on initial render, because Base UI
+     doesn't mount Items until the popup first opens. */
   return (
     <BaseSelect.Item
       ref={ref}

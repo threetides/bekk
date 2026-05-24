@@ -6,13 +6,13 @@ export type CheckboxSize = "sm" | "md" | "lg"
 
 /* Extends Base UI's CheckboxRoot props so consumers get `id`, `name`, `form`,
    `data-*`, `onMouseEnter`, `aria-*`, etc. for free — plus the input-shaped
-   `disabled`/`readOnly`/`required` that Base UI declares on the root. We
-   Omit `render` (a Base UI escape hatch we intentionally hide), `size` (we
+   `disabled`/`readOnly`/`required` that Base UI declares on the root. We Omit
+   Base UI's escape hatches (`render`, `nativeButton`, `inputRef`), `size` (we
    curate `"sm" | "md" | "lg"`), and `className`/`style` (forwarded to the
    root element). */
 export interface CheckboxProps extends Omit<
   BaseCheckbox.Root.Props,
-  "render" | "size" | "className" | "style"
+  "render" | "nativeButton" | "inputRef" | "size" | "className" | "style"
 > {
   ref?: Ref<HTMLLabelElement>
   className?: string
