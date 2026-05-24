@@ -27,7 +27,7 @@ A React component library built on top of [Base UI](https://base-ui.com). Bekk w
 - **Base UI** — `@base-ui/react` (installed)
 - **Lucide** — `lucide-react` for default icons (installed)
 - **TypeScript** — strict, `verbatimModuleSyntax`, `noUncheckedIndexedAccess`
-- **CSS Modules** — pure CSS, no preprocessor, no CSS-in-JS, no Tailwind
+- **Plain CSS** — global, BEM-namespaced with a `bekk-` prefix. No CSS Modules, no preprocessor, no CSS-in-JS, no Tailwind. Aggregated into a single shipped stylesheet.
 - **Vite 8** — dev server, hosts the docs site, and (eventually) the library build
 - **oxfmt** for formatting, **oxlint** for linting, **bun** as the package manager
 - **Path aliases:** `@/* → src/*`, `@styles/* → src/styles/*`
@@ -54,23 +54,24 @@ bun run fmt         # oxfmt
 │   ├── forms.md, quick-start.md, styling.md, typescript.md
 ├── src/
 │   ├── styles/
-│   │   ├── reset.css    Modern CSS reset (already in place)
+│   │   ├── reset.css    Modern CSS reset
 │   │   ├── tokens.css   All design tokens — the entire visual language
-│   │   └── index.css    Font face, html/body/root sizing
+│   │   ├── fonts.css    @font-face for Plus Jakarta Sans
+│   │   └── styles.css   Kitchen-sink bundle: tokens + reset + fonts + body rule + every component CSS
 │   ├── components/      One folder per component
 │   │   └── <Component>/
 │   │       ├── <Component>.tsx
 │   │       ├── <Component>.types.ts
-│   │       ├── <Component>.module.css
+│   │       ├── <Component>.css
 │   │       ├── <Component>.docs.tsx     Examples shown in the docs site
 │   │       └── index.ts
 │   ├── docs/            Docs-site shell (sidebar, routing, prop tables)
 │   ├── index.ts         Public package barrel — re-exports each component namespace
 │   ├── App.tsx          Mounts the docs site
-│   └── main.tsx         Imports the three stylesheets in order: index → reset → tokens
+│   └── main.tsx         Imports `styles.css` (the kitchen sink) + the docs shell
 ```
 
-**Flow:** tokens.css defines every visual value → component CSS modules consume tokens only → components are exported under namespaces → consumer imports a namespace from the package root. The docs site is a sibling concern that lives inside `src/` but is **not** part of the published library.
+**Flow:** tokens.css defines every visual value → each component's `Component.css` consumes tokens only → `src/styles/styles.css` aggregates every component's CSS into one stylesheet → components are exported under namespaces → consumer imports a namespace from the package root and `@threetides/bekk/styles.css` once. The docs site is a sibling concern that lives inside `src/` but is **not** part of the published library.
 
 ### 3.1 Three things called "docs" — keep them straight
 
@@ -131,40 +132,41 @@ The same semantic-token names exist in all themes — components don't need to k
 src/components/Dialog/
 ├── Dialog.tsx          Component implementation + the namespace export
 ├── Dialog.types.ts     All public types (props for each part, etc.)
-├── Dialog.module.css   BEM-named classes, tokens only
+├── Dialog.css          BEM-named classes, tokens only, all prefixed with bekk-dialog
 ├── Dialog.docs.tsx     Examples + prop documentation for the docs site
 └── index.ts            Re-exports the namespace + types
 ```
 
-**Coupled component pairs** (`Toggle` + `ToggleGroup`, `Radio` + `RadioGroup`, `Checkbox` + `CheckboxGroup`) share a single folder named after the leaf. They share `Component.tsx`, `Component.module.css`, `Component.types.ts`, and `Component.docs.tsx`. The `index.ts` re-exports both names. Don't split tightly coupled pairs into separate folders — they share state semantics and visual styling.
+**Coupled component pairs** (`Toggle` + `ToggleGroup`, `Radio` + `RadioGroup`, `Checkbox` + `CheckboxGroup`) share a single folder named after the leaf. They share `Component.tsx`, `Component.css`, `Component.types.ts`, and `Component.docs.tsx`. The `index.ts` re-exports both names. Don't split tightly coupled pairs into separate folders — they share state semantics and visual styling.
 
-### CSS Modules + BEM
+### Plain CSS + BEM with `bekk-` namespacing
 
-Classes inside `.module.css` files use **classic lowercase BEM**:
+Bekk ships **plain global CSS, not CSS Modules.** Every class in a `Component.css` file is named with classic lowercase BEM under a `bekk-<component>` block, e.g.:
 
-- Block: `.button`
-- Element: `.button__icon`, `.button__label`
-- Modifier: `.button--primary`, `.button--sm`
+- Block: `.bekk-button`
+- Element: `.bekk-button__icon`, `.bekk-button__label`
+- Modifier: `.bekk-button--primary`, `.bekk-button--sm`
 
-Because CSS Modules already give us local scope, BEM here is **purely a readability convention**. It also keeps modifiers visually distinct from elements without needing data attributes.
+The `bekk-` prefix is non-negotiable — it's the namespace boundary between bekk classes and the consumer's app. Two classes from different components must not share a name (so `.list`, `.item`, `.popup`, `.group` are never bare; they become `.bekk-select__list`, `.bekk-select__item`, `.bekk-select__popup`, `.bekk-checkbox-group`).
 
-**Referencing classes from TS/JSX:** BEM names contain `--` and `__`, which are not valid JS identifiers — so always use bracket notation:
+**Components do not import their CSS.** Component CSS lives in `Component.css` next to its TSX. The aggregated `src/styles/styles.css` `@import`s every component file in one place, and that's the file shipped to consumers as `@threetides/bekk/styles.css`. A consumer's single `import "@threetides/bekk/styles.css"` loads tokens + reset + fonts + every component style; tree-shaking per component isn't supported and isn't worth it (~13 kB gzipped for the whole component layer).
+
+**Referencing classes from TS/JSX:** plain string literals. No `styles.X` lookup, no `styles["X"]`. Use template literals for variant/size interpolation:
 
 ```tsx
 import { cx } from "@/utils/cx"
-import styles from "./Button.module.css"
 ;<button
-  className={cx(
-    styles.button,
-    variant === "primary" && styles["button--primary"],
-    size === "sm" && styles["button--sm"]
-  )}
+  className={cx("bekk-button", `bekk-button--${variant}`, `bekk-button--${size}`, className)}
 >
-  <span className={styles["button__icon"]}>…</span>
+  <span className="bekk-button__icon">…</span>
 </button>
 ```
 
 Use the shared [`cx`](src/utils/cx.ts) helper for class composition. It filters `false` / `undefined` / `null` and joins with spaces. Don't inline `.filter(Boolean).join(" ")` per-component.
+
+**When adding a new component:** before writing any CSS, decide on the block prefix (`bekk-<component-kebab-case>` — e.g. `bekk-tabs`, `bekk-alert-dialog`, `bekk-checkbox-group`) and stick to it. Then add the new file path to `src/styles/styles.css`'s `@import` list. Forgetting that last step means the styles never load.
+
+**Docs-site internals are an intentional exception.** Files under `src/docs/` (the in-repo docs site shell — `Sidebar.module.css`, `DocsApp.module.css`, `PropTable.module.css`, etc.) still use CSS Modules. They never ship to consumers, so the bundler-resolution risk that motivated the `bekk-` rule doesn't apply, and CSS Modules give them scoping without the rename ceremony. Don't "fix" them to match — that's busywork. New docs-site files can follow either convention; lean on the existing pattern in `src/docs/`.
 
 ### Internal CSS variables
 
@@ -178,12 +180,12 @@ Always prefix component-internal vars with `--bekk-<component>-`. Never invent u
 
 ```css
 /* Good: scoped to the component, won't collide */
-.accordion--md {
+.bekk-accordion--md {
   --bekk-accordion-trigger-pad-x: var(--spacing-4);
   --bekk-accordion-icon-size: var(--icon-size-md);
 }
 
-.accordion__trigger {
+.bekk-accordion__trigger {
   padding-inline: var(--bekk-accordion-trigger-pad-x);
 }
 ```
@@ -196,28 +198,28 @@ A component with both `variant` and `size` props otherwise needs rules for every
 - **Element selectors read the variables, agnostic to size.** One rule per element, not three.
 - **Variant modifier classes adjust the few properties variants actually change** (background, borders, dividers, hover treatment) — usually on the block or one or two elements. Variants don't multiply by size.
 
-Result: rule count stays roughly linear with elements + variants, not elements × variants × sizes. `Accordion.module.css` is the canonical example.
+Result: rule count stays roughly linear with elements + variants, not elements × variants × sizes. `Accordion.css` is the canonical example.
 
 ### Internal styling hooks
 
-Inside a component's CSS module, **use Base UI's `data-*` state attributes** to style states — don't invent parallel props or class modifiers for things Base UI already exposes:
+Inside a component's CSS file, **use Base UI's `data-*` state attributes** to style states — don't invent parallel props or class modifiers for things Base UI already exposes:
 
 ```css
-.button {
+.bekk-button {
   background-color: var(--color-accent-bg);
 }
 
-.button:hover:not([data-disabled]) {
+.bekk-button:hover:not([data-disabled]) {
   background-color: var(--color-accent-bg-hover);
 }
 
-.button[data-disabled] {
+.bekk-button[data-disabled] {
   background-color: var(--color-bg-muted);
   color: var(--color-text-disabled);
 }
 
-.popup[data-starting-style],
-.popup[data-ending-style] {
+.bekk-popover__popup[data-starting-style],
+.bekk-popover__popup[data-ending-style] {
   opacity: 0;
 }
 ```
@@ -226,8 +228,8 @@ These attributes are an **internal contract** between Base UI and our CSS. They 
 
 For variant/size props (which Base UI doesn't supply), expose them on our wrapper, then either:
 
-- Style them via BEM modifier classes (`.button--primary`), or
-- Add our own `data-*` attribute on the root and style it (`.button[data-variant="primary"]`).
+- Style them via BEM modifier classes (`.bekk-button--primary`), or
+- Add our own `data-*` attribute on the root and style it (`.bekk-button[data-variant="primary"]`).
 
 Either is fine — pick whichever reads more naturally for the component. Be consistent within a single component.
 
@@ -395,8 +397,9 @@ After those questions are answered:
 
 1. **Create the folder:** `src/components/<Name>/`.
 2. **Add `<Name>.types.ts`** with the prop interfaces for each exposed part. Each prop interface includes `className?: string`, `style?: React.CSSProperties`, and `ref?: React.Ref<...>` on the root element of that part.
-3. **Add `<Name>.module.css`** with BEM-named classes consuming tokens only. No hardcoded values. Use Base UI's `data-*` state attributes for state styling.
-4. **Add `<Name>.tsx`** implementing each part as a small wrapper around the corresponding Base UI part. Compose absorbed parts inside the wrapper (e.g. `Content` renders `Portal` + `Backdrop` + `Popup`). Assemble into the namespace:
+3. **Add `<Name>.css`** with BEM-named classes prefixed `bekk-<name-kebab>`, consuming tokens only. No hardcoded values. Use Base UI's `data-*` state attributes for state styling.
+4. **Register the new file in [`src/styles/styles.css`](src/styles/styles.css)** by adding an `@import "../components/<Name>/<Name>.css";` line. This is what makes the styles actually load for consumers — forgetting this step means the component looks unstyled in the wild.
+5. **Add `<Name>.tsx`** implementing each part as a small wrapper around the corresponding Base UI part. Reference classes as plain string literals (e.g. `"bekk-dialog__popup"`, `` `bekk-dialog--${size}` ``) — no `styles[...]` lookups. Compose absorbed parts inside the wrapper (e.g. `Content` renders `Portal` + `Backdrop` + `Popup`). Assemble into the namespace:
 
    ```tsx
    export const Dialog = {
@@ -409,19 +412,19 @@ After those questions are answered:
    }
    ```
 
-5. **Add `<Name>.docs.tsx`** with the examples and prop tables agreed on in § 9. This is required, not optional — a component without a docs file is incomplete. Each example needs a `code: string` field (copy-pasteable JSX); see § 7 for the authoring rules.
-6. **Add `index.ts`** to re-export the namespace:
+6. **Add `<Name>.docs.tsx`** with the examples and prop tables agreed on in § 9. This is required, not optional — a component without a docs file is incomplete. Each example needs a `code: string` field (copy-pasteable JSX); see § 7 for the authoring rules.
+7. **Add `index.ts`** to re-export the namespace:
 
    ```ts
    export { Dialog } from "./Dialog"
    export type * from "./Dialog.types"
    ```
 
-7. **Update the package barrel `src/index.ts`** to re-export the new component + its public types. This is the file consumers will import from once bekk is published; if a component isn't here, it's not part of the public API. Easy to forget — make it part of the muscle memory.
-8. **Add a token if you need a value you don't have** — but only after asking the user (see § 9).
-9. **Verify in `bun run dev`.** Open the docs page, exercise every example, toggle between light and dark, check keyboard navigation. No automated tests are required for v1, but manual verification is.
-10. **Run `bun run check`** until clean.
-11. **Show the user** before committing.
+8. **Update the package barrel `src/index.ts`** to re-export the new component + its public types. This is the file consumers will import from once bekk is published; if a component isn't here, it's not part of the public API. Easy to forget — make it part of the muscle memory.
+9. **Add a token if you need a value you don't have** — but only after asking the user (see § 9).
+10. **Verify in `bun run dev`.** Open the docs page, exercise every example, toggle between light and dark, check keyboard navigation. No automated tests are required for v1, but manual verification is.
+11. **Run `bun run check`** until clean.
+12. **Show the user** before committing.
 
 ---
 
@@ -520,10 +523,7 @@ When the work is ready: ask before running `git commit`, `git push`, or anything
 
 ## 11. Known TODOs / not yet wired up
 
-- **Library build is not configured.** `package.json` is `private: true`, no `main` / `module` / `exports` map, no externals, no `vite build --lib` config, no `tsc` declarations build. The intent is to publish as an npm package (`bekk`); the wiring is intentionally deferred. Don't change this without an explicit ask.
-- **No `src/index.ts` barrel yet.** It'll be the package entrypoint that re-exports every component namespace. Create it the first time you add a component.
-- **No `src/components/` directory yet.** Create it with the first component.
-- **No `src/docs/` shell yet.** The docs-site infrastructure (sidebar, routing, prop-table rendering, theme toggle, `*.docs.tsx` auto-discovery) gets built alongside the first component. Confirm scope with the user when that work starts.
+- **Package is published as [`@threetides/bekk`](https://www.npmjs.com/package/@threetides/bekk).** Library build (`bun run build`) produces `dist/` via `vite.lib.config.ts` + `tsconfig.lib.json` + `scripts/build-assets.mjs`. Externals: React, Base UI, lucide. Don't change the build wiring without an explicit ask.
 - **Tests are scoped to bekk-specific logic, not exhaustive coverage.** Vitest + React Testing Library run via `bun run test` (and as part of `bun run check`). Targets the parts with real regression risk: `cx` utility, docs `groupPagesByCategory` / `categorizeSlug`, `Field.Root` required/disabled cascade and the auto-asterisk on `Field.Label`, Input's `clearable` + `passwordToggle` + ref merging + Field integration, and Select's selection flow + Field integration. We deliberately don't re-test Base UI behavior ("does Tooltip open on hover", focus traps, keyboard nav of the Select popup) — that's Base UI's job. Visual regressions still need eyes-on review in the docs site; consider Playwright snapshots if/when that's worth it.
 - **Token palette is a starting point.** Neutral gray + a single generically-named accent palette (currently glacier / hue 198) + a few status colors. Iterate as real components reveal what's missing.
 - **Docs app dogfoods bekk where a primitive exists.** Sidebar uses `NavigationMenu` + `Button`, theme toggle uses `Toggle`/`ToggleGroup`, `CodeBlock` copy button is `Button`, `DocsApp` uses `Toast.Provider`/`Viewport` and `Button` for the mobile menu trigger. The only remaining migration is prop tables, which need a `Table` component that doesn't exist yet. The Overview cards and the mobile-drawer backdrop are intentionally raw — they're content/chrome that don't map onto a bekk primitive.

@@ -8,7 +8,7 @@
 
 /* ---------- Trigger ---------- */
 
-.trigger {
+.bekk-select__trigger {
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
@@ -30,11 +30,11 @@
     background-color var(--duration-fast) var(--easing-standard);
 }
 
-.trigger:hover:not([data-disabled]) {
+.bekk-select__trigger:hover:not([data-disabled]) {
   border-color: var(--color-border-strong);
 }
 
-.trigger[data-disabled] {
+.bekk-select__trigger[data-disabled] {
   background-color: var(--color-bg-muted);
   border-color: var(--color-border-subtle);
   color: var(--color-text-disabled);
@@ -42,16 +42,16 @@
 }
 
 /* Field-driven invalid state (Field.Root sets data-invalid on descendants). */
-.trigger[data-invalid] {
+.bekk-select__trigger[data-invalid] {
   border-color: var(--color-status-danger);
 }
 
-.trigger[data-popup-open] {
+.bekk-select__trigger[data-popup-open] {
   border-color: var(--color-accent-border);
 }
 
 /* Sizes set component-internal CSS variables */
-.trigger--sm {
+.bekk-select__trigger--sm {
   --bekk-select-pad-x: var(--spacing-2);
   --bekk-select-height: var(--control-height-sm);
   --bekk-select-font-size: var(--font-size-sm);
@@ -59,7 +59,7 @@
   --bekk-select-gap: var(--spacing-2);
 }
 
-.trigger--md {
+.bekk-select__trigger--md {
   --bekk-select-pad-x: var(--spacing-3);
   --bekk-select-height: var(--control-height-md);
   --bekk-select-font-size: var(--font-size-md);
@@ -67,7 +67,7 @@
   --bekk-select-gap: var(--spacing-2);
 }
 
-.trigger--lg {
+.bekk-select__trigger--lg {
   --bekk-select-pad-x: var(--spacing-4);
   --bekk-select-height: var(--control-height-lg);
   --bekk-select-font-size: var(--font-size-lg);
@@ -77,7 +77,7 @@
 
 /* Ghost variant matches Input — no box, just an underline at the same weight
    and color. Border-radius preserved so the global focus outline rounds. */
-.trigger--ghost {
+.bekk-select__trigger--ghost {
   background-color: transparent;
   border: none;
   border-radius: var(--radius-md);
@@ -85,7 +85,7 @@
   position: relative;
 }
 
-.trigger--ghost::after {
+.bekk-select__trigger--ghost::after {
   content: "";
   position: absolute;
   left: 0;
@@ -96,25 +96,25 @@
   transition: background-color var(--duration-fast) var(--easing-standard);
 }
 
-.trigger--ghost:hover:not([data-disabled])::after {
+.bekk-select__trigger--ghost:hover:not([data-disabled])::after {
   background-color: var(--color-border-strong);
 }
 
-.trigger--ghost[data-popup-open]::after {
+.bekk-select__trigger--ghost[data-popup-open]::after {
   background-color: var(--color-accent-border);
 }
 
-.trigger--ghost[data-invalid]::after {
+.bekk-select__trigger--ghost[data-invalid]::after {
   background-color: var(--color-status-danger);
 }
 
-.trigger--ghost[data-disabled]::after {
+.bekk-select__trigger--ghost[data-disabled]::after {
   background-color: var(--color-border-subtle);
 }
 
 /* Trigger inner parts. `data-placeholder` is set by Base UI on Select.Value
    when no value is selected — style that attribute to mute the placeholder. */
-.trigger__value {
+.bekk-select__trigger-value {
   flex: 1;
   min-width: 0;
   overflow: hidden;
@@ -122,11 +122,11 @@
   white-space: nowrap;
 }
 
-.trigger__value[data-placeholder] {
+.bekk-select__trigger-value[data-placeholder] {
   color: var(--color-text-muted);
 }
 
-.trigger__icon {
+.bekk-select__trigger-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -137,22 +137,22 @@
   transition: transform var(--duration-fast) var(--easing-decelerate);
 }
 
-.trigger__icon svg {
+.bekk-select__trigger-icon svg {
   width: 100%;
   height: 100%;
 }
 
-.trigger[data-popup-open] .trigger__icon {
+.bekk-select__trigger[data-popup-open] .bekk-select__trigger-icon {
   transform: rotate(180deg);
 }
 
 /* ---------- Popup ---------- */
 
-.positioner {
+.bekk-select__positioner {
   z-index: var(--z-popover);
 }
 
-.popup {
+.bekk-select__popup {
   --bekk-select-popup-max-h: 320px;
   min-width: var(--anchor-width);
   max-height: min(var(--available-height), var(--bekk-select-popup-max-h));
@@ -170,13 +170,13 @@
     transform var(--duration-fast) var(--easing-standard);
 }
 
-.popup[data-starting-style],
-.popup[data-ending-style] {
+.bekk-select__popup[data-starting-style],
+.bekk-select__popup[data-ending-style] {
   opacity: 0;
   transform: scale(0.97);
 }
 
-.list {
+.bekk-select__list {
   max-height: inherit;
   padding-block: var(--spacing-1);
   overflow-y: auto;
@@ -184,7 +184,7 @@
 
 /* ---------- Item ---------- */
 
-.item {
+.bekk-select__item {
   display: flex;
   align-items: center;
   gap: var(--spacing-2);
@@ -198,26 +198,26 @@
   user-select: none;
 }
 
-.item[data-highlighted] {
+.bekk-select__item[data-highlighted] {
   background-color: var(--color-bg-subtle);
 }
 
-.item[data-selected] {
+.bekk-select__item[data-selected] {
   color: var(--color-accent-fg);
   font-weight: var(--font-weight-medium);
 }
 
-.item[data-disabled] {
+.bekk-select__item[data-disabled] {
   color: var(--color-text-disabled);
   cursor: not-allowed;
 }
 
 /* Suppress global :focus-visible — keyboard navigation uses data-highlighted */
-.item:focus-visible {
+.bekk-select__item:focus-visible {
   outline: none;
 }
 
-.item__indicator {
+.bekk-select__item-indicator {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -227,12 +227,12 @@
   color: var(--color-accent-fg);
 }
 
-.item__indicator svg {
+.bekk-select__item-indicator svg {
   width: 100%;
   height: 100%;
 }
 
-.item__text {
+.bekk-select__item-text {
   flex: 1;
   min-width: 0;
   overflow: hidden;
@@ -242,11 +242,11 @@
 
 /* ---------- Group ---------- */
 
-.group {
+.bekk-select__group {
   display: contents;
 }
 
-.group__label {
+.bekk-select__group-label {
   padding: var(--spacing-2) var(--spacing-3) var(--spacing-1);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
@@ -256,7 +256,7 @@
   pointer-events: none;
 }
 
-.group + .group .group__label {
+.bekk-select__group + .bekk-select__group .bekk-select__group-label {
   margin-top: var(--spacing-1);
   border-top: var(--border-width-1) solid var(--color-border-subtle);
   padding-top: var(--spacing-2);

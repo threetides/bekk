@@ -2,7 +2,6 @@ import type { ComponentProps } from "react"
 import { Field as BaseField } from "@base-ui/react/field"
 import { cx } from "@/utils/cx"
 import { useFieldContext } from "../Field/Field"
-import styles from "./Textarea.module.css"
 import type { TextareaProps } from "./Textarea.types"
 
 /* Field.Control is typed for input; rest may include textarea-specific props. */
@@ -25,16 +24,16 @@ export function Textarea({
   return (
     <div
       className={cx(
-        styles.textarea,
-        styles[`textarea--${variant}`],
-        styles[`textarea--${size}`],
+        "bekk-textarea",
+        `bekk-textarea--${variant}`,
+        `bekk-textarea--${size}`,
         className
       )}
       style={style}
     >
       <BaseField.Control
         ref={ref as ControlProps["ref"]}
-        className={styles["textarea__control"]}
+        className={"bekk-textarea__control"}
         required={isRequired}
         onValueChange={onValueChange}
         render={<textarea rows={rows} />}

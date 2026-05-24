@@ -1,6 +1,5 @@
 import { Tooltip as BaseTooltip } from "@base-ui/react/tooltip"
 import { cx } from "@/utils/cx"
-import styles from "./Tooltip.module.css"
 import type {
   TooltipContentProps,
   TooltipProviderProps,
@@ -56,7 +55,7 @@ function TooltipContent({
   return (
     <BaseTooltip.Portal>
       <BaseTooltip.Positioner
-        className={styles["tooltip__positioner"]}
+        className={"bekk-tooltip__positioner"}
         side={side}
         align={align}
         sideOffset={sideOffset}
@@ -64,12 +63,12 @@ function TooltipContent({
       >
         <BaseTooltip.Popup
           ref={ref}
-          className={cx(styles["tooltip__popup"], styles[`tooltip__popup--${size}`], className)}
+          className={cx("bekk-tooltip__popup", `bekk-tooltip__popup--${size}`, className)}
           style={style}
         >
           {children}
           {arrow && (
-            <BaseTooltip.Arrow className={styles["tooltip__arrow"]}>
+            <BaseTooltip.Arrow className={"bekk-tooltip__arrow"}>
               <ArrowSvg />
             </BaseTooltip.Arrow>
           )}

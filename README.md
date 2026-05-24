@@ -101,7 +101,7 @@ bun run dev      # serves the docs site at http://localhost:5173
 - **React 19** (uses native `ref` as a prop — no `forwardRef`)
 - **[Base UI](https://base-ui.com)** — `@base-ui/react`
 - **TypeScript** — strict
-- **CSS Modules + classic BEM** — pure CSS, no preprocessor, no CSS-in-JS, no Tailwind
+- **Plain CSS with BEM** — global classes namespaced with a `bekk-` prefix, aggregated into a single stylesheet. No CSS Modules, no preprocessor, no CSS-in-JS, no Tailwind.
 - **Vite 8**
 - **oxfmt + oxlint**
 
@@ -111,7 +111,7 @@ bun run dev      # serves the docs site at http://localhost:5173
 src/
 ├── styles/         tokens.css + reset.css + fonts.css + styles.css
 ├── assets/         PlusJakartaSans-VariableFont_wght.woff2
-├── components/     one folder per component (Component.tsx, .types.ts, .module.css, .docs.tsx, index.ts)
+├── components/     one folder per component (Component.tsx, .types.ts, .css, .docs.tsx, index.ts)
 ├── docs/           docs-site shell (sidebar, routing, prop tables, docs-shell.css)
 ├── App.tsx         mounts the docs site
 └── main.tsx        bootstraps styles + React

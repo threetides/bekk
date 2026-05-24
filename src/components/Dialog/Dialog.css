@@ -1,7 +1,7 @@
 /* Backdrop — absorbed into Content. Uses `position: absolute` (not `fixed`)
    so iOS 26+ Safari paints it under the URL/tab chrome correctly. Requires
    `body { position: relative }` in the global styles. */
-.dialog__backdrop {
+.bekk-dialog__backdrop {
   position: absolute;
   inset: 0;
   background-color: var(--color-bg-backdrop);
@@ -9,14 +9,14 @@
   transition: opacity var(--duration-normal) var(--easing-standard);
 }
 
-.dialog__backdrop[data-starting-style],
-.dialog__backdrop[data-ending-style] {
+.bekk-dialog__backdrop[data-starting-style],
+.bekk-dialog__backdrop[data-ending-style] {
   opacity: 0;
 }
 
 /* Viewport — scrollable container that holds the popup, centered. Without
    this, popups taller than the viewport get clipped instead of scrolling. */
-.dialog__viewport {
+.bekk-dialog__viewport {
   position: fixed;
   inset: 0;
   z-index: var(--z-modal);
@@ -30,7 +30,7 @@
 /* Popup — the visible dialog box. Positioned by the viewport (flex centering),
    so it just needs sizing and the surface styles. `position: relative` so the
    absolutely-positioned close-X anchors to the popup, not the fixed viewport. */
-.dialog__popup {
+.bekk-dialog__popup {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -55,32 +55,32 @@
     transform var(--duration-normal) var(--easing-decelerate);
 }
 
-.dialog__popup[data-starting-style],
-.dialog__popup[data-ending-style] {
+.bekk-dialog__popup[data-starting-style],
+.bekk-dialog__popup[data-ending-style] {
   opacity: 0;
   transform: scale(0.96);
 }
 
 /* Sizes set component-internal variables; the popup element reads them. */
-.dialog__popup--sm {
+.bekk-dialog__popup--sm {
   --bekk-dialog-popup-max-w: 400px;
 }
 
-.dialog__popup--md {
+.bekk-dialog__popup--md {
   --bekk-dialog-popup-max-w: 520px;
 }
 
-.dialog__popup--lg {
+.bekk-dialog__popup--lg {
   --bekk-dialog-popup-max-w: 720px;
 }
 
 /* When the close X is shown, reserve room next to the title */
-.dialog__popup--with-close {
+.bekk-dialog__popup--with-close {
   --bekk-dialog-title-pad-right: var(--spacing-8);
 }
 
 /* Element: title */
-.dialog__title {
+.bekk-dialog__title {
   margin: 0;
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-semibold);
@@ -90,7 +90,7 @@
 }
 
 /* Element: description */
-.dialog__description {
+.bekk-dialog__description {
   margin: 0;
   font-size: var(--font-size-md);
   line-height: var(--line-height-normal);
@@ -98,7 +98,7 @@
 }
 
 /* Element: close X (absorbed, rendered by Content) */
-.dialog__close-x {
+.bekk-dialog__close-x {
   position: absolute;
   top: var(--spacing-3);
   right: var(--spacing-3);
@@ -117,12 +117,12 @@
     color var(--duration-fast) var(--easing-standard);
 }
 
-.dialog__close-x:hover {
+.bekk-dialog__close-x:hover {
   background-color: var(--color-bg-subtle);
   color: var(--color-text-primary);
 }
 
-.dialog__close-x svg {
+.bekk-dialog__close-x svg {
   width: var(--icon-size-md);
   height: var(--icon-size-md);
 }

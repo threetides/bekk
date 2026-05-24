@@ -1,4 +1,4 @@
-.toggle {
+.bekk-toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -21,18 +21,18 @@
     color var(--duration-fast) var(--easing-standard);
 }
 
-.toggle:focus-visible {
+.bekk-toggle:focus-visible {
   outline: var(--focus-ring-width) solid var(--color-focus-ring);
   outline-offset: var(--focus-ring-offset);
 }
 
-.toggle[data-disabled] {
+.bekk-toggle[data-disabled] {
   cursor: not-allowed;
   color: var(--color-text-disabled);
 }
 
 /* Sizes set internal CSS variables */
-.toggle--sm {
+.bekk-toggle--sm {
   --bekk-toggle-pad-y: var(--spacing-1);
   --bekk-toggle-pad-x: var(--spacing-2);
   --bekk-toggle-font-size: var(--font-size-sm);
@@ -40,7 +40,7 @@
   --bekk-toggle-gap: var(--spacing-1);
 }
 
-.toggle--md {
+.bekk-toggle--md {
   --bekk-toggle-pad-y: var(--spacing-2);
   --bekk-toggle-pad-x: var(--spacing-3);
   --bekk-toggle-font-size: var(--font-size-md);
@@ -48,7 +48,7 @@
   --bekk-toggle-gap: var(--spacing-2);
 }
 
-.toggle--lg {
+.bekk-toggle--lg {
   --bekk-toggle-pad-y: var(--spacing-3);
   --bekk-toggle-pad-x: var(--spacing-4);
   --bekk-toggle-font-size: var(--font-size-lg);
@@ -57,72 +57,72 @@
 }
 
 /* Variant: default — pressed fills with accent */
-.toggle--default:hover:not([data-disabled]):not([data-pressed]) {
+.bekk-toggle--default:hover:not([data-disabled]):not([data-pressed]) {
   background-color: var(--color-bg-subtle);
 }
 
-.toggle--default:active:not([data-disabled]):not([data-pressed]) {
+.bekk-toggle--default:active:not([data-disabled]):not([data-pressed]) {
   background-color: var(--color-bg-muted);
 }
 
-.toggle--default[data-pressed] {
+.bekk-toggle--default[data-pressed] {
   background-color: var(--color-accent-bg);
   color: var(--color-text-on-accent);
 }
 
-.toggle--default[data-pressed]:hover:not([data-disabled]) {
+.bekk-toggle--default[data-pressed]:hover:not([data-disabled]) {
   background-color: var(--color-accent-bg-hover);
 }
 
-.toggle--default[data-pressed]:active:not([data-disabled]) {
+.bekk-toggle--default[data-pressed]:active:not([data-disabled]) {
   background-color: var(--color-accent-bg-active);
 }
 
-.toggle--default[data-disabled]:not([data-pressed]) {
+.bekk-toggle--default[data-disabled]:not([data-pressed]) {
   background-color: var(--color-bg-subtle);
   color: var(--color-text-disabled);
 }
 
-.toggle--default[data-disabled][data-pressed] {
+.bekk-toggle--default[data-disabled][data-pressed] {
   background-color: var(--color-bg-muted);
   color: var(--color-text-disabled);
 }
 
 /* Variant: ghost — pressed fills with subtle bg, no accent */
-.toggle--ghost:hover:not([data-disabled]):not([data-pressed]) {
+.bekk-toggle--ghost:hover:not([data-disabled]):not([data-pressed]) {
   background-color: var(--color-bg-subtle);
 }
 
-.toggle--ghost:active:not([data-disabled]):not([data-pressed]) {
+.bekk-toggle--ghost:active:not([data-disabled]):not([data-pressed]) {
   background-color: var(--color-bg-muted);
 }
 
-.toggle--ghost[data-pressed] {
+.bekk-toggle--ghost[data-pressed] {
   background-color: var(--color-bg-muted);
   color: var(--color-text-primary);
 }
 
-.toggle--ghost[data-pressed]:hover:not([data-disabled]) {
+.bekk-toggle--ghost[data-pressed]:hover:not([data-disabled]) {
   background-color: var(--color-bg-emphasized);
 }
 
-.toggle--ghost[data-disabled]:not([data-pressed]) {
+.bekk-toggle--ghost[data-disabled]:not([data-pressed]) {
   background-color: var(--color-bg-subtle);
   color: var(--color-text-disabled);
 }
 
-.toggle--ghost[data-disabled][data-pressed] {
+.bekk-toggle--ghost[data-disabled][data-pressed] {
   background-color: var(--color-bg-subtle);
   color: var(--color-text-disabled);
 }
 
 /* Element: label (text span) */
-.toggle__label {
+.bekk-toggle__label {
   min-width: 0;
 }
 
 /* Element: icon (start or end slot) */
-.toggle__icon {
+.bekk-toggle__icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -131,12 +131,12 @@
   height: var(--bekk-toggle-icon-size);
 }
 
-.toggle__icon svg {
+.bekk-toggle__icon svg {
   width: 100%;
   height: 100%;
 }
 
-.toggle-group {
+.bekk-toggle-group {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-1);

@@ -7,7 +7,7 @@
    by the track and thumb.
    ============================================================ */
 
-.switch {
+.bekk-switch {
   display: inline-flex;
   align-items: center;
   gap: var(--bekk-switch-gap);
@@ -18,25 +18,25 @@
   cursor: pointer;
 }
 
-.switch[data-disabled] {
+.bekk-switch[data-disabled] {
   cursor: not-allowed;
   color: var(--color-text-disabled);
 }
 
-.switch[data-readonly] {
+.bekk-switch[data-readonly] {
   cursor: default;
 }
 
 /* Label placement — flips the visual order without changing the DOM.
    `justify-content: space-between` baked in so a settings-row layout (label
    left, control right) works without consumers reaching for inline styles. */
-.switch--label-start {
+.bekk-switch--label-start {
   flex-direction: row-reverse;
   justify-content: space-between;
 }
 
 /* Sizes set internal vars */
-.switch--sm {
+.bekk-switch--sm {
   --bekk-switch-track-w: var(--control-height-sm);
   --bekk-switch-track-h: 16px;
   --bekk-switch-thumb-size: 12px;
@@ -45,7 +45,7 @@
   --bekk-switch-gap: var(--spacing-2);
 }
 
-.switch--md {
+.bekk-switch--md {
   --bekk-switch-track-w: var(--control-height-md);
   --bekk-switch-track-h: 20px;
   --bekk-switch-thumb-size: 16px;
@@ -54,7 +54,7 @@
   --bekk-switch-gap: var(--spacing-2);
 }
 
-.switch--lg {
+.bekk-switch--lg {
   --bekk-switch-track-w: var(--control-height-lg);
   --bekk-switch-track-h: 24px;
   --bekk-switch-thumb-size: 20px;
@@ -64,7 +64,7 @@
 }
 
 /* Track — the pill */
-.switch__track {
+.bekk-switch__track {
   position: relative;
   display: inline-block;
   flex-shrink: 0;
@@ -75,30 +75,30 @@
   transition: background-color var(--duration-fast) var(--easing-standard);
 }
 
-.switch:hover:not([data-disabled]):not([data-readonly]) .switch__track {
+.bekk-switch:hover:not([data-disabled]):not([data-readonly]) .bekk-switch__track {
   background-color: var(--color-border-strong);
 }
 
-.switch[data-checked] .switch__track {
+.bekk-switch[data-checked] .bekk-switch__track {
   background-color: var(--color-accent-bg);
 }
 
-.switch[data-checked]:hover:not([data-disabled]):not([data-readonly]) .switch__track {
+.bekk-switch[data-checked]:hover:not([data-disabled]):not([data-readonly]) .bekk-switch__track {
   background-color: var(--color-accent-bg-hover);
 }
 
-.switch[data-disabled] .switch__track {
+.bekk-switch[data-disabled] .bekk-switch__track {
   background-color: var(--color-bg-muted);
 }
 
 /* When the Switch sits inside an invalid Field.Root, Base UI sets
    `data-invalid` on the Root. Surface that on the track. */
-.switch[data-invalid] .switch__track {
+.bekk-switch[data-invalid] .bekk-switch__track {
   background-color: var(--color-status-danger);
 }
 
 /* Thumb — the sliding circle */
-.switch__thumb {
+.bekk-switch__thumb {
   position: absolute;
   top: var(--bekk-switch-thumb-inset);
   left: var(--bekk-switch-thumb-inset);
@@ -110,7 +110,7 @@
   transition: transform var(--duration-fast) var(--easing-standard);
 }
 
-.switch[data-checked] .switch__thumb {
+.bekk-switch[data-checked] .bekk-switch__thumb {
   transform: translateX(
     calc(
       var(--bekk-switch-track-w) - var(--bekk-switch-thumb-size) -
@@ -119,18 +119,18 @@
   );
 }
 
-.switch[data-disabled] .switch__thumb {
+.bekk-switch[data-disabled] .bekk-switch__thumb {
   background-color: var(--color-bg-subtle);
   box-shadow: none;
 }
 
 /* The label text */
-.switch__label {
+.bekk-switch__label {
   user-select: none;
 }
 
 /* Focus ring lands on the track via :has() — the input is hidden */
-.switch:has(input:focus-visible) .switch__track {
+.bekk-switch:has(input:focus-visible) .bekk-switch__track {
   outline: var(--border-width-2) solid var(--color-focus-ring);
   outline-offset: var(--focus-ring-offset);
 }

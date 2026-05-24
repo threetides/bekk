@@ -1,7 +1,6 @@
 import { createContext, useContext } from "react"
 import { Field as BaseField } from "@base-ui/react/field"
 import { cx } from "@/utils/cx"
-import styles from "./Field.module.css"
 import type {
   FieldDescriptionProps,
   FieldErrorProps,
@@ -45,7 +44,7 @@ function FieldRoot({
     <FieldContext.Provider value={{ required }}>
       <BaseField.Root
         ref={ref}
-        className={cx(styles.field, className)}
+        className={cx("bekk-field", className)}
         style={style}
         disabled={disabled}
         name={name}
@@ -65,7 +64,7 @@ function FieldLabel({ ref, className, style, children, nativeLabel }: FieldLabel
   return (
     <BaseField.Label
       ref={ref}
-      className={cx(styles["field__label"], className)}
+      className={cx("bekk-field__label", className)}
       style={style}
       data-required={ctx?.required ? "" : undefined}
       nativeLabel={nativeLabel}
@@ -79,7 +78,7 @@ function FieldItem({ ref, className, style, children, disabled }: FieldItemProps
   return (
     <BaseField.Item
       ref={ref}
-      className={cx(styles["field__item"], className)}
+      className={cx("bekk-field__item", className)}
       style={style}
       disabled={disabled}
     >
@@ -92,7 +91,7 @@ function FieldDescription({ ref, className, style, children }: FieldDescriptionP
   return (
     <BaseField.Description
       ref={ref}
-      className={cx(styles["field__description"], className)}
+      className={cx("bekk-field__description", className)}
       style={style}
     >
       {children}
@@ -104,7 +103,7 @@ function FieldError({ ref, className, style, children, match }: FieldErrorProps)
   return (
     <BaseField.Error
       ref={ref}
-      className={cx(styles["field__error"], className)}
+      className={cx("bekk-field__error", className)}
       style={style}
       match={match}
     >

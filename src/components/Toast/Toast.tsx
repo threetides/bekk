@@ -1,7 +1,6 @@
 import { Toast as BaseToast } from "@base-ui/react/toast"
 import { AlertCircle, AlertTriangle, CheckCircle2, Info, X } from "lucide-react"
 import { cx } from "@/utils/cx"
-import styles from "./Toast.module.css"
 import type {
   ToastAddOptions,
   ToastProviderProps,
@@ -40,7 +39,7 @@ function ToastViewport({ position = "bottom-right" }: ToastViewportProps) {
   return (
     <BaseToast.Portal>
       <BaseToast.Viewport
-        className={cx(styles["toast__viewport"], styles[`toast__viewport--${position}`])}
+        className={cx("bekk-toast__viewport", `bekk-toast__viewport--${position}`)}
       >
         <ToastList />
       </BaseToast.Viewport>
@@ -67,16 +66,16 @@ function ToastItem({ toast }: ToastItemProps) {
   const type: ToastType = toast.data?.type ?? "info"
   const Icon = ICON_MAP[type]
   return (
-    <BaseToast.Root toast={toast} className={cx(styles.toast, styles[`toast--${type}`])}>
-      <span className={styles["toast__icon"]}>
+    <BaseToast.Root toast={toast} className={cx("bekk-toast", `bekk-toast--${type}`)}>
+      <span className={"bekk-toast__icon"}>
         <Icon aria-hidden />
       </span>
-      <div className={styles["toast__body"]}>
-        <BaseToast.Title className={styles["toast__title"]} />
-        <BaseToast.Description className={styles["toast__description"]} />
+      <div className={"bekk-toast__body"}>
+        <BaseToast.Title className={"bekk-toast__title"} />
+        <BaseToast.Description className={"bekk-toast__description"} />
       </div>
-      {toast.actionProps && <BaseToast.Action className={styles["toast__action"]} />}
-      <BaseToast.Close className={styles["toast__close"]} aria-label="Close">
+      {toast.actionProps && <BaseToast.Action className={"bekk-toast__action"} />}
+      <BaseToast.Close className={"bekk-toast__close"} aria-label="Close">
         <X aria-hidden />
       </BaseToast.Close>
     </BaseToast.Root>

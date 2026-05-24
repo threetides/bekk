@@ -1,6 +1,6 @@
 /* Optional backdrop (opt-in via `backdrop` on Content). Uses `position: absolute`
    so iOS 26+ Safari paints it under the URL chrome correctly. */
-.popover__backdrop {
+.bekk-popover__backdrop {
   position: absolute;
   inset: 0;
   background-color: var(--color-bg-backdrop);
@@ -8,19 +8,19 @@
   transition: opacity var(--duration-normal) var(--easing-standard);
 }
 
-.popover__backdrop[data-starting-style],
-.popover__backdrop[data-ending-style] {
+.bekk-popover__backdrop[data-starting-style],
+.bekk-popover__backdrop[data-ending-style] {
   opacity: 0;
 }
 
 /* Positioner — invisible wrapper that Base UI positions */
-.popover__positioner {
+.bekk-popover__positioner {
   z-index: var(--z-popover);
 }
 
 /* Popup — the visible content box. `min(360px, --available-width)` keeps the
    popup from overflowing the viewport when anchored near the edge. */
-.popover__popup {
+.bekk-popover__popup {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-3);
@@ -49,33 +49,33 @@
   outline: none;
 }
 
-.popover__popup[data-starting-style],
-.popover__popup[data-ending-style] {
+.bekk-popover__popup[data-starting-style],
+.bekk-popover__popup[data-ending-style] {
   opacity: 0;
   transform: scale(0.96);
 }
 
 /* Sizes set internal CSS variables */
-.popover__popup--sm {
+.bekk-popover__popup--sm {
   --bekk-popover-pad-y: var(--spacing-2);
   --bekk-popover-pad-x: var(--spacing-3);
   --bekk-popover-font-size: var(--font-size-sm);
 }
 
-.popover__popup--md {
+.bekk-popover__popup--md {
   --bekk-popover-pad-y: var(--spacing-3);
   --bekk-popover-pad-x: var(--spacing-4);
   --bekk-popover-font-size: var(--font-size-md);
 }
 
-.popover__popup--lg {
+.bekk-popover__popup--lg {
   --bekk-popover-pad-y: var(--spacing-4);
   --bekk-popover-pad-x: var(--spacing-5);
   --bekk-popover-font-size: var(--font-size-lg);
 }
 
 /* Title */
-.popover__title {
+.bekk-popover__title {
   margin: 0;
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-semibold);
@@ -84,7 +84,7 @@
 }
 
 /* Description */
-.popover__description {
+.bekk-popover__description {
   margin: 0;
   font-size: var(--font-size-sm);
   line-height: var(--line-height-normal);
@@ -92,11 +92,11 @@
 }
 
 /* Arrow — Base UI's Arrow is positioned automatically. SVG rotates per side. */
-.popover__arrow {
+.bekk-popover__arrow {
   display: flex;
 }
 
-.popover__arrow svg {
+.bekk-popover__arrow svg {
   width: 12px;
   height: 8px;
   fill: var(--color-bg-surface);
@@ -107,21 +107,21 @@
 /* Each side shifts the arrow 1px INTO the popover so the arrow's fill paints
    over the popover's bottom/top/side border in the arrow's footprint.
    The popover border visually continues as the two slanted strokes. */
-.popover__arrow[data-side="top"] {
+.bekk-popover__arrow[data-side="top"] {
   bottom: -7px;
 }
 
-.popover__arrow[data-side="bottom"] {
+.bekk-popover__arrow[data-side="bottom"] {
   top: -7px;
   transform: rotate(180deg);
 }
 
-.popover__arrow[data-side="left"] {
+.bekk-popover__arrow[data-side="left"] {
   right: -9px;
   transform: rotate(-90deg);
 }
 
-.popover__arrow[data-side="right"] {
+.bekk-popover__arrow[data-side="right"] {
   left: -9px;
   transform: rotate(90deg);
 }

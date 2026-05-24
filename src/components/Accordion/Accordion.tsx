@@ -2,7 +2,6 @@ import { Accordion as BaseAccordion } from "@base-ui/react/accordion"
 import { ChevronDown } from "lucide-react"
 import { cx } from "@/utils/cx"
 import { headingElementFor } from "@/utils/headingElement"
-import styles from "./Accordion.module.css"
 import type {
   AccordionItemProps,
   AccordionPanelProps,
@@ -28,9 +27,9 @@ function AccordionRoot({
     <BaseAccordion.Root
       ref={ref}
       className={cx(
-        styles.accordion,
-        styles[`accordion--${variant}`],
-        styles[`accordion--${size}`],
+        "bekk-accordion",
+        `bekk-accordion--${variant}`,
+        `bekk-accordion--${size}`,
         className
       )}
       style={style}
@@ -58,7 +57,7 @@ function AccordionItem({
   return (
     <BaseAccordion.Item
       ref={ref}
-      className={cx(styles["accordion__item"], className)}
+      className={cx("bekk-accordion__item", className)}
       style={style}
       value={value}
       disabled={disabled}
@@ -79,16 +78,16 @@ function AccordionTrigger({
 }: AccordionTriggerProps) {
   return (
     <BaseAccordion.Header
-      className={styles["accordion__header"]}
+      className={"bekk-accordion__header"}
       render={headingElementFor(headingLevel)}
     >
       <BaseAccordion.Trigger
         ref={ref}
-        className={cx(styles["accordion__trigger"], className)}
+        className={cx("bekk-accordion__trigger", className)}
         style={style}
       >
-        <span className={styles["accordion__trigger-label"]}>{children}</span>
-        <span className={styles["accordion__trigger-icon"]}>
+        <span className={"bekk-accordion__trigger-label"}>{children}</span>
+        <span className={"bekk-accordion__trigger-icon"}>
           {icon ?? <ChevronDown aria-hidden />}
         </span>
       </BaseAccordion.Trigger>
@@ -98,12 +97,8 @@ function AccordionTrigger({
 
 function AccordionPanel({ ref, className, style, children }: AccordionPanelProps) {
   return (
-    <BaseAccordion.Panel
-      ref={ref}
-      className={cx(styles["accordion__panel"], className)}
-      style={style}
-    >
-      <div className={styles["accordion__content"]}>{children}</div>
+    <BaseAccordion.Panel ref={ref} className={cx("bekk-accordion__panel", className)} style={style}>
+      <div className={"bekk-accordion__content"}>{children}</div>
     </BaseAccordion.Panel>
   )
 }

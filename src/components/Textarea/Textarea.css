@@ -7,7 +7,7 @@
    override via inline style or className.
    ============================================================ */
 
-.textarea {
+.bekk-textarea {
   display: flex;
   width: 100%;
   background-color: var(--color-bg-surface);
@@ -21,45 +21,45 @@
   cursor: text;
 }
 
-.textarea:hover:not(:has([data-disabled])) {
+.bekk-textarea:hover:not(:has([data-disabled])) {
   border-color: var(--color-border-strong);
 }
 
-.textarea:focus-within {
+.bekk-textarea:focus-within {
   border-color: var(--color-accent-border);
   outline: var(--border-width-2) solid var(--color-focus-ring);
   outline-offset: var(--focus-ring-offset);
 }
 
-.textarea:has([data-disabled]) {
+.bekk-textarea:has([data-disabled]) {
   background-color: var(--color-bg-muted);
   border-color: var(--color-border-subtle);
   color: var(--color-text-disabled);
   cursor: not-allowed;
 }
 
-.textarea:has([data-invalid]) {
+.bekk-textarea:has([data-invalid]) {
   border-color: var(--color-status-danger);
 }
 
-.textarea:has([data-invalid]):focus-within {
+.bekk-textarea:has([data-invalid]):focus-within {
   outline-color: var(--color-status-danger);
 }
 
 /* Sizes set internal CSS variables */
-.textarea--sm {
+.bekk-textarea--sm {
   --bekk-textarea-pad-x: var(--spacing-2);
   --bekk-textarea-pad-y: var(--spacing-2);
   --bekk-textarea-font-size: var(--font-size-sm);
 }
 
-.textarea--md {
+.bekk-textarea--md {
   --bekk-textarea-pad-x: var(--spacing-3);
   --bekk-textarea-pad-y: var(--spacing-2);
   --bekk-textarea-font-size: var(--font-size-md);
 }
 
-.textarea--lg {
+.bekk-textarea--lg {
   --bekk-textarea-pad-x: var(--spacing-4);
   --bekk-textarea-pad-y: var(--spacing-3);
   --bekk-textarea-font-size: var(--font-size-lg);
@@ -67,14 +67,14 @@
 
 /* Ghost variant — matches Input's ghost: no box, bottom-line via pseudo so the
    underline stays straight even with rounded outline corners. */
-.textarea--ghost {
+.bekk-textarea--ghost {
   background-color: transparent;
   border: none;
   border-radius: var(--radius-md);
   position: relative;
 }
 
-.textarea--ghost::after {
+.bekk-textarea--ghost::after {
   content: "";
   position: absolute;
   left: 0;
@@ -85,24 +85,24 @@
   transition: background-color var(--duration-fast) var(--easing-standard);
 }
 
-.textarea--ghost:hover:not(:has([data-disabled]))::after {
+.bekk-textarea--ghost:hover:not(:has([data-disabled]))::after {
   background-color: var(--color-border-strong);
 }
 
-.textarea--ghost:focus-within::after {
+.bekk-textarea--ghost:focus-within::after {
   background-color: var(--color-accent-border);
 }
 
-.textarea--ghost:has([data-invalid])::after {
+.bekk-textarea--ghost:has([data-invalid])::after {
   background-color: var(--color-status-danger);
 }
 
-.textarea--ghost:has([data-disabled])::after {
+.bekk-textarea--ghost:has([data-disabled])::after {
   background-color: var(--color-border-subtle);
 }
 
 /* The actual <textarea> — borderless, fills the wrapper */
-.textarea__control {
+.bekk-textarea__control {
   width: 100%;
   min-width: 0;
   padding: var(--bekk-textarea-pad-y) var(--bekk-textarea-pad-x);
@@ -116,17 +116,17 @@
   outline: none;
 }
 
-.textarea__control::placeholder {
+.bekk-textarea__control::placeholder {
   color: var(--color-text-muted);
 }
 
-.textarea__control[data-disabled] {
+.bekk-textarea__control[data-disabled] {
   cursor: not-allowed;
   resize: none;
 }
 
 /* Suppress the global :focus-visible on the inner textarea — the wrapper paints
    the ring via :focus-within so we don't double up. */
-.textarea__control:focus-visible {
+.bekk-textarea__control:focus-visible {
   outline: none;
 }

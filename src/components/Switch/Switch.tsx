@@ -1,7 +1,6 @@
 import { Switch as BaseSwitch } from "@base-ui/react/switch"
 import { cx } from "@/utils/cx"
 import { useFieldContext } from "../Field/Field"
-import styles from "./Switch.module.css"
 import type { SwitchProps } from "./Switch.types"
 
 export function Switch({
@@ -32,9 +31,9 @@ export function Switch({
     <BaseSwitch.Root
       ref={ref}
       className={cx(
-        styles.switch,
-        styles[`switch--${size}`],
-        styles[`switch--label-${labelPlacement}`],
+        "bekk-switch",
+        `bekk-switch--${size}`,
+        `bekk-switch--label-${labelPlacement}`,
         className
       )}
       style={style}
@@ -52,11 +51,11 @@ export function Switch({
       render={<label />}
       {...rest}
     >
-      <span className={styles["switch__track"]} aria-hidden>
-        <BaseSwitch.Thumb className={styles["switch__thumb"]} />
+      <span className={"bekk-switch__track"} aria-hidden>
+        <BaseSwitch.Thumb className={"bekk-switch__thumb"} />
       </span>
       {children !== undefined && children !== null && (
-        <span className={styles["switch__label"]}>{children}</span>
+        <span className={"bekk-switch__label"}>{children}</span>
       )}
     </BaseSwitch.Root>
   )

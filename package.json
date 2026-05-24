@@ -1,15 +1,13 @@
 {
   "name": "@threetides/bekk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A polished, accessible, opinionated React component library built on top of Base UI.",
   "license": "MIT",
   "files": [
     "dist"
   ],
   "type": "module",
-  "sideEffects": [
-    "**/*.css"
-  ],
+  "sideEffects": false,
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -27,7 +25,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build --config vite.lib.config.ts && bun run build:assets",
-    "build:assets": "mkdir -p dist/styles dist/assets && cp src/styles/tokens.css src/styles/reset.css src/styles/fonts.css src/styles/styles.css dist/styles/ && cp src/assets/* dist/assets/",
+    "build:assets": "node scripts/build-assets.mjs",
     "build:docs": "tsc -b && vite build",
     "preview": "vite preview",
     "fmt": "oxfmt",
@@ -58,7 +56,6 @@
     "typescript": "~6.0.2",
     "vite": "^8.0.12",
     "vite-plugin-dts": "^5.0.1",
-    "vite-plugin-lib-inject-css": "^2.2.2",
     "vitest": "^4.1.6"
   },
   "peerDependencies": {

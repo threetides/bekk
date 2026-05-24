@@ -8,7 +8,7 @@
    inner element so per-size rules stay linear.
    ============================================================ */
 
-.checkbox {
+.bekk-checkbox {
   display: inline-flex;
   align-items: center;
   gap: var(--bekk-checkbox-gap);
@@ -19,31 +19,31 @@
   cursor: pointer;
 }
 
-.checkbox[data-disabled] {
+.bekk-checkbox[data-disabled] {
   cursor: not-allowed;
   color: var(--color-text-disabled);
 }
 
-.checkbox[data-readonly] {
+.bekk-checkbox[data-readonly] {
   cursor: default;
 }
 
 /* Sizes set internal vars consumed by box + label */
-.checkbox--sm {
+.bekk-checkbox--sm {
   --bekk-checkbox-box-size: var(--control-box-size-sm);
   --bekk-checkbox-icon-size: 10px;
   --bekk-checkbox-font-size: var(--font-size-sm);
   --bekk-checkbox-gap: var(--spacing-2);
 }
 
-.checkbox--md {
+.bekk-checkbox--md {
   --bekk-checkbox-box-size: var(--control-box-size-md);
   --bekk-checkbox-icon-size: 14px;
   --bekk-checkbox-font-size: var(--font-size-md);
   --bekk-checkbox-gap: var(--spacing-2);
 }
 
-.checkbox--lg {
+.bekk-checkbox--lg {
   --bekk-checkbox-box-size: var(--control-box-size-lg);
   --bekk-checkbox-icon-size: 18px;
   --bekk-checkbox-font-size: var(--font-size-lg);
@@ -51,7 +51,7 @@
 }
 
 /* The visible box */
-.checkbox__box {
+.bekk-checkbox__box {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -67,36 +67,36 @@
     border-color var(--duration-fast) var(--easing-standard);
 }
 
-.checkbox:hover:not([data-disabled]):not([data-readonly]) .checkbox__box {
+.bekk-checkbox:hover:not([data-disabled]):not([data-readonly]) .bekk-checkbox__box {
   border-color: var(--color-border-strong);
 }
 
-.checkbox[data-checked] .checkbox__box,
-.checkbox[data-indeterminate] .checkbox__box {
+.bekk-checkbox[data-checked] .bekk-checkbox__box,
+.bekk-checkbox[data-indeterminate] .bekk-checkbox__box {
   background-color: var(--color-accent-bg);
   border-color: var(--color-accent-bg);
 }
 
-.checkbox[data-checked]:hover:not([data-disabled]) .checkbox__box,
-.checkbox[data-indeterminate]:hover:not([data-disabled]) .checkbox__box {
+.bekk-checkbox[data-checked]:hover:not([data-disabled]) .bekk-checkbox__box,
+.bekk-checkbox[data-indeterminate]:hover:not([data-disabled]) .bekk-checkbox__box {
   background-color: var(--color-accent-bg-hover);
   border-color: var(--color-accent-bg-hover);
 }
 
-.checkbox[data-disabled] .checkbox__box {
+.bekk-checkbox[data-disabled] .bekk-checkbox__box {
   background-color: var(--color-bg-muted);
   border-color: var(--color-border-subtle);
   color: var(--color-text-disabled);
 }
 
-.checkbox[data-invalid] .checkbox__box {
+.bekk-checkbox[data-invalid] .bekk-checkbox__box {
   border-color: var(--color-status-danger);
 }
 
 /* The indicator (checkmark or minus). Always mounted so the box's flex baseline
    doesn't shift when the icon appears — only opacity changes between states.
    Base UI surfaces the parent checkbox's state via `data-*` on the indicator. */
-.checkbox__indicator {
+.bekk-checkbox__indicator {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -106,33 +106,33 @@
   transition: opacity var(--duration-fast) var(--easing-standard);
 }
 
-.checkbox__indicator[data-checked],
-.checkbox__indicator[data-indeterminate] {
+.bekk-checkbox__indicator[data-checked],
+.bekk-checkbox__indicator[data-indeterminate] {
   opacity: 1;
 }
 
-.checkbox__indicator svg {
+.bekk-checkbox__indicator svg {
   width: 100%;
   height: 100%;
   stroke-width: 3;
 }
 
 /* The label text */
-.checkbox__label {
+.bekk-checkbox__label {
   user-select: none;
 }
 
 /* The focus ring lands on the visible box, not the whole label — the global
    :focus-visible rule targets the hidden input which is invisible. We surface
    it via :has() so the wrapper's box gets a clean outline. */
-.checkbox:has(input:focus-visible) .checkbox__box {
+.bekk-checkbox:has(input:focus-visible) .bekk-checkbox__box {
   outline: var(--border-width-2) solid var(--color-focus-ring);
   outline-offset: var(--focus-ring-offset);
 }
 
 /* ---------- CheckboxGroup ---------- */
 
-.group {
+.bekk-checkbox-group {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-2);

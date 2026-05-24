@@ -6,7 +6,7 @@
    Visually a circle with a centered filled dot when selected.
    ============================================================ */
 
-.radio {
+.bekk-radio {
   display: inline-flex;
   align-items: center;
   gap: var(--bekk-radio-gap);
@@ -17,31 +17,31 @@
   cursor: pointer;
 }
 
-.radio[data-disabled] {
+.bekk-radio[data-disabled] {
   cursor: not-allowed;
   color: var(--color-text-disabled);
 }
 
-.radio[data-readonly] {
+.bekk-radio[data-readonly] {
   cursor: default;
 }
 
 /* Sizes set internal vars */
-.radio--sm {
+.bekk-radio--sm {
   --bekk-radio-box-size: var(--control-box-size-sm);
   --bekk-radio-dot-size: 6px;
   --bekk-radio-font-size: var(--font-size-sm);
   --bekk-radio-gap: var(--spacing-2);
 }
 
-.radio--md {
+.bekk-radio--md {
   --bekk-radio-box-size: var(--control-box-size-md);
   --bekk-radio-dot-size: 8px;
   --bekk-radio-font-size: var(--font-size-md);
   --bekk-radio-gap: var(--spacing-2);
 }
 
-.radio--lg {
+.bekk-radio--lg {
   --bekk-radio-box-size: var(--control-box-size-lg);
   --bekk-radio-dot-size: 10px;
   --bekk-radio-font-size: var(--font-size-lg);
@@ -49,7 +49,7 @@
 }
 
 /* The outer circle */
-.radio__dot {
+.bekk-radio__dot {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -64,26 +64,26 @@
     border-color var(--duration-fast) var(--easing-standard);
 }
 
-.radio:hover:not([data-disabled]):not([data-readonly]) .radio__dot {
+.bekk-radio:hover:not([data-disabled]):not([data-readonly]) .bekk-radio__dot {
   border-color: var(--color-border-strong);
 }
 
-.radio[data-checked] .radio__dot {
+.bekk-radio[data-checked] .bekk-radio__dot {
   border-color: var(--color-accent-bg);
 }
 
-.radio[data-disabled] .radio__dot {
+.bekk-radio[data-disabled] .bekk-radio__dot {
   background-color: var(--color-bg-muted);
   border-color: var(--color-border-subtle);
 }
 
-.radio[data-invalid] .radio__dot {
+.bekk-radio[data-invalid] .bekk-radio__dot {
   border-color: var(--color-status-danger);
 }
 
 /* The inner indicator (filled dot). Always mounted so the dot's flex baseline
    stays stable — only opacity changes between states. */
-.radio__indicator {
+.bekk-radio__indicator {
   display: inline-block;
   width: var(--bekk-radio-dot-size);
   height: var(--bekk-radio-dot-size);
@@ -96,29 +96,29 @@
     transform var(--duration-fast) var(--easing-emphasized);
 }
 
-.radio__indicator[data-checked] {
+.bekk-radio__indicator[data-checked] {
   opacity: 1;
   transform: scale(1);
 }
 
-.radio[data-disabled] .radio__indicator[data-checked] {
+.bekk-radio[data-disabled] .bekk-radio__indicator[data-checked] {
   background-color: var(--color-text-disabled);
 }
 
 /* The label text */
-.radio__label {
+.bekk-radio__label {
   user-select: none;
 }
 
 /* Focus ring on the visible dot via :has() — see Checkbox for the same pattern */
-.radio:has(input:focus-visible) .radio__dot {
+.bekk-radio:has(input:focus-visible) .bekk-radio__dot {
   outline: var(--border-width-2) solid var(--color-focus-ring);
   outline-offset: var(--focus-ring-offset);
 }
 
 /* ---------- RadioGroup ---------- */
 
-.group {
+.bekk-radio-group {
   display: flex;
 }
 

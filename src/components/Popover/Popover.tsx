@@ -1,7 +1,6 @@
 import { Popover as BasePopover } from "@base-ui/react/popover"
 import { cx } from "@/utils/cx"
 import { headingElementFor } from "@/utils/headingElement"
-import styles from "./Popover.module.css"
 import type {
   PopoverCloseProps,
   PopoverContentProps,
@@ -47,9 +46,9 @@ function PopoverContent({
 }: PopoverContentProps) {
   return (
     <BasePopover.Portal>
-      {backdrop && <BasePopover.Backdrop className={styles["popover__backdrop"]} />}
+      {backdrop && <BasePopover.Backdrop className={"bekk-popover__backdrop"} />}
       <BasePopover.Positioner
-        className={styles["popover__positioner"]}
+        className={"bekk-popover__positioner"}
         side={side}
         align={align}
         sideOffset={sideOffset}
@@ -57,12 +56,12 @@ function PopoverContent({
       >
         <BasePopover.Popup
           ref={ref}
-          className={cx(styles["popover__popup"], styles[`popover__popup--${size}`], className)}
+          className={cx("bekk-popover__popup", `bekk-popover__popup--${size}`, className)}
           style={style}
         >
           {children}
           {arrow && (
-            <BasePopover.Arrow className={styles["popover__arrow"]}>
+            <BasePopover.Arrow className={"bekk-popover__arrow"}>
               <ArrowSvg />
             </BasePopover.Arrow>
           )}
@@ -76,7 +75,7 @@ function PopoverTitle({ ref, className, style, children, headingLevel = 3 }: Pop
   return (
     <BasePopover.Title
       ref={ref}
-      className={cx(styles["popover__title"], className)}
+      className={cx("bekk-popover__title", className)}
       style={style}
       render={headingElementFor(headingLevel)}
     >
@@ -89,7 +88,7 @@ function PopoverDescription({ ref, className, style, children }: PopoverDescript
   return (
     <BasePopover.Description
       ref={ref}
-      className={cx(styles["popover__description"], className)}
+      className={cx("bekk-popover__description", className)}
       style={style}
     >
       {children}

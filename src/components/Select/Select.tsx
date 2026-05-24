@@ -4,7 +4,6 @@ import { Select as BaseSelect } from "@base-ui/react/select"
 import { Check, ChevronDown } from "lucide-react"
 import { cx } from "@/utils/cx"
 import { useFieldContext } from "../Field/Field"
-import styles from "./Select.module.css"
 import type {
   SelectContentProps,
   SelectGroupLabelProps,
@@ -119,9 +118,9 @@ function SelectTrigger({
     <BaseSelect.Trigger
       ref={ref}
       className={cx(
-        styles.trigger,
-        styles[`trigger--${variant}`],
-        styles[`trigger--${size}`],
+        "bekk-select__trigger",
+        `bekk-select__trigger--${variant}`,
+        `bekk-select__trigger--${size}`,
         className
       )}
       style={style}
@@ -133,8 +132,8 @@ function SelectTrigger({
           populated by Select.Item, and renders the placeholder itself when no
           value (since Base UI's own `placeholder` prop is ignored once children
           is provided). */}
-      <BaseSelect.Value className={styles["trigger__value"]}>{renderValue}</BaseSelect.Value>
-      <span className={styles["trigger__icon"]} aria-hidden>
+      <BaseSelect.Value className={"bekk-select__trigger-value"}>{renderValue}</BaseSelect.Value>
+      <span className={"bekk-select__trigger-icon"} aria-hidden>
         {icon ?? <ChevronDown />}
       </span>
     </BaseSelect.Trigger>
@@ -154,14 +153,14 @@ function SelectContent({
   return (
     <BaseSelect.Portal>
       <BaseSelect.Positioner
-        className={styles.positioner}
+        className={"bekk-select__positioner"}
         side={side}
         align={align}
         sideOffset={sideOffset}
         alignOffset={alignOffset}
       >
-        <BaseSelect.Popup ref={ref} className={cx(styles.popup, className)} style={style}>
-          <BaseSelect.List className={styles.list}>{children}</BaseSelect.List>
+        <BaseSelect.Popup ref={ref} className={cx("bekk-select__popup", className)} style={style}>
+          <BaseSelect.List className={"bekk-select__list"}>{children}</BaseSelect.List>
         </BaseSelect.Popup>
       </BaseSelect.Positioner>
     </BaseSelect.Portal>
@@ -184,7 +183,7 @@ function SelectItem<Value = string>({
   return (
     <BaseSelect.Item
       ref={ref}
-      className={cx(styles.item, className)}
+      className={cx("bekk-select__item", className)}
       style={style}
       value={value}
       disabled={disabled}
@@ -192,19 +191,19 @@ function SelectItem<Value = string>({
     >
       {/* Wrapper reserves a fixed-size slot so the checkmark sizes via CSS
           even when ItemIndicator unmounts (it only renders when selected). */}
-      <span className={styles["item__indicator"]} aria-hidden>
+      <span className={"bekk-select__item-indicator"} aria-hidden>
         <BaseSelect.ItemIndicator>
           <Check />
         </BaseSelect.ItemIndicator>
       </span>
-      <BaseSelect.ItemText className={styles["item__text"]}>{children}</BaseSelect.ItemText>
+      <BaseSelect.ItemText className={"bekk-select__item-text"}>{children}</BaseSelect.ItemText>
     </BaseSelect.Item>
   )
 }
 
 function SelectGroup({ ref, className, style, children }: SelectGroupProps) {
   return (
-    <BaseSelect.Group ref={ref} className={cx(styles.group, className)} style={style}>
+    <BaseSelect.Group ref={ref} className={cx("bekk-select__group", className)} style={style}>
       {children}
     </BaseSelect.Group>
   )
@@ -214,7 +213,7 @@ function SelectGroupLabel({ ref, className, style, children }: SelectGroupLabelP
   return (
     <BaseSelect.GroupLabel
       ref={ref}
-      className={cx(styles["group__label"], className)}
+      className={cx("bekk-select__group-label", className)}
       style={style}
     >
       {children}

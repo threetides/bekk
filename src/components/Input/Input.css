@@ -1,6 +1,6 @@
 /* Block — the wrapper div hosts border, focus ring, and icon slots.
    The actual <input> sits inside, borderless and transparent. */
-.input {
+.bekk-input {
   display: inline-flex;
   align-items: center;
   gap: var(--bekk-input-gap);
@@ -18,7 +18,7 @@
   cursor: text;
 }
 
-.input:hover:not(:has([data-disabled])) {
+.bekk-input:hover:not(:has([data-disabled])) {
   border-color: var(--color-border-strong);
 }
 
@@ -26,13 +26,13 @@
    :focus-visible rule (same outline width/offset/color) so the visual feels
    like part of the system, just driven by :focus-within because the focus
    target is a descendant. */
-.input:focus-within {
+.bekk-input:focus-within {
   border-color: var(--color-accent-border);
   outline: var(--border-width-2) solid var(--color-focus-ring);
   outline-offset: var(--focus-ring-offset);
 }
 
-.input:has([data-disabled]) {
+.bekk-input:has([data-disabled]) {
   background-color: var(--color-bg-muted);
   border-color: var(--color-border-subtle);
   color: var(--color-text-disabled);
@@ -40,16 +40,16 @@
 }
 
 /* Invalid state — Field.Root surfaces `data-invalid` on descendants. */
-.input:has([data-invalid]) {
+.bekk-input:has([data-invalid]) {
   border-color: var(--color-status-danger);
 }
 
-.input:has([data-invalid]):focus-within {
+.bekk-input:has([data-invalid]):focus-within {
   outline-color: var(--color-status-danger);
 }
 
 /* Sizes set component-internal CSS variables */
-.input--sm {
+.bekk-input--sm {
   --bekk-input-pad-x: var(--spacing-2);
   --bekk-input-height: var(--control-height-sm);
   --bekk-input-font-size: var(--font-size-sm);
@@ -57,7 +57,7 @@
   --bekk-input-gap: var(--spacing-2);
 }
 
-.input--md {
+.bekk-input--md {
   --bekk-input-pad-x: var(--spacing-3);
   --bekk-input-height: var(--control-height-md);
   --bekk-input-font-size: var(--font-size-md);
@@ -65,7 +65,7 @@
   --bekk-input-gap: var(--spacing-2);
 }
 
-.input--lg {
+.bekk-input--lg {
   --bekk-input-pad-x: var(--spacing-4);
   --bekk-input-height: var(--control-height-lg);
   --bekk-input-font-size: var(--font-size-lg);
@@ -78,7 +78,7 @@
    The underline is a pseudo-element so the wrapper can keep `border-radius`
    for a properly-rounded focus outline without the line itself curving at
    the corners. */
-.input--ghost {
+.bekk-input--ghost {
   background-color: transparent;
   border: none;
   border-radius: var(--radius-md);
@@ -86,7 +86,7 @@
   position: relative;
 }
 
-.input--ghost::after {
+.bekk-input--ghost::after {
   content: "";
   position: absolute;
   left: 0;
@@ -97,24 +97,24 @@
   transition: background-color var(--duration-fast) var(--easing-standard);
 }
 
-.input--ghost:hover:not(:has([data-disabled]))::after {
+.bekk-input--ghost:hover:not(:has([data-disabled]))::after {
   background-color: var(--color-border-strong);
 }
 
-.input--ghost:focus-within::after {
+.bekk-input--ghost:focus-within::after {
   background-color: var(--color-accent-border);
 }
 
-.input--ghost:has([data-invalid])::after {
+.bekk-input--ghost:has([data-invalid])::after {
   background-color: var(--color-status-danger);
 }
 
-.input--ghost:has([data-disabled])::after {
+.bekk-input--ghost:has([data-disabled])::after {
   background-color: var(--color-border-subtle);
 }
 
 /* The actual input element — borderless, fills the wrapper */
-.input__control {
+.bekk-input__control {
   flex: 1;
   min-width: 0;
   height: var(--bekk-input-height);
@@ -130,20 +130,20 @@
 
 /* Suppress the global :focus-visible ring on the inner element — the wrapper
    carries the indicator via :focus-within, so we'd otherwise paint two rings. */
-.input__control:focus-visible {
+.bekk-input__control:focus-visible {
   outline: none;
 }
 
-.input__control::placeholder {
+.bekk-input__control::placeholder {
   color: var(--color-text-muted);
 }
 
-.input__control[data-disabled] {
+.bekk-input__control[data-disabled] {
   cursor: not-allowed;
 }
 
 /* Icon slot (passive: iconStart/iconEnd) */
-.input__icon {
+.bekk-input__icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -153,7 +153,7 @@
   color: var(--color-text-muted);
 }
 
-.input__icon svg {
+.bekk-input__icon svg {
   width: 100%;
   height: 100%;
 }
@@ -161,7 +161,7 @@
 /* Action button (interactive: clear, password toggle).
    Sized to match the icon slot visually, with a small halo of padding so the
    hover surface and global focus ring sit nicely around the icon. */
-.input__action {
+.bekk-input__action {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -180,17 +180,17 @@
     background-color var(--duration-fast) var(--easing-standard);
 }
 
-.input__action:hover:not(:disabled) {
+.bekk-input__action:hover:not(:disabled) {
   color: var(--color-text-primary);
   background-color: var(--color-bg-subtle);
 }
 
-.input__action:disabled {
+.bekk-input__action:disabled {
   color: var(--color-text-disabled);
   cursor: not-allowed;
 }
 
-.input__action svg {
+.bekk-input__action svg {
   width: var(--bekk-input-icon-size);
   height: var(--bekk-input-icon-size);
 }

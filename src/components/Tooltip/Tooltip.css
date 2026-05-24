@@ -1,11 +1,11 @@
 /* Positioner — invisible wrapper that Base UI positions */
-.tooltip__positioner {
+.bekk-tooltip__positioner {
   z-index: var(--z-tooltip);
 }
 
 /* Popup — the visible bubble. `max-width: var(--available-width)` keeps long
    tooltips from running off the viewport edge. */
-.tooltip__popup {
+.bekk-tooltip__popup {
   display: flex;
   align-items: center;
   max-width: min(280px, var(--available-width));
@@ -25,26 +25,26 @@
     transform var(--duration-fast) var(--easing-standard);
 }
 
-.tooltip__popup[data-starting-style],
-.tooltip__popup[data-ending-style] {
+.bekk-tooltip__popup[data-starting-style],
+.bekk-tooltip__popup[data-ending-style] {
   opacity: 0;
   transform: scale(0.95);
 }
 
 /* Sizes set internal CSS variables */
-.tooltip__popup--sm {
+.bekk-tooltip__popup--sm {
   --bekk-tooltip-pad-y: var(--spacing-1);
   --bekk-tooltip-pad-x: var(--spacing-2);
   --bekk-tooltip-font-size: var(--font-size-xs);
 }
 
-.tooltip__popup--md {
+.bekk-tooltip__popup--md {
   --bekk-tooltip-pad-y: var(--spacing-2);
   --bekk-tooltip-pad-x: var(--spacing-3);
   --bekk-tooltip-font-size: var(--font-size-sm);
 }
 
-.tooltip__popup--lg {
+.bekk-tooltip__popup--lg {
   --bekk-tooltip-pad-y: var(--spacing-3);
   --bekk-tooltip-pad-x: var(--spacing-4);
   --bekk-tooltip-font-size: var(--font-size-md);
@@ -52,31 +52,31 @@
 
 /* Arrow — Base UI's Arrow component is positioned automatically.
    We render an SVG inside it and rotate per side via data-side. */
-.tooltip__arrow {
+.bekk-tooltip__arrow {
   display: flex;
 }
 
-.tooltip__arrow svg {
+.bekk-tooltip__arrow svg {
   width: 12px;
   height: 8px;
   fill: var(--color-bg-inverse);
 }
 
-.tooltip__arrow[data-side="top"] {
+.bekk-tooltip__arrow[data-side="top"] {
   bottom: -8px;
 }
 
-.tooltip__arrow[data-side="bottom"] {
+.bekk-tooltip__arrow[data-side="bottom"] {
   top: -8px;
   transform: rotate(180deg);
 }
 
-.tooltip__arrow[data-side="left"] {
+.bekk-tooltip__arrow[data-side="left"] {
   right: -10px;
   transform: rotate(-90deg);
 }
 
-.tooltip__arrow[data-side="right"] {
+.bekk-tooltip__arrow[data-side="right"] {
   left: -10px;
   transform: rotate(90deg);
 }

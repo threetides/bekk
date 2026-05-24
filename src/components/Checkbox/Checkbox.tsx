@@ -3,7 +3,6 @@ import { CheckboxGroup as BaseCheckboxGroup } from "@base-ui/react/checkbox-grou
 import { Check, Minus } from "lucide-react"
 import { cx } from "@/utils/cx"
 import { useFieldContext } from "../Field/Field"
-import styles from "./Checkbox.module.css"
 import type { CheckboxGroupProps, CheckboxProps } from "./Checkbox.types"
 
 export function Checkbox({
@@ -36,7 +35,7 @@ export function Checkbox({
   return (
     <BaseCheckbox.Root
       ref={ref}
-      className={cx(styles.checkbox, styles[`checkbox--${size}`], className)}
+      className={cx("bekk-checkbox", `bekk-checkbox--${size}`, className)}
       style={style}
       checked={checked}
       defaultChecked={defaultChecked}
@@ -54,16 +53,16 @@ export function Checkbox({
       render={<label />}
       {...rest}
     >
-      <span className={styles["checkbox__box"]} aria-hidden>
+      <span className={"bekk-checkbox__box"} aria-hidden>
         {/* keepMounted so the indicator stays in the DOM even when unchecked —
             otherwise the box's flex baseline shifts when the SVG mounts, which
             nudges the row (and everything below it) by ~1px. */}
-        <BaseCheckbox.Indicator className={styles["checkbox__indicator"]} keepMounted>
+        <BaseCheckbox.Indicator className={"bekk-checkbox__indicator"} keepMounted>
           {indeterminate ? <Minus /> : <Check />}
         </BaseCheckbox.Indicator>
       </span>
       {children !== undefined && children !== null && (
-        <span className={styles["checkbox__label"]}>{children}</span>
+        <span className={"bekk-checkbox__label"}>{children}</span>
       )}
     </BaseCheckbox.Root>
   )
@@ -83,7 +82,7 @@ export function CheckboxGroup({
   return (
     <BaseCheckboxGroup
       ref={ref}
-      className={cx(styles.group, className)}
+      className={cx("bekk-checkbox-group", className)}
       style={style}
       value={value}
       defaultValue={defaultValue}

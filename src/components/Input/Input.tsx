@@ -5,7 +5,6 @@ import { Eye, EyeOff, X } from "lucide-react"
 import { cx } from "@/utils/cx"
 import { mergeRefs } from "@/utils/mergeRefs"
 import { useFieldContext } from "../Field/Field"
-import styles from "./Input.module.css"
 import type { InputProps } from "./Input.types"
 
 /* Bypass React's value tracker so an uncontrolled clear still fires onChange. */
@@ -97,18 +96,18 @@ export function Input({
 
   return (
     <div
-      className={cx(styles.input, styles[`input--${variant}`], styles[`input--${size}`], className)}
+      className={cx("bekk-input", `bekk-input--${variant}`, `bekk-input--${size}`, className)}
       style={style}
       onPointerDown={handleWrapperPointerDown}
     >
       {iconStart && (
-        <span className={styles["input__icon"]} aria-hidden>
+        <span className={"bekk-input__icon"} aria-hidden>
           {iconStart}
         </span>
       )}
       <BaseInput
         ref={setRef}
-        className={styles["input__control"]}
+        className={"bekk-input__control"}
         required={isRequired}
         type={effectiveType}
         value={value}
@@ -121,7 +120,7 @@ export function Input({
       {showClearButton && (
         <button
           type="button"
-          className={styles["input__action"]}
+          className={"bekk-input__action"}
           onMouseDown={handleClear}
           onClick={handleClearClick}
           aria-label="Clear"
@@ -133,7 +132,7 @@ export function Input({
       {showRevealToggle && (
         <button
           type="button"
-          className={styles["input__action"]}
+          className={"bekk-input__action"}
           onMouseDown={handleRevealMouseDown}
           onClick={handleRevealClick}
           aria-label={revealed ? "Hide password" : "Show password"}
@@ -144,7 +143,7 @@ export function Input({
         </button>
       )}
       {iconEnd && (
-        <span className={styles["input__icon"]} aria-hidden>
+        <span className={"bekk-input__icon"} aria-hidden>
           {iconEnd}
         </span>
       )}

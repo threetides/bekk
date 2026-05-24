@@ -1,6 +1,6 @@
 /* Backdrop — `position: absolute` (not fixed) so iOS 26+ Safari paints it
    under the URL chrome correctly. Requires `body { position: relative }`. */
-.alert-dialog__backdrop {
+.bekk-alert-dialog__backdrop {
   position: absolute;
   inset: 0;
   background-color: var(--color-bg-backdrop);
@@ -8,14 +8,14 @@
   transition: opacity var(--duration-normal) var(--easing-standard);
 }
 
-.alert-dialog__backdrop[data-starting-style],
-.alert-dialog__backdrop[data-ending-style] {
+.bekk-alert-dialog__backdrop[data-starting-style],
+.bekk-alert-dialog__backdrop[data-ending-style] {
   opacity: 0;
 }
 
 /* Viewport — scrollable container around the popup, fixed to the visual
    viewport. The popup gets centered via flex; tall content scrolls naturally. */
-.alert-dialog__viewport {
+.bekk-alert-dialog__viewport {
   position: fixed;
   inset: 0;
   z-index: var(--z-modal);
@@ -28,7 +28,7 @@
 
 /* Popup — `position: relative` so any absolutely-positioned children (e.g. a
    future close-X) anchor to the popup, not the fixed viewport. */
-.alert-dialog__popup {
+.bekk-alert-dialog__popup {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -51,27 +51,27 @@
     transform var(--duration-normal) var(--easing-decelerate);
 }
 
-.alert-dialog__popup[data-starting-style],
-.alert-dialog__popup[data-ending-style] {
+.bekk-alert-dialog__popup[data-starting-style],
+.bekk-alert-dialog__popup[data-ending-style] {
   opacity: 0;
   transform: scale(0.96);
 }
 
 /* Sizes set component-internal variables; the popup element reads them. */
-.alert-dialog__popup--sm {
+.bekk-alert-dialog__popup--sm {
   --bekk-alert-dialog-popup-max-w: 400px;
 }
 
-.alert-dialog__popup--md {
+.bekk-alert-dialog__popup--md {
   --bekk-alert-dialog-popup-max-w: 520px;
 }
 
-.alert-dialog__popup--lg {
+.bekk-alert-dialog__popup--lg {
   --bekk-alert-dialog-popup-max-w: 720px;
 }
 
 /* Title */
-.alert-dialog__title {
+.bekk-alert-dialog__title {
   margin: 0;
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-semibold);
@@ -80,7 +80,7 @@
 }
 
 /* Description */
-.alert-dialog__description {
+.bekk-alert-dialog__description {
   margin: 0;
   font-size: var(--font-size-md);
   line-height: var(--line-height-normal);
@@ -88,7 +88,7 @@
 }
 
 /* Actions row */
-.alert-dialog__actions {
+.bekk-alert-dialog__actions {
   display: flex;
   justify-content: flex-end;
   gap: var(--spacing-3);

@@ -2,7 +2,6 @@ import { Dialog as BaseDialog } from "@base-ui/react/dialog"
 import { X } from "lucide-react"
 import { cx } from "@/utils/cx"
 import { headingElementFor } from "@/utils/headingElement"
-import styles from "./Dialog.module.css"
 import type {
   DialogCloseProps,
   DialogContentProps,
@@ -34,23 +33,23 @@ function DialogContent({
 }: DialogContentProps) {
   return (
     <BaseDialog.Portal>
-      <BaseDialog.Backdrop className={styles["dialog__backdrop"]} />
+      <BaseDialog.Backdrop className={"bekk-dialog__backdrop"} />
       {/* Viewport is the scrollable container around the popup. Without it,
           dialogs taller than the viewport get clipped instead of scrolling. */}
-      <BaseDialog.Viewport className={styles["dialog__viewport"]}>
+      <BaseDialog.Viewport className={"bekk-dialog__viewport"}>
         <BaseDialog.Popup
           ref={ref}
           className={cx(
-            styles["dialog__popup"],
-            styles[`dialog__popup--${size}`],
-            showCloseButton && styles["dialog__popup--with-close"],
+            "bekk-dialog__popup",
+            `bekk-dialog__popup--${size}`,
+            showCloseButton && "bekk-dialog__popup--with-close",
             className
           )}
           style={style}
         >
           {children}
           {showCloseButton && (
-            <BaseDialog.Close className={styles["dialog__close-x"]} aria-label="Close dialog">
+            <BaseDialog.Close className={"bekk-dialog__close-x"} aria-label="Close dialog">
               <X aria-hidden />
             </BaseDialog.Close>
           )}
@@ -64,7 +63,7 @@ function DialogTitle({ ref, className, style, children, headingLevel = 2 }: Dial
   return (
     <BaseDialog.Title
       ref={ref}
-      className={cx(styles["dialog__title"], className)}
+      className={cx("bekk-dialog__title", className)}
       style={style}
       render={headingElementFor(headingLevel)}
     >
@@ -77,7 +76,7 @@ function DialogDescription({ ref, className, style, children }: DialogDescriptio
   return (
     <BaseDialog.Description
       ref={ref}
-      className={cx(styles["dialog__description"], className)}
+      className={cx("bekk-dialog__description", className)}
       style={style}
     >
       {children}

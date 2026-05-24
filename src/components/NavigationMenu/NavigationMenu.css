@@ -9,18 +9,18 @@
    ============================================================ */
 
 /* Block — the <nav> root */
-.nav {
+.bekk-nav {
   background-color: transparent;
   font-family: var(--font-family-sans);
   color: var(--color-text-primary);
 }
 
-.nav--horizontal {
+.bekk-nav--horizontal {
   display: inline-flex;
   flex-direction: column;
 }
 
-.nav--vertical {
+.bekk-nav--vertical {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -30,7 +30,7 @@
    The root background stays transparent for both. */
 
 /* Sizes — set internal variables used by triggers and links */
-.nav--sm {
+.bekk-nav--sm {
   --bekk-nav-item-pad-y: var(--spacing-1);
   --bekk-nav-item-pad-x: var(--spacing-2);
   --bekk-nav-item-gap: var(--spacing-1);
@@ -39,7 +39,7 @@
   --bekk-nav-list-gap: var(--spacing-1);
 }
 
-.nav--md {
+.bekk-nav--md {
   --bekk-nav-item-pad-y: var(--spacing-2);
   --bekk-nav-item-pad-x: var(--spacing-3);
   --bekk-nav-item-gap: var(--spacing-2);
@@ -48,7 +48,7 @@
   --bekk-nav-list-gap: var(--spacing-1);
 }
 
-.nav--lg {
+.bekk-nav--lg {
   --bekk-nav-item-pad-y: var(--spacing-3);
   --bekk-nav-item-pad-x: var(--spacing-4);
   --bekk-nav-item-gap: var(--spacing-3);
@@ -58,7 +58,7 @@
 }
 
 /* Element: list */
-.nav__list {
+.bekk-nav__list {
   display: flex;
   gap: var(--bekk-nav-list-gap);
   margin: 0;
@@ -66,34 +66,34 @@
   list-style: none;
 }
 
-.nav--horizontal .nav__list {
+.bekk-nav--horizontal .bekk-nav__list {
   flex-direction: row;
   align-items: center;
 }
 
-.nav--vertical .nav__list {
+.bekk-nav--vertical .bekk-nav__list {
   flex-direction: column;
   align-items: stretch;
 }
 
 /* Element: item */
-.nav__item {
+.bekk-nav__item {
   position: relative;
   display: flex;
 }
 
-.nav--horizontal .nav__item {
+.bekk-nav--horizontal .bekk-nav__item {
   flex-direction: column;
 }
 
-.nav--vertical .nav__item {
+.bekk-nav--vertical .bekk-nav__item {
   flex-direction: column;
   width: 100%;
 }
 
 /* Shared base for trigger + link */
-.nav__trigger,
-.nav__link {
+.bekk-nav__trigger,
+.bekk-nav__link {
   display: inline-flex;
   align-items: center;
   gap: var(--bekk-nav-item-gap);
@@ -115,55 +115,55 @@
     color var(--duration-fast) var(--easing-standard);
 }
 
-.nav--vertical .nav__trigger,
-.nav--vertical .nav__link {
+.bekk-nav--vertical .bekk-nav__trigger,
+.bekk-nav--vertical .bekk-nav__link {
   width: 100%;
   justify-content: flex-start;
 }
 
-.nav__trigger:hover:not([data-disabled]):not([aria-disabled="true"]),
-.nav__link:hover:not([data-disabled]):not([aria-disabled="true"]) {
+.bekk-nav__trigger:hover:not([data-disabled]):not([aria-disabled="true"]),
+.bekk-nav__link:hover:not([data-disabled]):not([aria-disabled="true"]) {
   background-color: var(--color-bg-subtle);
   color: var(--color-text-primary);
 }
 
-.nav__trigger:active:not([data-disabled]):not([aria-disabled="true"]),
-.nav__link:active:not([data-disabled]):not([aria-disabled="true"]) {
+.bekk-nav__trigger:active:not([data-disabled]):not([aria-disabled="true"]),
+.bekk-nav__link:active:not([data-disabled]):not([aria-disabled="true"]) {
   background-color: var(--color-bg-muted);
 }
 
-.nav__trigger[data-disabled],
-.nav__link[data-disabled],
-.nav__link[aria-disabled="true"] {
+.bekk-nav__trigger[data-disabled],
+.bekk-nav__link[data-disabled],
+.bekk-nav__link[aria-disabled="true"] {
   color: var(--color-text-disabled);
   cursor: not-allowed;
   pointer-events: none;
 }
 
 /* Active link — current page indicator */
-.nav__link[data-active] {
+.bekk-nav__link[data-active] {
   color: var(--color-accent-fg);
   background-color: var(--color-bg-subtle);
 }
 
-.nav__link[data-active]:hover:not([data-disabled]) {
+.bekk-nav__link[data-active]:hover:not([data-disabled]) {
   color: var(--color-accent-fg);
 }
 
 /* Trigger when its panel is the open one */
-.nav__trigger[data-popup-open] {
+.bekk-nav__trigger[data-popup-open] {
   color: var(--color-text-primary);
   background-color: var(--color-bg-subtle);
 }
 
 /* Trigger label */
-.nav__trigger-label {
+.bekk-nav__trigger-label {
   flex: 1;
   min-width: 0;
 }
 
 /* Trigger icon (chevron) */
-.nav__trigger-icon {
+.bekk-nav__trigger-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -174,7 +174,7 @@
   transition: transform var(--duration-fast) var(--easing-decelerate);
 }
 
-.nav__trigger-icon svg {
+.bekk-nav__trigger-icon svg {
   width: 100%;
   height: 100%;
 }
@@ -186,28 +186,28 @@
      - vertical closed: rotate -90deg so it points right (collapse to the side)
      - vertical open:   rotate 0deg, back to down (panel below the row)
      - horizontal open: rotate 180deg (point up, indicating "now open"). */
-.nav--vertical .nav__trigger-icon {
+.bekk-nav--vertical .bekk-nav__trigger-icon {
   transform: rotate(-90deg);
 }
 
-.nav--horizontal .nav__trigger[data-popup-open] .nav__trigger-icon {
+.bekk-nav--horizontal .bekk-nav__trigger[data-popup-open] .bekk-nav__trigger-icon {
   transform: rotate(180deg);
 }
 
-.nav--vertical .nav__trigger[data-popup-open] .nav__trigger-icon {
+.bekk-nav--vertical .bekk-nav__trigger[data-popup-open] .bekk-nav__trigger-icon {
   transform: rotate(0deg);
 }
 
 /* Ghost variant — flatter idle look for nesting inside containers with their own
    background. Active and hover states still surface so the user can see what
    they're pointing at and which page they're on. */
-.nav--ghost .nav__trigger,
-.nav--ghost .nav__link {
+.bekk-nav--ghost .bekk-nav__trigger,
+.bekk-nav--ghost .bekk-nav__link {
   color: var(--color-text-secondary);
 }
 
-.nav--ghost .nav__trigger:hover:not([data-disabled]):not([aria-disabled="true"]),
-.nav--ghost .nav__link:hover:not([data-disabled]):not([aria-disabled="true"]) {
+.bekk-nav--ghost .bekk-nav__trigger:hover:not([data-disabled]):not([aria-disabled="true"]),
+.bekk-nav--ghost .bekk-nav__link:hover:not([data-disabled]):not([aria-disabled="true"]) {
   background-color: var(--color-bg-subtle);
 }
 
@@ -218,7 +218,7 @@
    inert until an item with Content becomes active.
    ============================================================ */
 
-.nav__positioner {
+.bekk-nav__positioner {
   z-index: var(--z-dropdown);
   box-sizing: border-box;
   /* Animate position so the popup slides smoothly between sibling triggers
@@ -231,11 +231,11 @@
     bottom var(--duration-normal) var(--easing-emphasized);
 }
 
-.nav__positioner[data-instant] {
+.bekk-nav__positioner[data-instant] {
   transition: none;
 }
 
-.nav__popup {
+.bekk-nav__popup {
   position: relative;
   box-sizing: border-box;
   max-height: var(--available-height);
@@ -254,8 +254,8 @@
     transform var(--duration-fast) var(--easing-standard);
 }
 
-.nav__popup[data-starting-style],
-.nav__popup[data-ending-style] {
+.bekk-nav__popup[data-starting-style],
+.bekk-nav__popup[data-ending-style] {
   opacity: 0;
   transform: scale(0.97);
 }
@@ -264,7 +264,7 @@
    active item changes. Base UI sets --popup-width / --popup-height on
    the Popup (which we inherit). Both are "auto" when idle, fixed pixels
    while transitioning. */
-.nav__viewport {
+.bekk-nav__viewport {
   position: relative;
   width: var(--popup-width);
   height: var(--popup-height);
@@ -277,12 +277,12 @@
 /* Content flows naturally so it sizes the Viewport. When a Content is
    transitioning out, Base UI inlines `position: absolute; top: 0; left: 0`
    on it — don't fight that here, just style the visible state. */
-.nav__content {
+.bekk-nav__content {
   padding: var(--bekk-nav-item-pad-y) var(--bekk-nav-item-pad-x);
   transition: opacity var(--duration-fast) var(--easing-standard);
 }
 
-.nav__content[data-starting-style],
-.nav__content[data-ending-style] {
+.bekk-nav__content[data-starting-style],
+.bekk-nav__content[data-ending-style] {
   opacity: 0;
 }

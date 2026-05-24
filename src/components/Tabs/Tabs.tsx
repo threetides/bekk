@@ -1,6 +1,5 @@
 import { Tabs as BaseTabs } from "@base-ui/react/tabs"
 import { cx } from "@/utils/cx"
-import styles from "./Tabs.module.css"
 import type { TabsListProps, TabsPanelProps, TabsRootProps, TabsTabProps } from "./Tabs.types"
 
 function TabsRoot({
@@ -19,10 +18,10 @@ function TabsRoot({
     <BaseTabs.Root
       ref={ref}
       className={cx(
-        styles.tabs,
-        styles[`tabs--${variant}`],
-        styles[`tabs--${size}`],
-        styles[`tabs--${orientation}`],
+        "bekk-tabs",
+        `bekk-tabs--${variant}`,
+        `bekk-tabs--${size}`,
+        `bekk-tabs--${orientation}`,
         className
       )}
       style={style}
@@ -40,12 +39,12 @@ function TabsList({ ref, className, style, children, activateOnFocus = false }: 
   return (
     <BaseTabs.List
       ref={ref}
-      className={cx(styles["tabs__list"], className)}
+      className={cx("bekk-tabs__list", className)}
       style={style}
       activateOnFocus={activateOnFocus}
     >
       {children}
-      <BaseTabs.Indicator className={styles["tabs__indicator"]} />
+      <BaseTabs.Indicator className={"bekk-tabs__indicator"} />
     </BaseTabs.List>
   )
 }
@@ -63,16 +62,16 @@ function TabsTab({
   return (
     <BaseTabs.Tab
       ref={ref}
-      className={cx(styles["tabs__tab"], className)}
+      className={cx("bekk-tabs__tab", className)}
       style={style}
       value={value}
       disabled={disabled}
     >
-      {iconStart && <span className={styles["tabs__tab-icon"]}>{iconStart}</span>}
+      {iconStart && <span className={"bekk-tabs__tab-icon"}>{iconStart}</span>}
       {children !== undefined && children !== null && (
-        <span className={styles["tabs__tab-label"]}>{children}</span>
+        <span className={"bekk-tabs__tab-label"}>{children}</span>
       )}
-      {iconEnd && <span className={styles["tabs__tab-icon"]}>{iconEnd}</span>}
+      {iconEnd && <span className={"bekk-tabs__tab-icon"}>{iconEnd}</span>}
     </BaseTabs.Tab>
   )
 }
@@ -81,7 +80,7 @@ function TabsPanel({ ref, className, style, children, value }: TabsPanelProps) {
   return (
     <BaseTabs.Panel
       ref={ref}
-      className={cx(styles["tabs__panel"], className)}
+      className={cx("bekk-tabs__panel", className)}
       style={style}
       value={value}
     >

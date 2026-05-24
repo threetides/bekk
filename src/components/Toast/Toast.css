@@ -6,7 +6,7 @@
    data-expanded attribute set when the stack is hovered/focused).
    ============================================================ */
 
-.toast__viewport {
+.bekk-toast__viewport {
   --bekk-toast-width: 380px;
   --bekk-toast-gap: var(--spacing-2);
   --bekk-toast-peek: var(--spacing-3);
@@ -18,34 +18,34 @@
   pointer-events: none; /* dead space passes clicks through */
 }
 
-.toast__viewport--top-left {
+.bekk-toast__viewport--top-left {
   top: var(--spacing-4);
   left: var(--spacing-4);
 }
 
-.toast__viewport--top-center {
+.bekk-toast__viewport--top-center {
   top: var(--spacing-4);
   left: 50%;
   transform: translateX(-50%);
 }
 
-.toast__viewport--top-right {
+.bekk-toast__viewport--top-right {
   top: var(--spacing-4);
   right: var(--spacing-4);
 }
 
-.toast__viewport--bottom-left {
+.bekk-toast__viewport--bottom-left {
   bottom: var(--spacing-4);
   left: var(--spacing-4);
 }
 
-.toast__viewport--bottom-center {
+.bekk-toast__viewport--bottom-center {
   bottom: var(--spacing-4);
   left: 50%;
   transform: translateX(-50%);
 }
 
-.toast__viewport--bottom-right {
+.bekk-toast__viewport--bottom-right {
   bottom: var(--spacing-4);
   right: var(--spacing-4);
 }
@@ -54,7 +54,7 @@
    Toast — visual look (layout-independent)
    ============================================================ */
 
-.toast {
+.bekk-toast {
   position: absolute;
   left: 0;
   right: 0;
@@ -86,12 +86,12 @@
     opacity var(--duration-normal) var(--easing-standard);
 }
 
-.toast[data-expanded] {
+.bekk-toast[data-expanded] {
   /* Expanded (hover/focus): each toast renders at its natural height */
   height: var(--toast-height);
 }
 
-.toast::before {
+.bekk-toast::before {
   content: "";
   position: absolute;
   left: 0;
@@ -107,7 +107,7 @@
    pointer "inside" the parent toast as it crosses the gap, so hovering between
    adjacent toasts doesn't drop the expanded state. Direction depends on
    anchor (above each toast for bottom-anchored stacks, below for top-anchored). */
-.toast::after {
+.bekk-toast::after {
   content: "";
   position: absolute;
   left: 0;
@@ -115,28 +115,28 @@
   height: var(--bekk-toast-gap);
 }
 
-.toast__viewport--bottom-left .toast::after,
-.toast__viewport--bottom-center .toast::after,
-.toast__viewport--bottom-right .toast::after {
+.bekk-toast__viewport--bottom-left .bekk-toast::after,
+.bekk-toast__viewport--bottom-center .bekk-toast::after,
+.bekk-toast__viewport--bottom-right .bekk-toast::after {
   bottom: 100%;
 }
 
-.toast__viewport--top-left .toast::after,
-.toast__viewport--top-center .toast::after,
-.toast__viewport--top-right .toast::after {
+.bekk-toast__viewport--top-left .bekk-toast::after,
+.bekk-toast__viewport--top-center .bekk-toast::after,
+.bekk-toast__viewport--top-right .bekk-toast::after {
   top: 100%;
 }
 
-.toast--info {
+.bekk-toast--info {
   --bekk-toast-accent: var(--color-status-info);
 }
-.toast--success {
+.bekk-toast--success {
   --bekk-toast-accent: var(--color-status-success);
 }
-.toast--warning {
+.bekk-toast--warning {
   --bekk-toast-accent: var(--color-status-warning);
 }
-.toast--error {
+.bekk-toast--error {
   --bekk-toast-accent: var(--color-status-danger);
 }
 
@@ -146,7 +146,7 @@
    bites, and they sit in the hover region above the topmost visible toast
    without receiving pointer events, which collapses the expanded stack the
    moment the cursor crosses into them. Hide them visually and from hit-testing. */
-.toast[data-limited] {
+.bekk-toast[data-limited] {
   opacity: 0;
   pointer-events: none;
 }
@@ -159,9 +159,9 @@
    ============================================================ */
 
 /* --- Bottom-anchored --- */
-.toast__viewport--bottom-left .toast,
-.toast__viewport--bottom-center .toast,
-.toast__viewport--bottom-right .toast {
+.bekk-toast__viewport--bottom-left .bekk-toast,
+.bekk-toast__viewport--bottom-center .bekk-toast,
+.bekk-toast__viewport--bottom-right .bekk-toast {
   bottom: 0;
   transform-origin: bottom center;
   transform: translateX(var(--toast-swipe-movement-x, 0px))
@@ -171,9 +171,9 @@
     scale(max(0.8, calc(1 - var(--toast-index) * 0.05)));
 }
 
-.toast__viewport--bottom-left .toast[data-expanded],
-.toast__viewport--bottom-center .toast[data-expanded],
-.toast__viewport--bottom-right .toast[data-expanded] {
+.bekk-toast__viewport--bottom-left .bekk-toast[data-expanded],
+.bekk-toast__viewport--bottom-center .bekk-toast[data-expanded],
+.bekk-toast__viewport--bottom-right .bekk-toast[data-expanded] {
   transform: translateX(var(--toast-swipe-movement-x, 0px))
     translateY(
       calc(
@@ -184,9 +184,9 @@
 }
 
 /* --- Top-anchored --- */
-.toast__viewport--top-left .toast,
-.toast__viewport--top-center .toast,
-.toast__viewport--top-right .toast {
+.bekk-toast__viewport--top-left .bekk-toast,
+.bekk-toast__viewport--top-center .bekk-toast,
+.bekk-toast__viewport--top-right .bekk-toast {
   top: 0;
   transform-origin: top center;
   transform: translateX(var(--toast-swipe-movement-x, 0px))
@@ -196,9 +196,9 @@
     scale(max(0.8, calc(1 - var(--toast-index) * 0.05)));
 }
 
-.toast__viewport--top-left .toast[data-expanded],
-.toast__viewport--top-center .toast[data-expanded],
-.toast__viewport--top-right .toast[data-expanded] {
+.bekk-toast__viewport--top-left .bekk-toast[data-expanded],
+.bekk-toast__viewport--top-center .bekk-toast[data-expanded],
+.bekk-toast__viewport--top-right .bekk-toast[data-expanded] {
   transform: translateX(var(--toast-swipe-movement-x, 0px))
     translateY(
       calc(
@@ -211,18 +211,18 @@
 /* While fading out, a limited toast follows the same translate-and-shrink path
    the visible stack was on, but with the scale cap dropped so it keeps
    shrinking past 0.8 instead of stalling at the cap and blinking out. */
-.toast__viewport--bottom-left .toast[data-limited],
-.toast__viewport--bottom-center .toast[data-limited],
-.toast__viewport--bottom-right .toast[data-limited] {
+.bekk-toast__viewport--bottom-left .bekk-toast[data-limited],
+.bekk-toast__viewport--bottom-center .bekk-toast[data-limited],
+.bekk-toast__viewport--bottom-right .bekk-toast[data-limited] {
   transform: translateY(
       calc(var(--toast-swipe-movement-y, 0px) - var(--toast-index) * var(--bekk-toast-peek))
     )
     scale(calc(1 - var(--toast-index) * 0.05));
 }
 
-.toast__viewport--top-left .toast[data-limited],
-.toast__viewport--top-center .toast[data-limited],
-.toast__viewport--top-right .toast[data-limited] {
+.bekk-toast__viewport--top-left .bekk-toast[data-limited],
+.bekk-toast__viewport--top-center .bekk-toast[data-limited],
+.bekk-toast__viewport--top-right .bekk-toast[data-limited] {
   transform: translateY(
       calc(var(--toast-swipe-movement-y, 0px) + var(--toast-index) * var(--bekk-toast-peek))
     )
@@ -235,52 +235,52 @@
    ============================================================ */
 
 /* Enter — slide in from outside the anchored edge */
-.toast__viewport--bottom-left .toast[data-starting-style],
-.toast__viewport--bottom-center .toast[data-starting-style],
-.toast__viewport--bottom-right .toast[data-starting-style] {
+.bekk-toast__viewport--bottom-left .bekk-toast[data-starting-style],
+.bekk-toast__viewport--bottom-center .bekk-toast[data-starting-style],
+.bekk-toast__viewport--bottom-right .bekk-toast[data-starting-style] {
   transform: translateY(120%);
   opacity: 0;
 }
 
-.toast__viewport--top-left .toast[data-starting-style],
-.toast__viewport--top-center .toast[data-starting-style],
-.toast__viewport--top-right .toast[data-starting-style] {
+.bekk-toast__viewport--top-left .bekk-toast[data-starting-style],
+.bekk-toast__viewport--top-center .bekk-toast[data-starting-style],
+.bekk-toast__viewport--top-right .bekk-toast[data-starting-style] {
   transform: translateY(-120%);
   opacity: 0;
 }
 
 /* Exit (no swipe) — same direction as entry */
-.toast__viewport--bottom-left .toast[data-ending-style]:not([data-swipe-direction]),
-.toast__viewport--bottom-center .toast[data-ending-style]:not([data-swipe-direction]),
-.toast__viewport--bottom-right .toast[data-ending-style]:not([data-swipe-direction]) {
+.bekk-toast__viewport--bottom-left .bekk-toast[data-ending-style]:not([data-swipe-direction]),
+.bekk-toast__viewport--bottom-center .bekk-toast[data-ending-style]:not([data-swipe-direction]),
+.bekk-toast__viewport--bottom-right .bekk-toast[data-ending-style]:not([data-swipe-direction]) {
   transform: translateY(120%);
   opacity: 0;
 }
 
-.toast__viewport--top-left .toast[data-ending-style]:not([data-swipe-direction]),
-.toast__viewport--top-center .toast[data-ending-style]:not([data-swipe-direction]),
-.toast__viewport--top-right .toast[data-ending-style]:not([data-swipe-direction]) {
+.bekk-toast__viewport--top-left .bekk-toast[data-ending-style]:not([data-swipe-direction]),
+.bekk-toast__viewport--top-center .bekk-toast[data-ending-style]:not([data-swipe-direction]),
+.bekk-toast__viewport--top-right .bekk-toast[data-ending-style]:not([data-swipe-direction]) {
   transform: translateY(-120%);
   opacity: 0;
 }
 
 /* Swipe-out exits */
-.toast[data-ending-style][data-swipe-direction="right"] {
+.bekk-toast[data-ending-style][data-swipe-direction="right"] {
   transform: translateX(calc(var(--toast-swipe-movement-x) + 120%));
   opacity: 0;
 }
 
-.toast[data-ending-style][data-swipe-direction="left"] {
+.bekk-toast[data-ending-style][data-swipe-direction="left"] {
   transform: translateX(calc(var(--toast-swipe-movement-x) - 120%));
   opacity: 0;
 }
 
-.toast[data-ending-style][data-swipe-direction="down"] {
+.bekk-toast[data-ending-style][data-swipe-direction="down"] {
   transform: translateY(calc(var(--toast-swipe-movement-y) + 120%));
   opacity: 0;
 }
 
-.toast[data-ending-style][data-swipe-direction="up"] {
+.bekk-toast[data-ending-style][data-swipe-direction="up"] {
   transform: translateY(calc(var(--toast-swipe-movement-y) - 120%));
   opacity: 0;
 }
@@ -289,7 +289,7 @@
    Toast internals (icon / body / action / close) — unchanged.
    ============================================================ */
 
-.toast__icon {
+.bekk-toast__icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -303,12 +303,12 @@
   margin-top: 2px;
 }
 
-.toast__icon svg {
+.bekk-toast__icon svg {
   width: 100%;
   height: 100%;
 }
 
-.toast__body {
+.bekk-toast__body {
   flex: 1;
   min-width: 0;
   display: flex;
@@ -316,7 +316,7 @@
   gap: var(--spacing-1);
 }
 
-.toast__title {
+.bekk-toast__title {
   margin: 0;
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
@@ -324,14 +324,14 @@
   color: var(--color-text-primary);
 }
 
-.toast__description {
+.bekk-toast__description {
   margin: 0;
   font-size: var(--font-size-sm);
   line-height: var(--line-height-normal);
   color: var(--color-text-secondary);
 }
 
-.toast__action {
+.bekk-toast__action {
   flex-shrink: 0;
   align-self: center;
   padding: var(--spacing-1) var(--spacing-2);
@@ -346,11 +346,11 @@
   transition: background-color var(--duration-fast) var(--easing-standard);
 }
 
-.toast__action:hover {
+.bekk-toast__action:hover {
   background-color: var(--color-bg-subtle);
 }
 
-.toast__close {
+.bekk-toast__close {
   flex-shrink: 0;
   align-self: flex-start;
   display: inline-flex;
@@ -368,12 +368,12 @@
     color var(--duration-fast) var(--easing-standard);
 }
 
-.toast__close:hover {
+.bekk-toast__close:hover {
   background-color: var(--color-bg-subtle);
   color: var(--color-text-primary);
 }
 
-.toast__close svg {
+.bekk-toast__close svg {
   width: var(--icon-size-sm);
   height: var(--icon-size-sm);
 }

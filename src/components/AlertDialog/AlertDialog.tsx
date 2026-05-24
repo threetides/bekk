@@ -2,7 +2,6 @@ import { AlertDialog as BaseAlertDialog } from "@base-ui/react/alert-dialog"
 import { cx } from "@/utils/cx"
 import { headingElementFor } from "@/utils/headingElement"
 import { Button } from "../Button"
-import styles from "./AlertDialog.module.css"
 import type {
   AlertDialogActionProps,
   AlertDialogActionsProps,
@@ -35,17 +34,13 @@ function AlertDialogContent({
 }: AlertDialogContentProps) {
   return (
     <BaseAlertDialog.Portal>
-      <BaseAlertDialog.Backdrop className={styles["alert-dialog__backdrop"]} />
+      <BaseAlertDialog.Backdrop className={"bekk-alert-dialog__backdrop"} />
       {/* Viewport handles scroll/centering for tall content. Without it,
           long alerts get clipped at the viewport edge. */}
-      <BaseAlertDialog.Viewport className={styles["alert-dialog__viewport"]}>
+      <BaseAlertDialog.Viewport className={"bekk-alert-dialog__viewport"}>
         <BaseAlertDialog.Popup
           ref={ref}
-          className={cx(
-            styles["alert-dialog__popup"],
-            styles[`alert-dialog__popup--${size}`],
-            className
-          )}
+          className={cx("bekk-alert-dialog__popup", `bekk-alert-dialog__popup--${size}`, className)}
           style={style}
         >
           {children}
@@ -65,7 +60,7 @@ function AlertDialogTitle({
   return (
     <BaseAlertDialog.Title
       ref={ref}
-      className={cx(styles["alert-dialog__title"], className)}
+      className={cx("bekk-alert-dialog__title", className)}
       style={style}
       render={headingElementFor(headingLevel)}
     >
@@ -78,7 +73,7 @@ function AlertDialogDescription({ ref, className, style, children }: AlertDialog
   return (
     <BaseAlertDialog.Description
       ref={ref}
-      className={cx(styles["alert-dialog__description"], className)}
+      className={cx("bekk-alert-dialog__description", className)}
       style={style}
     >
       {children}
@@ -88,7 +83,7 @@ function AlertDialogDescription({ ref, className, style, children }: AlertDialog
 
 function AlertDialogActions({ ref, className, style, children }: AlertDialogActionsProps) {
   return (
-    <div ref={ref} className={cx(styles["alert-dialog__actions"], className)} style={style}>
+    <div ref={ref} className={cx("bekk-alert-dialog__actions", className)} style={style}>
       {children}
     </div>
   )
