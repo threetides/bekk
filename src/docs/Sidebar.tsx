@@ -16,19 +16,14 @@ export const Sidebar: FC<SidebarProps> = ({ groups, currentSlug, open, onClose }
   return (
     <div className={styles.sidebar} data-open={open ? "" : undefined}>
       <div className={styles["sidebar__brand"]}>
-        <svg
+        <img
           className={styles["sidebar__mark"]}
-          viewBox="0 0 48 48"
+          src="/favicon.svg"
           width="28"
           height="28"
-          role="img"
+          alt=""
           aria-hidden="true"
-        >
-          <path
-            d="M 4 30 C 6 18, 10 6, 16 6 C 20 6, 24 12, 28 16 C 34 18, 40 20, 46 22 C 36 28, 24 28, 18 26 C 12 26, 6 28, 4 30 Z"
-            fill="currentColor"
-          />
-        </svg>
+        />
         <span>bekk</span>
         <Button
           className={styles["sidebar__close"]}

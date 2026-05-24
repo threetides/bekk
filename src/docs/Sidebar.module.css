@@ -31,7 +31,6 @@
 .sidebar__mark {
   flex: none;
   display: block;
-  color: var(--color-accent-fg);
 }
 
 .sidebar__close {

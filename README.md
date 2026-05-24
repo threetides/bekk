@@ -2,7 +2,7 @@
 
 A small, opinionated React component library built on top of [Base UI](https://base-ui.com). Bekk wraps Base UI's accessible primitives in a friendlier, pared-down API and a single design-token-driven visual language.
 
-> **Status: pre-release.** Not yet published to npm. The install snippet below describes the intended consumer experience; today the package is consumed from source.
+Published on npm as [`@threetides/bekk`](https://www.npmjs.com/package/@threetides/bekk).
 
 ---
 
@@ -17,22 +17,20 @@ A small, opinionated React component library built on top of [Base UI](https://b
 
 ## Quickstart
 
-> The package isn't published yet — the snippet below describes the intended API once it is.
-
 ```bash
-npm install bekk @base-ui/react react react-dom
+npm install @threetides/bekk @base-ui/react react react-dom
 ```
 
 Import the stylesheet once at the entry of your app — this pulls in the design tokens, a polite CSS reset, and the Plus Jakarta Sans font face:
 
 ```tsx
-import "bekk/styles.css"
+import "@threetides/bekk/styles.css"
 ```
 
 Then use the components:
 
 ```tsx
-import { Button, Dialog } from "bekk"
+import { Button, Dialog } from "@threetides/bekk"
 
 export function Example() {
   return (
@@ -56,12 +54,12 @@ export function Example() {
 
 ### Styling à la carte
 
-`bekk/styles.css` is the kitchen-sink bundle. If you have your own reset or your own brand font, import the pieces you want individually instead:
+`@threetides/bekk/styles.css` is the kitchen-sink bundle. If you have your own reset or your own brand font, import the pieces you want individually instead:
 
 ```tsx
-import "bekk/styles/tokens.css" // required — the design system
-import "bekk/styles/reset.css" // optional — modern CSS reset
-import "bekk/styles/fonts.css" // optional — Plus Jakarta Sans @font-face
+import "@threetides/bekk/styles/tokens.css" // required — the design system
+import "@threetides/bekk/styles/reset.css" // optional — modern CSS reset
+import "@threetides/bekk/styles/fonts.css" // optional — Plus Jakarta Sans @font-face
 ```
 
 Only `tokens.css` is mandatory. Without it, components have no values to read. If you skip `fonts.css`, the `--font-family-sans` token falls back to `system-ui, sans-serif`.

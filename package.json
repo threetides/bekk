@@ -1,5 +1,5 @@
 {
-  "name": "bekk",
+  "name": "@threetides/bekk",
   "version": "0.1.0",
   "description": "A polished, accessible, opinionated React component library built on top of Base UI.",
   "license": "MIT",

@@ -2,11 +2,11 @@ import type { FC } from "react"
 import { CodeBlock } from "./CodeBlock"
 import styles from "./Quickstart.module.css"
 
-const INSTALL = `npm install bekk @base-ui/react react react-dom`
+const INSTALL = `npm install @threetides/bekk @base-ui/react react react-dom`
 
-const IMPORT_STYLES = `import "bekk/styles.css"`
+const IMPORT_STYLES = `import "@threetides/bekk/styles.css"`
 
-const USE_EXAMPLE = `import { Button, Dialog } from "bekk"
+const USE_EXAMPLE = `import { Button, Dialog } from "@threetides/bekk"
 
 export function Example() {
   return (
@@ -27,9 +27,9 @@ export function Example() {
   )
 }`
 
-const A_LA_CARTE = `import "bekk/styles/tokens.css" // required — the design system
-import "bekk/styles/reset.css" // optional — modern CSS reset
-import "bekk/styles/fonts.css" // optional — Plus Jakarta Sans @font-face`
+const A_LA_CARTE = `import "@threetides/bekk/styles/tokens.css" // required — the design system
+import "@threetides/bekk/styles/reset.css" // optional — modern CSS reset
+import "@threetides/bekk/styles/fonts.css" // optional — Plus Jakarta Sans @font-face`
 
 const DARK_MODE = `<html data-theme="dark">`
 
@@ -66,8 +66,9 @@ export const Quickstart: FC = () => {
       <section className={styles["quickstart__section"]}>
         <h3 className={styles["quickstart__section-title"]}>3. Use a component</h3>
         <p className={styles["quickstart__body"]}>
-          Import from <code>bekk</code> and compose. Each component's CSS is automatically pulled in
-          by your bundler — you don't need a separate per-component stylesheet.
+          Import from <code>@threetides/bekk</code> and compose. Each component's CSS is
+          automatically pulled in by your bundler — you don't need a separate per-component
+          stylesheet.
         </p>
         <CodeBlock code={USE_EXAMPLE} lang="tsx" />
       </section>
@@ -75,8 +76,8 @@ export const Quickstart: FC = () => {
       <section className={styles["quickstart__section"]}>
         <h3 className={styles["quickstart__section-title"]}>Styling à la carte</h3>
         <p className={styles["quickstart__body"]}>
-          <code>bekk/styles.css</code> is the kitchen-sink bundle. If you bring your own reset or
-          your own brand font, import the pieces you want individually instead.
+          <code>@threetides/bekk/styles.css</code> is the kitchen-sink bundle. If you bring your own
+          reset or your own brand font, import the pieces you want individually instead.
         </p>
         <CodeBlock code={A_LA_CARTE} lang="tsx" />
         <p className={styles["quickstart__body"]}>
