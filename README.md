@@ -20,8 +20,16 @@ A small, opinionated React component library built on top of [Base UI](https://b
 > The package isn't published yet — the snippet below describes the intended API once it is.
 
 ```bash
-npm install @base-ui/react bekk
+npm install bekk @base-ui/react react react-dom
 ```
+
+Import the stylesheet once at the entry of your app — this pulls in the design tokens, a polite CSS reset, and the Plus Jakarta Sans font face:
+
+```tsx
+import "bekk/styles.css"
+```
+
+Then use the components:
 
 ```tsx
 import { Button, Dialog } from "bekk"
@@ -45,6 +53,18 @@ export function Example() {
   )
 }
 ```
+
+### Styling à la carte
+
+`bekk/styles.css` is the kitchen-sink bundle. If you have your own reset or your own brand font, import the pieces you want individually instead:
+
+```tsx
+import "bekk/styles/tokens.css" // required — the design system
+import "bekk/styles/reset.css" // optional — modern CSS reset
+import "bekk/styles/fonts.css" // optional — Plus Jakarta Sans @font-face
+```
+
+Only `tokens.css` is mandatory. Without it, components have no values to read. If you skip `fonts.css`, the `--font-family-sans` token falls back to `system-ui, sans-serif`.
 
 ## Documentation
 
@@ -70,8 +90,10 @@ bun run dev      # serves the docs site at http://localhost:5173
 | Script               | What it does                           |
 | -------------------- | -------------------------------------- |
 | `bun run dev`        | Vite dev server — serves the docs site |
-| `bun run build`      | Type-check and build                   |
-| `bun run check`      | Format + lint + type-check             |
+| `bun run build`      | Build the library into `dist/`         |
+| `bun run build:docs` | Build the docs site                    |
+| `bun run check`      | Format + lint + type-check + test      |
+| `bun run test`       | Run the test suite once                |
 | `bun run fmt`        | `oxfmt`                                |
 | `bun run lint`       | `oxlint --deny-warnings`               |
 | `bun run type-check` | `tsc --noEmit`                         |
@@ -89,9 +111,10 @@ bun run dev      # serves the docs site at http://localhost:5173
 
 ```
 src/
-├── styles/         tokens.css + reset.css + index.css
+├── styles/         tokens.css + reset.css + fonts.css + styles.css
+├── assets/         PlusJakartaSans-VariableFont_wght.woff2
 ├── components/     one folder per component (Component.tsx, .types.ts, .module.css, .docs.tsx, index.ts)
-├── docs/           docs-site shell (sidebar, routing, prop tables)
+├── docs/           docs-site shell (sidebar, routing, prop tables, docs-shell.css)
 ├── App.tsx         mounts the docs site
 └── main.tsx        bootstraps styles + React
 ```

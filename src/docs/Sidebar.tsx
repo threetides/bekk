@@ -57,6 +57,15 @@ export const Sidebar: FC<SidebarProps> = ({ groups, currentSlug, open, onClose }
                 Overview
               </NavigationMenu.Link>
             </NavigationMenu.Item>
+            <NavigationMenu.Item>
+              <NavigationMenu.Link
+                href="#/quickstart"
+                active={currentSlug === "quickstart"}
+                className={styles["sidebar__link"]}
+              >
+                Quickstart
+              </NavigationMenu.Link>
+            </NavigationMenu.Item>
           </NavigationMenu.List>
         </div>
         {groups.map((group) => (

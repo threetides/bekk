@@ -12,18 +12,21 @@ function getHighlighter(): Promise<Highlighter> {
   if (highlighterPromise === null) {
     highlighterPromise = createHighlighter({
       themes: ["github-light", "github-dark"],
-      langs: ["tsx"]
+      langs: ["tsx", "bash"]
     })
   }
   return highlighterPromise
 }
 
+export type CodeBlockLang = "tsx" | "bash"
+
 interface CodeBlockProps {
   code: string
   embedded?: boolean
+  lang?: CodeBlockLang
 }
 
-export const CodeBlock: FC<CodeBlockProps> = ({ code, embedded = false }) => {
+export const CodeBlock: FC<CodeBlockProps> = ({ code, embedded = false, lang = "tsx" }) => {
   const [html, setHtml] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
 
@@ -32,7 +35,7 @@ export const CodeBlock: FC<CodeBlockProps> = ({ code, embedded = false }) => {
     getHighlighter().then((highlighter) => {
       if (cancelled) return
       const result = highlighter.codeToHtml(code, {
-        lang: "tsx",
+        lang,
         themes: { light: "github-light", dark: "github-dark" },
         defaultColor: false
       })
@@ -41,7 +44,7 @@ export const CodeBlock: FC<CodeBlockProps> = ({ code, embedded = false }) => {
     return () => {
       cancelled = true
     }
-  }, [code])
+  }, [code, lang])
 
   const onCopy = () => {
     void navigator.clipboard.writeText(code).then(() => {

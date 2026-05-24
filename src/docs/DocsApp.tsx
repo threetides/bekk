@@ -7,6 +7,7 @@ import { groupedPages, pages } from "./discover"
 import { Sidebar } from "./Sidebar"
 import { ComponentPage } from "./ComponentPage"
 import { Overview } from "./Overview"
+import { Quickstart } from "./Quickstart"
 import { ThemeToggle } from "./ThemeToggle"
 import styles from "./DocsApp.module.css"
 
@@ -25,8 +26,9 @@ function useHashRoute(): string {
 export const DocsApp: FC = () => {
   const slug = useHashRoute()
   const isOverview = slug === "" || slug === "overview"
-  const current = isOverview ? undefined : pages.find((p) => p.slug === slug)
-  const activeSlug = isOverview ? "overview" : current?.slug
+  const isQuickstart = slug === "quickstart"
+  const current = isOverview || isQuickstart ? undefined : pages.find((p) => p.slug === slug)
+  const activeSlug = isOverview ? "overview" : isQuickstart ? "quickstart" : current?.slug
   const contentRef = useRef<HTMLDivElement>(null)
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -74,6 +76,8 @@ export const DocsApp: FC = () => {
           </div>
           {isOverview ? (
             <Overview groups={groupedPages} />
+          ) : isQuickstart ? (
+            <Quickstart />
           ) : current ? (
             <ComponentPage page={current.page} />
           ) : (
