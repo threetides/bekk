@@ -5,7 +5,7 @@ export type AccordionVariant = "default" | "ghost"
 export type AccordionSize = "sm" | "md" | "lg"
 export type AccordionHeadingLevel = 2 | 3 | 4 | 5 | 6
 
-export interface AccordionRootProps {
+export interface AccordionRootProps<Value = string> {
   ref?: Ref<HTMLDivElement>
   className?: string
   style?: CSSProperties
@@ -15,12 +15,9 @@ export interface AccordionRootProps {
   multiple?: boolean
   disabled?: boolean
   hiddenUntilFound?: boolean
-  value?: BaseAccordion.Root.Value
-  defaultValue?: BaseAccordion.Root.Value
-  onValueChange?: (
-    value: BaseAccordion.Root.Value,
-    eventDetails: BaseAccordion.Root.ChangeEventDetails
-  ) => void
+  value?: Value[]
+  defaultValue?: Value[]
+  onValueChange?: (value: Value[], eventDetails: BaseAccordion.Root.ChangeEventDetails) => void
 }
 
 export interface AccordionItemProps {

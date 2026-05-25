@@ -3,6 +3,7 @@ import type { FC } from "react"
 import { Accordion } from "./Accordion"
 import type { AccordionSize, AccordionVariant } from "./Accordion.types"
 import { Button } from "../Button"
+import { LABEL_STYLE } from "../../docs/labelStyle"
 import type { DocPage } from "../../docs/types"
 
 const FAQ = [
@@ -47,13 +48,6 @@ const MultipleOpen: FC = () => (
 
 const VARIANTS: AccordionVariant[] = ["default", "ghost"]
 const SIZES: AccordionSize[] = ["sm", "md", "lg"]
-
-const LABEL_STYLE = {
-  fontSize: 13,
-  fontFamily: "var(--font-family-mono)",
-  color: "var(--color-text-muted)",
-  marginBottom: 8
-} as const
 
 const VariantsSizes: FC = () => (
   <div style={{ display: "grid", gap: 24 }}>
@@ -136,7 +130,7 @@ const Controlled: FC = () => {
           Open: [{value.join(", ") || "none"}]
         </span>
       </div>
-      <Accordion.Root value={value} onValueChange={(v) => setValue(v as string[])} multiple>
+      <Accordion.Root value={value} onValueChange={setValue} multiple>
         {FAQ.map((i) => (
           <Accordion.Item key={i.value} value={i.value}>
             <Accordion.Trigger>{i.title}</Accordion.Trigger>
@@ -267,11 +261,7 @@ const docPage: DocPage = {
       render: () => <Controlled />,
       code: `const [value, setValue] = useState<string[]>(["what"])
 
-<Accordion.Root
-  multiple
-  value={value}
-  onValueChange={(v) => setValue(v as string[])}
->
+<Accordion.Root multiple value={value} onValueChange={setValue}>
   <Accordion.Item value="what">
     <Accordion.Trigger>What is bekk?</Accordion.Trigger>
     <Accordion.Panel>…</Accordion.Panel>

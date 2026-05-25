@@ -122,12 +122,12 @@
   display: flex;
 }
 
-.group--vertical {
+.bekk-radio-group--vertical {
   flex-direction: column;
   gap: var(--spacing-2);
 }
 
-.group--horizontal {
+.bekk-radio-group--horizontal {
   flex-direction: row;
   flex-wrap: wrap;
   gap: var(--spacing-3) var(--spacing-4);

@@ -2,17 +2,11 @@ import { ArrowRight, Plus, Trash2 } from "lucide-react"
 import type { FC } from "react"
 import { Button } from "./Button"
 import type { ButtonSize, ButtonVariant } from "./Button.types"
+import { LABEL_STYLE } from "../../docs/labelStyle"
 import type { DocPage } from "../../docs/types"
 
 const VARIANTS: ButtonVariant[] = ["default", "ghost"]
 const SIZES: ButtonSize[] = ["sm", "md", "lg"]
-
-const LABEL_STYLE = {
-  fontSize: 13,
-  fontFamily: "var(--font-family-mono)",
-  color: "var(--color-text-muted)",
-  marginBottom: 8
-} as const
 
 const Default: FC = () => <Button>Save changes</Button>
 

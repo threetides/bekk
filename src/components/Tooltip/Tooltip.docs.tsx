@@ -32,10 +32,10 @@ const Sides: FC = () => (
       <Tooltip.Root key={side} defaultOpen>
         <Tooltip.Trigger>
           <Button variant="ghost" size="sm">
-            {side}
+            Hover me
           </Button>
         </Tooltip.Trigger>
-        <Tooltip.Content side={side}>I open on {side}</Tooltip.Content>
+        <Tooltip.Content side={side}>side=&quot;{side}&quot;</Tooltip.Content>
       </Tooltip.Root>
     ))}
   </div>
@@ -47,10 +47,10 @@ const Sizes: FC = () => (
       <Tooltip.Root key={size} defaultOpen>
         <Tooltip.Trigger>
           <Button variant="ghost" size={size}>
-            {size}
+            Hover me
           </Button>
         </Tooltip.Trigger>
-        <Tooltip.Content size={size}>Tooltip {size}</Tooltip.Content>
+        <Tooltip.Content size={size}>size=&quot;{size}&quot;</Tooltip.Content>
       </Tooltip.Root>
     ))}
   </div>

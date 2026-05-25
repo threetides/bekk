@@ -6,7 +6,7 @@ export type TabsSize = "sm" | "md" | "lg"
 export type TabsOrientation = "horizontal" | "vertical"
 export type TabsValue = string | number | null
 
-export interface TabsRootProps {
+export interface TabsRootProps<Value extends string | number = string> {
   ref?: Ref<HTMLDivElement>
   className?: string
   style?: CSSProperties
@@ -14,9 +14,9 @@ export interface TabsRootProps {
   variant?: TabsVariant
   size?: TabsSize
   orientation?: TabsOrientation
-  value?: TabsValue
-  defaultValue?: TabsValue
-  onValueChange?: (value: TabsValue, eventDetails: BaseTabs.Root.ChangeEventDetails) => void
+  value?: Value | null
+  defaultValue?: Value | null
+  onValueChange?: (value: Value | null, eventDetails: BaseTabs.Root.ChangeEventDetails) => void
 }
 
 export interface TabsListProps {

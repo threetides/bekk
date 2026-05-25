@@ -2,7 +2,7 @@ import { Tabs as BaseTabs } from "@base-ui/react/tabs"
 import { cx } from "@/utils/cx"
 import type { TabsListProps, TabsPanelProps, TabsRootProps, TabsTabProps } from "./Tabs.types"
 
-function TabsRoot({
+function TabsRoot<Value extends string | number = string>({
   ref,
   className,
   style,
@@ -13,7 +13,7 @@ function TabsRoot({
   value,
   defaultValue,
   onValueChange
-}: TabsRootProps) {
+}: TabsRootProps<Value>) {
   return (
     <BaseTabs.Root
       ref={ref}
@@ -28,7 +28,9 @@ function TabsRoot({
       orientation={orientation}
       value={value}
       defaultValue={defaultValue}
-      onValueChange={onValueChange}
+      onValueChange={(v, eventDetails) => {
+        onValueChange?.(v as Value | null, eventDetails)
+      }}
     >
       {children}
     </BaseTabs.Root>

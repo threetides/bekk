@@ -3,17 +3,11 @@ import { useState } from "react"
 import type { FC } from "react"
 import { Toggle, ToggleGroup } from "./Toggle"
 import type { ToggleSize, ToggleVariant } from "./Toggle.types"
+import { LABEL_STYLE } from "../../docs/labelStyle"
 import type { DocPage } from "../../docs/types"
 
 const VARIANTS: ToggleVariant[] = ["default", "ghost"]
 const SIZES: ToggleSize[] = ["sm", "md", "lg"]
-
-const LABEL_STYLE = {
-  fontSize: 13,
-  fontFamily: "var(--font-family-mono)",
-  color: "var(--color-text-muted)",
-  marginBottom: 8
-} as const
 
 const Default: FC = () => <Toggle iconStart={<Heart aria-hidden />} aria-label="Favorite" />
 

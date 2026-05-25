@@ -54,6 +54,15 @@
   margin-right: var(--spacing-2);
 }
 
+.page__inline-code {
+  font-family: var(--font-family-mono);
+  font-size: 0.9em;
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-sunken);
+  color: var(--color-text-primary);
+}
+
 .page__examples {
   display: flex;
   flex-direction: column;

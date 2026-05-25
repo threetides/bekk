@@ -1,8 +1,24 @@
-import type { FC } from "react"
+import type { FC, ReactNode } from "react"
 import type { DocPage } from "./types"
 import { PropTable } from "./PropTable"
 import { CodeBlock } from "./CodeBlock"
 import styles from "./ComponentPage.module.css"
+
+/* Parse `…` runs in description / anatomy text as inline <code>. Authors write
+   docs with backticked identifiers (Field.Root, aria-label, etc.); rendering
+   them as monospace makes pages readable. */
+function inlineCode(text: string): ReactNode[] {
+  return text.split(/(`[^`]+`)/g).map((part, i) => {
+    if (part.startsWith("`") && part.endsWith("`") && part.length > 2) {
+      return (
+        <code key={i} className={styles["page__inline-code"]}>
+          {part.slice(1, -1)}
+        </code>
+      )
+    }
+    return part
+  })
+}
 
 interface ComponentPageProps {
   page: DocPage
@@ -13,7 +29,7 @@ export const ComponentPage: FC<ComponentPageProps> = ({ page }) => {
     <article className={styles.page}>
       <header className={styles["page__head"]}>
         <h2 className={styles["page__name"]}>{page.name}</h2>
-        <p className={styles["page__description"]}>{page.description}</p>
+        <p className={styles["page__description"]}>{inlineCode(page.description)}</p>
       </header>
 
       <section className={styles["page__section"]}>
@@ -22,7 +38,7 @@ export const ComponentPage: FC<ComponentPageProps> = ({ page }) => {
           {page.anatomy.map((a) => (
             <li key={a.part}>
               <code className={styles["page__anatomy-part"]}>{a.part}</code>
-              <span>{a.description}</span>
+              <span>{inlineCode(a.description)}</span>
             </li>
           ))}
         </ul>
@@ -35,7 +51,7 @@ export const ComponentPage: FC<ComponentPageProps> = ({ page }) => {
             <div key={ex.title} className={styles["page__example"]}>
               <h4 className={styles["page__example-title"]}>{ex.title}</h4>
               {ex.description !== undefined && (
-                <p className={styles["page__example-desc"]}>{ex.description}</p>
+                <p className={styles["page__example-desc"]}>{inlineCode(ex.description)}</p>
               )}
               <div className={styles["page__example-card"]}>
                 <div className={styles["page__example-preview"]}>{ex.render()}</div>

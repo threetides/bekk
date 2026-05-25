@@ -108,6 +108,15 @@ const VariantsSizes: FC = () => (
               <Tabs.Tab value="two">Two</Tabs.Tab>
               <Tabs.Tab value="three">Three</Tabs.Tab>
             </Tabs.List>
+            <Tabs.Panel value="one">
+              <div style={PANEL_BOX}>One</div>
+            </Tabs.Panel>
+            <Tabs.Panel value="two">
+              <div style={PANEL_BOX}>Two</div>
+            </Tabs.Panel>
+            <Tabs.Panel value="three">
+              <div style={PANEL_BOX}>Three</div>
+            </Tabs.Panel>
           </Tabs.Root>
         </div>
       ))
@@ -163,18 +172,15 @@ const Disabled: FC = () => (
 )
 
 const Controlled: FC = () => {
-  const [value, setValue] = useState<string>("one")
+  const [value, setValue] = useState<string | null>("one")
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-      <div style={LABEL_STYLE}>Active: {value}</div>
-      <Tabs.Root value={value} onValueChange={(v) => typeof v === "string" && setValue(v)}>
-        <Tabs.List>
-          <Tabs.Tab value="one">One</Tabs.Tab>
-          <Tabs.Tab value="two">Two</Tabs.Tab>
-          <Tabs.Tab value="three">Three</Tabs.Tab>
-        </Tabs.List>
-      </Tabs.Root>
-    </div>
+    <Tabs.Root value={value} onValueChange={setValue}>
+      <Tabs.List>
+        <Tabs.Tab value="one">One</Tabs.Tab>
+        <Tabs.Tab value="two">Two</Tabs.Tab>
+        <Tabs.Tab value="three">Three</Tabs.Tab>
+      </Tabs.List>
+    </Tabs.Root>
   )
 }
 
@@ -294,9 +300,9 @@ const docPage: DocPage = {
       title: "Controlled",
       description: "Drive the active tab externally with `value` + `onValueChange`.",
       render: () => <Controlled />,
-      code: `const [value, setValue] = useState("one")
+      code: `const [value, setValue] = useState<string | null>("one")
 
-<Tabs.Root value={value} onValueChange={(v) => typeof v === "string" && setValue(v)}>
+<Tabs.Root value={value} onValueChange={setValue}>
   <Tabs.List>
     <Tabs.Tab value="one">One</Tabs.Tab>
     <Tabs.Tab value="two">Two</Tabs.Tab>

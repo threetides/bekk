@@ -9,7 +9,7 @@ import type {
   AccordionTriggerProps
 } from "./Accordion.types"
 
-function AccordionRoot({
+function AccordionRoot<Value = string>({
   ref,
   className,
   style,
@@ -22,9 +22,9 @@ function AccordionRoot({
   value,
   defaultValue,
   onValueChange
-}: AccordionRootProps) {
+}: AccordionRootProps<Value>) {
   return (
-    <BaseAccordion.Root
+    <BaseAccordion.Root<Value>
       ref={ref}
       className={cx(
         "bekk-accordion",
