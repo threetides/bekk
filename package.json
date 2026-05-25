@@ -1,6 +1,6 @@
 {
   "name": "@threetides/bekk",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A polished, accessible, opinionated React component library built on top of Base UI.",
   "license": "MIT",
   "files": [
