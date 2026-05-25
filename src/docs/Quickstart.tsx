@@ -66,9 +66,8 @@ export const Quickstart: FC = () => {
       <section className={styles["quickstart__section"]}>
         <h3 className={styles["quickstart__section-title"]}>3. Use a component</h3>
         <p className={styles["quickstart__body"]}>
-          Import from <code>@threetides/bekk</code> and compose. Each component's CSS is
-          automatically pulled in by your bundler — you don't need a separate per-component
-          stylesheet.
+          Import from <code>@threetides/bekk</code> and compose. The single stylesheet from step 2
+          already covers every component — there's nothing else to load.
         </p>
         <CodeBlock code={USE_EXAMPLE} lang="tsx" />
       </section>
