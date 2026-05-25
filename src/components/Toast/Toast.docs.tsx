@@ -89,24 +89,19 @@ const WithAction: FC = () => {
 const Dedup: FC = () => {
   const toast = useToast()
   return (
-    <div style={{ display: "grid", gap: 8, maxWidth: 320 }}>
-      <span style={{ fontSize: 13, color: "var(--color-text-muted)" }}>
-        Click rapidly — the same `id` dedupes so the stack never grows past one.
-      </span>
-      <Button
-        variant="ghost"
-        onClick={() =>
-          toast.add({
-            id: "save-status",
-            title: "Saving…",
-            description: `At ${new Date().toLocaleTimeString()}`,
-            type: "info"
-          })
-        }
-      >
-        Save (id=&quot;save-status&quot;)
-      </Button>
-    </div>
+    <Button
+      variant="ghost"
+      onClick={() =>
+        toast.add({
+          id: "save-status",
+          title: "Saving…",
+          description: `At ${new Date().toLocaleTimeString()}`,
+          type: "info"
+        })
+      }
+    >
+      Save
+    </Button>
   )
 }
 
@@ -197,7 +192,7 @@ toast.add({ type: "error", title: "Something went wrong", description: "…" })`
     {
       title: "Deduplication by id",
       description:
-        "Pass `id` to deduplicate. If a toast with the same id is already showing, the manager replaces it instead of pushing a duplicate onto the stack.",
+        "Pass `id` to deduplicate. Click rapidly: the manager replaces the existing toast instead of stacking duplicates, so only one is ever visible.",
       render: () => <Dedup />,
       code: `toast.add({
   id: "save-status",

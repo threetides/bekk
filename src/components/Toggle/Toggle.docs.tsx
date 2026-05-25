@@ -100,31 +100,17 @@ const Controlled: FC = () => {
   const [alignment, setAlignment] = useState<string[]>(["left"])
   return (
     <div style={{ display: "grid", gap: 16 }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-        <Toggle
-          pressed={pressed}
-          onPressedChange={setPressed}
-          iconStart={<Heart aria-hidden />}
-          aria-label="Favorite (controlled)"
-        />
-        <span style={{ fontSize: 13, color: "var(--color-text-muted)" }}>
-          Favorited: {pressed ? "yes" : "no"}
-        </span>
-      </div>
-      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-        <ToggleGroup value={alignment} onValueChange={setAlignment} aria-label="Alignment">
-          <Toggle value="left" iconStart={<AlignLeft aria-hidden />} aria-label="Align left" />
-          <Toggle
-            value="center"
-            iconStart={<AlignCenter aria-hidden />}
-            aria-label="Align center"
-          />
-          <Toggle value="right" iconStart={<AlignRight aria-hidden />} aria-label="Align right" />
-        </ToggleGroup>
-        <span style={{ fontSize: 13, color: "var(--color-text-muted)" }}>
-          Alignment: {alignment[0] ?? "none"}
-        </span>
-      </div>
+      <Toggle
+        pressed={pressed}
+        onPressedChange={setPressed}
+        iconStart={<Heart aria-hidden />}
+        aria-label="Favorite (controlled)"
+      />
+      <ToggleGroup value={alignment} onValueChange={setAlignment} aria-label="Alignment">
+        <Toggle value="left" iconStart={<AlignLeft aria-hidden />} aria-label="Align left" />
+        <Toggle value="center" iconStart={<AlignCenter aria-hidden />} aria-label="Align center" />
+        <Toggle value="right" iconStart={<AlignRight aria-hidden />} aria-label="Align right" />
+      </ToggleGroup>
     </div>
   )
 }

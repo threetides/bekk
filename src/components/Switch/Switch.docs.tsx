@@ -37,12 +37,7 @@ const Sizes: FC = () => (
   </div>
 )
 
-const NoLabel: FC = () => (
-  <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-    <Switch aria-label="Air mode" />
-    <span style={LABEL_STYLE}>Omit children for a bare switch — pass `aria-label`.</span>
-  </div>
-)
+const NoLabel: FC = () => <Switch aria-label="Air mode" />
 
 const LabelStart: FC = () => (
   <div style={{ display: "flex", flexDirection: "column", gap: 8, maxWidth: 280 }}>

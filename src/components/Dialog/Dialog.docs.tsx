@@ -149,19 +149,15 @@ const NoCloseX: FC = () => (
 const Controlled: FC = () => {
   const [open, setOpen] = useState(false)
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+    <>
       <Button variant="ghost" onClick={() => setOpen(true)}>
         Open via state
       </Button>
-      <span style={{ fontSize: 13, color: "var(--color-text-muted)" }}>
-        Currently {open ? "open" : "closed"}
-      </span>
       <Dialog.Root open={open} onOpenChange={setOpen}>
         <Dialog.Content>
           <Dialog.Title>Controlled dialog</Dialog.Title>
           <Dialog.Description>
-            This dialog has no Trigger child — open state is driven from outside via the button on
-            the left.
+            This dialog has no Trigger child — open state is driven from outside.
           </Dialog.Description>
           <div style={{ display: "flex", justifyContent: "flex-end", gap: 12, marginTop: 8 }}>
             <Dialog.Close>
@@ -170,7 +166,7 @@ const Controlled: FC = () => {
           </div>
         </Dialog.Content>
       </Dialog.Root>
-    </div>
+    </>
   )
 }
 

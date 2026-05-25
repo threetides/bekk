@@ -63,8 +63,8 @@ const FormSubmit: FC = () => (
     }}
     style={{ display: "flex", alignItems: "center", gap: 12 }}
   >
-    <Button variant="ghost">Cancel (default type=&quot;button&quot;)</Button>
-    <Button type="submit">Submit (type=&quot;submit&quot;)</Button>
+    <Button variant="ghost">Cancel</Button>
+    <Button type="submit">Submit</Button>
   </form>
 )
 

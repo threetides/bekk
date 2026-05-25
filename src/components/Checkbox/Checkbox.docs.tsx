@@ -38,14 +38,7 @@ const Sizes: FC = () => (
   </div>
 )
 
-const NoLabel: FC = () => (
-  <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-    <Checkbox aria-label="Row selector" />
-    <span style={LABEL_STYLE}>
-      Omit children for a bare checkbox — remember an `aria-label` for screen readers.
-    </span>
-  </div>
-)
+const NoLabel: FC = () => <Checkbox aria-label="Row selector" />
 
 const Controlled: FC = () => {
   const [checked, setChecked] = useState(false)

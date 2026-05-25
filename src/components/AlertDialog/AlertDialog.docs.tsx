@@ -7,44 +7,23 @@ import type { DocPage } from "../../docs/types"
 
 const SIZES: AlertDialogSize[] = ["sm", "md", "lg"]
 
-const Default: FC = () => {
-  const [deleted, setDeleted] = useState(false)
-  return (
-    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-      <AlertDialog.Root>
-        <AlertDialog.Trigger>
-          <Button>Delete project</Button>
-        </AlertDialog.Trigger>
-        <AlertDialog.Content>
-          <AlertDialog.Title>Delete project?</AlertDialog.Title>
-          <AlertDialog.Description>
-            This permanently deletes the project and all its data. You can&apos;t undo this.
-          </AlertDialog.Description>
-          <AlertDialog.Actions>
-            <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-            <AlertDialog.Action onClick={() => setDeleted(true)}>Delete</AlertDialog.Action>
-          </AlertDialog.Actions>
-        </AlertDialog.Content>
-      </AlertDialog.Root>
-      {deleted && (
-        <span
-          style={{
-            fontSize: 13,
-            color: "var(--color-text-muted)",
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8
-          }}
-        >
-          Project deleted. (Click reset to try again.)
-          <Button variant="ghost" size="sm" onClick={() => setDeleted(false)}>
-            reset
-          </Button>
-        </span>
-      )}
-    </div>
-  )
-}
+const Default: FC = () => (
+  <AlertDialog.Root>
+    <AlertDialog.Trigger>
+      <Button>Delete project</Button>
+    </AlertDialog.Trigger>
+    <AlertDialog.Content>
+      <AlertDialog.Title>Delete project?</AlertDialog.Title>
+      <AlertDialog.Description>
+        This permanently deletes the project and all its data. You can&apos;t undo this.
+      </AlertDialog.Description>
+      <AlertDialog.Actions>
+        <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+        <AlertDialog.Action>Delete</AlertDialog.Action>
+      </AlertDialog.Actions>
+    </AlertDialog.Content>
+  </AlertDialog.Root>
+)
 
 const Sizes: FC = () => (
   <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
@@ -71,15 +50,11 @@ const Sizes: FC = () => (
 
 const Controlled: FC = () => {
   const [open, setOpen] = useState(false)
-  const [confirmed, setConfirmed] = useState<"none" | "cancelled" | "confirmed">("none")
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+    <>
       <Button variant="ghost" onClick={() => setOpen(true)}>
         Open via state
       </Button>
-      <span style={{ fontSize: 13, color: "var(--color-text-muted)" }}>
-        Last result: {confirmed}
-      </span>
       <AlertDialog.Root open={open} onOpenChange={setOpen}>
         <AlertDialog.Content>
           <AlertDialog.Title>Discard changes?</AlertDialog.Title>
@@ -87,16 +62,12 @@ const Controlled: FC = () => {
             This dialog is controlled — open state lives outside the component.
           </AlertDialog.Description>
           <AlertDialog.Actions>
-            <AlertDialog.Cancel onClick={() => setConfirmed("cancelled")}>
-              Keep editing
-            </AlertDialog.Cancel>
-            <AlertDialog.Action onClick={() => setConfirmed("confirmed")}>
-              Discard
-            </AlertDialog.Action>
+            <AlertDialog.Cancel>Keep editing</AlertDialog.Cancel>
+            <AlertDialog.Action>Discard</AlertDialog.Action>
           </AlertDialog.Actions>
         </AlertDialog.Content>
       </AlertDialog.Root>
-    </div>
+    </>
   )
 }
 
@@ -189,8 +160,8 @@ const docPage: DocPage = {
     <AlertDialog.Title>Discard changes?</AlertDialog.Title>
     <AlertDialog.Description>This dialog is controlled from outside.</AlertDialog.Description>
     <AlertDialog.Actions>
-      <AlertDialog.Cancel onClick={() => onCancel()}>Keep editing</AlertDialog.Cancel>
-      <AlertDialog.Action onClick={() => onConfirm()}>Discard</AlertDialog.Action>
+      <AlertDialog.Cancel>Keep editing</AlertDialog.Cancel>
+      <AlertDialog.Action>Discard</AlertDialog.Action>
     </AlertDialog.Actions>
   </AlertDialog.Content>
 </AlertDialog.Root>`
