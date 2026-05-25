@@ -26,6 +26,11 @@ const PRINCIPLES = [
   }
 ]
 
+function teaser(description: string): string {
+  const firstSentence = description.match(/^[^.!?]*[.!?]/)?.[0] ?? description
+  return firstSentence.replace(/`/g, "")
+}
+
 export const Overview: FC<OverviewProps> = ({ groups }) => {
   return (
     <article className={styles.overview}>
@@ -60,7 +65,9 @@ export const Overview: FC<OverviewProps> = ({ groups }) => {
                 {group.pages.map((p) => (
                   <a key={p.slug} href={`#/${p.slug}`} className={styles["overview__card"]}>
                     <span className={styles["overview__card-name"]}>{p.page.name}</span>
-                    <span className={styles["overview__card-desc"]}>{p.page.description}</span>
+                    <span className={styles["overview__card-desc"]}>
+                      {teaser(p.page.description)}
+                    </span>
                   </a>
                 ))}
               </div>

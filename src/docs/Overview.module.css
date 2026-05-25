@@ -117,6 +117,7 @@
   background-color: var(--color-bg-surface);
   color: var(--color-text-primary);
   text-decoration: none;
+  min-height: 0;
   transition:
     border-color var(--duration-fast) var(--easing-standard),
     background-color var(--duration-fast) var(--easing-standard);
@@ -136,6 +137,12 @@
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
   line-height: var(--line-height-normal);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @media (min-width: 721px) {
