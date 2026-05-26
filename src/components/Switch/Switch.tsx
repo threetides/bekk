@@ -54,9 +54,7 @@ export function Switch({
       <span className={"bekk-switch__track"} aria-hidden>
         <BaseSwitch.Thumb className={"bekk-switch__thumb"} />
       </span>
-      {children !== undefined && children !== null && (
-        <span className={"bekk-switch__label"}>{children}</span>
-      )}
+      {children && <span className={"bekk-switch__label"}>{children}</span>}
     </BaseSwitch.Root>
   )
 }

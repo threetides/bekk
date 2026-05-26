@@ -70,9 +70,7 @@ function TabsTab({
       disabled={disabled}
     >
       {iconStart && <span className={"bekk-tabs__tab-icon"}>{iconStart}</span>}
-      {children !== undefined && children !== null && (
-        <span className={"bekk-tabs__tab-label"}>{children}</span>
-      )}
+      {children && <span className={"bekk-tabs__tab-label"}>{children}</span>}
       {iconEnd && <span className={"bekk-tabs__tab-icon"}>{iconEnd}</span>}
     </BaseTabs.Tab>
   )

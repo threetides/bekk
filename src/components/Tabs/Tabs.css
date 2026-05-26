@@ -37,7 +37,7 @@
   --bekk-tabs-tab-pad-y: var(--spacing-1);
   --bekk-tabs-tab-pad-x: var(--spacing-2);
   --bekk-tabs-tab-gap: var(--spacing-1);
-  --bekk-tabs-tab-height: 28px;
+  --bekk-tabs-tab-height: var(--control-height-sm);
   --bekk-tabs-font-size: var(--font-size-sm);
   --bekk-tabs-icon-size: var(--icon-size-sm);
   --bekk-tabs-list-gap: var(--spacing-1);
@@ -47,7 +47,7 @@
   --bekk-tabs-tab-pad-y: var(--spacing-2);
   --bekk-tabs-tab-pad-x: var(--spacing-3);
   --bekk-tabs-tab-gap: var(--spacing-2);
-  --bekk-tabs-tab-height: 36px;
+  --bekk-tabs-tab-height: var(--control-height-md);
   --bekk-tabs-font-size: var(--font-size-md);
   --bekk-tabs-icon-size: var(--icon-size-md);
   --bekk-tabs-list-gap: var(--spacing-1);
@@ -57,7 +57,7 @@
   --bekk-tabs-tab-pad-y: var(--spacing-3);
   --bekk-tabs-tab-pad-x: var(--spacing-4);
   --bekk-tabs-tab-gap: var(--spacing-2);
-  --bekk-tabs-tab-height: 44px;
+  --bekk-tabs-tab-height: var(--control-height-lg);
   --bekk-tabs-font-size: var(--font-size-lg);
   --bekk-tabs-icon-size: var(--icon-size-lg);
   --bekk-tabs-list-gap: var(--spacing-2);
