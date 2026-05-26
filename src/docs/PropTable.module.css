@@ -1,43 +1,68 @@
 .table {
-  width: 100%;
-  border-collapse: collapse;
+  border: var(--border-width-1) solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--color-bg-surface);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1.2fr 1.5fr 0.7fr 2.5fr;
+  gap: var(--spacing-4);
+  padding: var(--spacing-4);
+  border-bottom: var(--border-width-1) solid var(--color-border-subtle);
   font-size: var(--font-size-sm);
-  table-layout: auto;
+  align-items: baseline;
 }
 
-.table__head th {
-  text-align: left;
-  padding: var(--spacing-2) var(--spacing-3);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text-primary);
-  background-color: var(--color-bg-subtle);
-  border-bottom: var(--border-width-1) solid var(--color-border-subtle);
+.row:last-child {
+  border-bottom: 0;
 }
 
-.table__cell {
-  padding: var(--spacing-2) var(--spacing-3);
-  border-bottom: var(--border-width-1) solid var(--color-border-subtle);
-  vertical-align: top;
-  color: var(--color-text-secondary);
-}
-
-.table tbody tr:last-child .table__cell {
-  border-bottom: none;
-}
-
-.table__code {
+.row--head {
   font-family: var(--font-family-mono);
-  font-size: 0.85em;
-  padding: 1px 4px;
-  background-color: var(--color-bg-subtle);
-  border-radius: var(--radius-sm);
-  color: var(--color-text-primary);
-  overflow-wrap: anywhere;
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  background-color: var(--color-bg-sunken);
+  padding-top: var(--spacing-2);
+  padding-bottom: var(--spacing-2);
 }
 
-/* Keep prop names tidy on a single line — they're short camelCase identifiers
-   and look better intact. The other code cells (types, defaults) wrap. */
-.table__cell:first-child .table__code {
-  white-space: nowrap;
-  overflow-wrap: normal;
+.name {
+  font-family: var(--font-family-mono);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
+  word-break: break-word;
+}
+
+.type {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-accent-fg);
+  line-height: var(--line-height-normal);
+  word-break: break-word;
+}
+
+.default {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.desc {
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+@media (max-width: 720px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .row--head {
+    display: none;
+  }
 }

@@ -2,19 +2,28 @@ import type { FC } from "react"
 import { X } from "lucide-react"
 import { Button } from "@/components/Button"
 import { NavigationMenu } from "@/components/NavigationMenu"
+import { NpmIcon } from "./icons"
 import type { CategoryGroup } from "./discover"
 import styles from "./Sidebar.module.css"
 
 interface SidebarProps {
   groups: CategoryGroup[]
   currentSlug: string | undefined
+  version: string
   open: boolean
   onClose: () => void
 }
 
-export const Sidebar: FC<SidebarProps> = ({ groups, currentSlug, open, onClose }) => {
+const START_LINKS = [
+  { slug: "overview", label: "Overview" },
+  { slug: "quickstart", label: "Quickstart" },
+  { slug: "principles", label: "Principles" },
+  { slug: "theming", label: "Theming" }
+]
+
+export const Sidebar: FC<SidebarProps> = ({ groups, currentSlug, version, open, onClose }) => {
   return (
-    <div className={styles.sidebar} data-open={open ? "" : undefined}>
+    <aside className={styles.sidebar} data-open={open ? "" : undefined}>
       <div className={styles["sidebar__brand"]}>
         <img
           className={styles["sidebar__mark"]}
@@ -24,7 +33,8 @@ export const Sidebar: FC<SidebarProps> = ({ groups, currentSlug, open, onClose }
           alt=""
           aria-hidden="true"
         />
-        <span>bekk</span>
+        <span className={styles["sidebar__wordmark"]}>bekk</span>
+        <span className={styles["sidebar__version"]}>v{version}</span>
         <Button
           className={styles["sidebar__close"]}
           variant="ghost"
@@ -34,38 +44,38 @@ export const Sidebar: FC<SidebarProps> = ({ groups, currentSlug, open, onClose }
           onClick={onClose}
         />
       </div>
+
       <NavigationMenu.Root
         orientation="vertical"
         variant="ghost"
         size="sm"
-        aria-label="Components"
+        aria-label="Documentation"
         className={styles["sidebar__nav"]}
       >
         <div className={styles["sidebar__group"]}>
+          <h3 className={styles["sidebar__heading"]} data-index="00">
+            Start
+          </h3>
           <NavigationMenu.List>
-            <NavigationMenu.Item>
-              <NavigationMenu.Link
-                href="#/overview"
-                active={currentSlug === "overview"}
-                className={styles["sidebar__link"]}
-              >
-                Overview
-              </NavigationMenu.Link>
-            </NavigationMenu.Item>
-            <NavigationMenu.Item>
-              <NavigationMenu.Link
-                href="#/quickstart"
-                active={currentSlug === "quickstart"}
-                className={styles["sidebar__link"]}
-              >
-                Quickstart
-              </NavigationMenu.Link>
-            </NavigationMenu.Item>
+            {START_LINKS.map((link) => (
+              <NavigationMenu.Item key={link.slug}>
+                <NavigationMenu.Link
+                  href={`#/${link.slug}`}
+                  active={link.slug === currentSlug}
+                  className={styles["sidebar__link"]}
+                >
+                  {link.label}
+                </NavigationMenu.Link>
+              </NavigationMenu.Item>
+            ))}
           </NavigationMenu.List>
         </div>
-        {groups.map((group) => (
+
+        {groups.map((group, i) => (
           <div key={group.category} className={styles["sidebar__group"]}>
-            <h3 className={styles["sidebar__heading"]}>{group.category}</h3>
+            <h3 className={styles["sidebar__heading"]} data-index={String(i + 1).padStart(2, "0")}>
+              {group.category}
+            </h3>
             <NavigationMenu.List>
               {group.pages.map((p) => (
                 <NavigationMenu.Item key={p.slug}>
@@ -82,6 +92,18 @@ export const Sidebar: FC<SidebarProps> = ({ groups, currentSlug, open, onClose }
           </div>
         ))}
       </NavigationMenu.Root>
-    </div>
+
+      <div className={styles["sidebar__footer"]}>
+        <a
+          href="https://www.npmjs.com/package/@threetides/bekk"
+          target="_blank"
+          rel="noreferrer"
+          className={styles["sidebar__footer-link"]}
+        >
+          <NpmIcon />
+          <span>npm</span>
+        </a>
+      </div>
+    </aside>
   )
 }

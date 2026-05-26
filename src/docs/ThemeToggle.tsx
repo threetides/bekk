@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 import type { FC } from "react"
+import { Monitor, Moon, Sun } from "lucide-react"
 import { Toggle, ToggleGroup } from "@/components/Toggle"
 import styles from "./ThemeToggle.module.css"
 
 type Theme = "auto" | "light" | "dark"
 
 const STORAGE_KEY = "bekk-docs-theme"
-const THEMES = ["auto", "light", "dark"] as const
 
 function getInitialTheme(): Theme {
   if (typeof window === "undefined") return "auto"
@@ -41,11 +41,33 @@ export const ThemeToggle: FC = () => {
       aria-label="Theme"
       className={styles.toggle}
     >
-      {THEMES.map((t) => (
-        <Toggle key={t} value={t} size="sm" variant="ghost" className={styles["toggle__button"]}>
-          {t}
-        </Toggle>
-      ))}
+      <Toggle
+        value="light"
+        size="sm"
+        variant="ghost"
+        className={styles["toggle__button"]}
+        aria-label="Light theme"
+      >
+        <Sun aria-hidden />
+      </Toggle>
+      <Toggle
+        value="auto"
+        size="sm"
+        variant="ghost"
+        className={styles["toggle__button"]}
+        aria-label="System theme"
+      >
+        <Monitor aria-hidden />
+      </Toggle>
+      <Toggle
+        value="dark"
+        size="sm"
+        variant="ghost"
+        className={styles["toggle__button"]}
+        aria-label="Dark theme"
+      >
+        <Moon aria-hidden />
+      </Toggle>
     </ToggleGroup>
   )
 }

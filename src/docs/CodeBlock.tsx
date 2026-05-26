@@ -12,21 +12,27 @@ function getHighlighter(): Promise<Highlighter> {
   if (highlighterPromise === null) {
     highlighterPromise = createHighlighter({
       themes: ["github-light", "github-dark"],
-      langs: ["tsx", "bash"]
+      langs: ["tsx", "bash", "css", "html"]
     })
   }
   return highlighterPromise
 }
 
-export type CodeBlockLang = "tsx" | "bash"
+export type CodeBlockLang = "tsx" | "bash" | "css" | "html"
 
 interface CodeBlockProps {
   code: string
   embedded?: boolean
   lang?: CodeBlockLang
+  filename?: string
 }
 
-export const CodeBlock: FC<CodeBlockProps> = ({ code, embedded = false, lang = "tsx" }) => {
+export const CodeBlock: FC<CodeBlockProps> = ({
+  code,
+  embedded = false,
+  lang = "tsx",
+  filename
+}) => {
   const [html, setHtml] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
 
@@ -53,19 +59,43 @@ export const CodeBlock: FC<CodeBlockProps> = ({ code, embedded = false, lang = "
     })
   }
 
+  const showHead = !embedded && filename !== undefined
+
   return (
     <div className={cx(styles.codeblock, embedded && styles["codeblock--embedded"])}>
-      <div className={styles["codeblock__toolbar"]}>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onCopy}
-          iconStart={copied ? <Check aria-hidden /> : <Copy aria-hidden />}
-          aria-label={copied ? "Copied" : "Copy code"}
-        >
-          {copied ? "Copied" : "Copy"}
-        </Button>
-      </div>
+      {showHead && (
+        <div className={styles["codeblock__head"]}>
+          <span className={styles["codeblock__dots"]} aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </span>
+          <span className={styles["codeblock__filename"]}>{filename}</span>
+          <Button
+            className={styles["codeblock__copy"]}
+            variant="ghost"
+            size="sm"
+            onClick={onCopy}
+            iconStart={copied ? <Check aria-hidden /> : <Copy aria-hidden />}
+            aria-label={copied ? "Copied" : "Copy code"}
+          >
+            {copied ? "Copied" : "Copy"}
+          </Button>
+        </div>
+      )}
+      {!showHead && (
+        <div className={styles["codeblock__toolbar"]}>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onCopy}
+            iconStart={copied ? <Check aria-hidden /> : <Copy aria-hidden />}
+            aria-label={copied ? "Copied" : "Copy code"}
+          >
+            {copied ? "Copied" : "Copy"}
+          </Button>
+        </div>
+      )}
       {html === null ? (
         <pre className={cx(styles["codeblock__pre"], styles["codeblock__pre--fallback"])}>
           <code>{code}</code>

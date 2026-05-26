@@ -9,8 +9,49 @@
 .codeblock--embedded {
   border: none;
   border-radius: 0;
+  background-color: var(--color-bg-sunken);
 }
 
+/* Framed head bar — used when a filename is provided.
+   Sits flush at the top with traffic-light dots, filename label, and copy. */
+.codeblock__head {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-1) var(--spacing-2) var(--spacing-1) var(--spacing-3);
+  border-bottom: var(--border-width-1) solid var(--color-border-subtle);
+  background-color: var(--color-bg-canvas);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+}
+
+.codeblock__dots {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.codeblock__dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-border-default);
+}
+
+.codeblock__filename {
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--color-text-muted);
+}
+
+.codeblock__copy {
+  margin-left: auto;
+}
+
+/* Floating copy toolbar — used when there's no head bar.
+   Visible on small screens, fades in on hover for desktop. */
 .codeblock__toolbar {
   position: absolute;
   top: var(--spacing-2);
@@ -20,8 +61,6 @@
   transition: opacity var(--duration-fast) var(--easing-standard);
 }
 
-/* On hover-capable devices, the copy button starts hidden and only appears
-   when the block is interacted with — keeps the syntax-highlighted code clean. */
 @media (hover: hover) and (min-width: 721px) {
   .codeblock__toolbar {
     opacity: 0;
@@ -33,11 +72,11 @@
   }
 }
 
-/* Shiki layout — we keep its tokenized spans, but the bg comes from bekk so the
-   block reads as recessed below the example surface. */
+/* Shiki layout — keep its tokenized spans, but bg comes from bekk so the block
+   reads as recessed below the example surface. */
 .codeblock__rendered :global(.shiki) {
   margin: 0;
-  padding: var(--spacing-4);
+  padding: var(--spacing-4) var(--spacing-5);
   background-color: transparent;
   font-family: var(--font-family-mono);
   font-size: var(--font-size-sm);
@@ -46,8 +85,8 @@
   tab-size: 2;
 }
 
-/* Dual-theme syntax colors: shiki emits --shiki-light / --shiki-dark per span
-   when called with defaultColor: false. Map them to bekk's theming rules. */
+/* Dual-theme colors: shiki emits --shiki-light / --shiki-dark per span when
+   called with defaultColor: false. Map them to bekk's theming rules. */
 .codeblock__rendered :global(.shiki),
 .codeblock__rendered :global(.shiki span) {
   color: var(--shiki-light);
@@ -67,7 +106,7 @@
 
 .codeblock__pre--fallback {
   margin: 0;
-  padding: var(--spacing-4);
+  padding: var(--spacing-4) var(--spacing-5);
   font-family: var(--font-family-mono);
   font-size: var(--font-size-sm);
   line-height: var(--line-height-normal);
