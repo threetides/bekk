@@ -1,144 +1,179 @@
-.page {
-  padding: var(--spacing-4);
-  max-width: 960px;
-  margin: 0 auto;
+.page__body {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-6);
+  gap: var(--spacing-12);
+  min-width: 0;
 }
 
+/* Head */
 .page__head {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-2);
+  gap: var(--spacing-3);
 }
 
-.page__name {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  margin: 0;
-}
-
-.page__description {
-  font-size: var(--font-size-md);
-  color: var(--color-text-secondary);
-  margin: 0;
-}
-
-.page__section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-4);
-}
-
-.page__section-title {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  margin: 0;
-}
-
-.page__anatomy {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-2);
-  font-size: var(--font-size-sm);
-}
-
-.page__anatomy-part {
+.page__path {
   font-family: var(--font-family-mono);
-  font-size: 0.9em;
-  padding: 2px 6px;
-  background-color: var(--color-bg-subtle);
-  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.page__title {
+  margin: 0;
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-light);
+  letter-spacing: var(--letter-spacing-tighter);
   color: var(--color-text-primary);
-  margin-right: var(--spacing-2);
+  line-height: var(--line-height-display);
+}
+
+@media (max-width: 720px) {
+  .page__title {
+    font-size: var(--font-size-4xl);
+  }
+}
+
+.page__lede {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-secondary);
+  max-width: 60ch;
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+@media (max-width: 720px) {
+  .page__lede {
+    font-size: var(--font-size-lg);
+  }
+}
+
+.page__tags {
+  display: flex;
+  gap: var(--spacing-2);
+  flex-wrap: wrap;
+  margin-top: var(--spacing-2);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  padding: 4px var(--spacing-2);
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg-subtle);
+  color: var(--color-text-secondary);
+}
+
+/* Section */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-5);
+  scroll-margin-top: 80px;
 }
 
 .page__inline-code {
   font-family: var(--font-family-mono);
-  font-size: 0.9em;
+  font-size: 0.875em;
   padding: 0.1em 0.35em;
   border-radius: var(--radius-sm);
-  background-color: var(--color-bg-sunken);
+  background-color: var(--color-bg-subtle);
   color: var(--color-text-primary);
 }
 
-.page__examples {
+/* Anatomy table */
+.anatomy {
+  border-top: var(--border-width-1) solid var(--color-border-subtle);
+  border-bottom: var(--border-width-1) solid var(--color-border-subtle);
+}
+
+.anatomy__row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--spacing-6);
+  padding: var(--spacing-4) 0;
+  border-bottom: var(--border-width-1) solid var(--color-border-subtle);
+  align-items: baseline;
+}
+
+.anatomy__row:last-child {
+  border-bottom: 0;
+}
+
+.anatomy__part {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.anatomy__desc {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 720px) {
+  .anatomy__row {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-1);
+  }
+}
+
+/* Examples */
+.examples {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+}
+
+.example {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.example__head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.example__title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.example__desc {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  max-width: 60ch;
+}
+
+/* Props */
+.props {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-6);
 }
 
-.page__example {
+.props__group {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-2);
+  gap: var(--spacing-3);
 }
 
-.page__example-title {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
+.props__group-head {
   margin: 0;
-}
-
-.page__example-desc {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-  margin: 0;
-}
-
-.page__example-card {
-  border: var(--border-width-1) solid var(--color-border-subtle);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-}
-
-.page__example-preview {
-  padding: var(--spacing-4);
-  background-color: var(--color-bg-surface);
-  overflow-x: auto;
-}
-
-/* When a code block follows the preview inside the card, draw a divider between
-   them so the seam reads as connected rather than overlapping. */
-.page__example-preview:not(:only-child) {
-  border-bottom: var(--border-width-1) solid var(--color-border-subtle);
-}
-
-.page__props {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-4);
-}
-
-.page__props-table {
-  overflow-x: auto;
-  border: var(--border-width-1) solid var(--color-border-subtle);
-  border-radius: var(--radius-lg);
-}
-
-.page__props-part {
   font-family: var(--font-family-mono);
   font-size: var(--font-size-md);
-  font-weight: var(--font-weight-semibold);
-  margin: 0;
-}
-
-@media (min-width: 721px) {
-  .page {
-    padding: var(--spacing-8);
-    gap: var(--spacing-8);
-  }
-
-  .page__name {
-    font-size: var(--font-size-3xl);
-  }
-
-  .page__section-title {
-    font-size: var(--font-size-xl);
-  }
-
-  .page__example-preview {
-    padding: var(--spacing-6);
-  }
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
 }

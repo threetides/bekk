@@ -1,10 +1,11 @@
 .toggle {
-  background-color: var(--color-bg-subtle);
-  border-radius: var(--radius-md);
   padding: 2px;
-  gap: 2px;
+  border: var(--border-width-1) solid var(--color-border-subtle);
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg-surface);
+  gap: 0;
 }
 
 .toggle__button {
-  text-transform: capitalize;
+  border-radius: var(--radius-full);
 }

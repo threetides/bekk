@@ -1,0 +1,22 @@
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-accent-fg);
+}
+
+.eyebrow__index {
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.eyebrow__rule {
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-border-subtle);
+}
