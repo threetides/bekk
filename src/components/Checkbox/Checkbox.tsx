@@ -61,9 +61,7 @@ export function Checkbox({
           {indeterminate ? <Minus /> : <Check />}
         </BaseCheckbox.Indicator>
       </span>
-      {children !== undefined && children !== null && (
-        <span className={"bekk-checkbox__label"}>{children}</span>
-      )}
+      {children && <span className={"bekk-checkbox__label"}>{children}</span>}
     </BaseCheckbox.Root>
   )
 }

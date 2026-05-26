@@ -40,9 +40,7 @@ export function Radio<Value = string>({
             indicator inserts on select — same reason as Checkbox. */}
         <BaseRadio.Indicator className={"bekk-radio__indicator"} keepMounted />
       </span>
-      {children !== undefined && children !== null && (
-        <span className={"bekk-radio__label"}>{children}</span>
-      )}
+      {children && <span className={"bekk-radio__label"}>{children}</span>}
     </BaseRadio.Root>
   )
 }

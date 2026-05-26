@@ -7,6 +7,9 @@
    ============================================================ */
 
 .bekk-radio {
+  /* Filled dot is half the outer circle's diameter, less a 1px optical trim. */
+  --bekk-radio-dot-size: calc(var(--bekk-radio-box-size) / 2 - 1px);
+
   display: inline-flex;
   align-items: center;
   gap: var(--bekk-radio-gap);
@@ -29,21 +32,18 @@
 /* Sizes set internal vars */
 .bekk-radio--sm {
   --bekk-radio-box-size: var(--control-box-size-sm);
-  --bekk-radio-dot-size: 6px;
   --bekk-radio-font-size: var(--font-size-sm);
   --bekk-radio-gap: var(--spacing-2);
 }
 
 .bekk-radio--md {
   --bekk-radio-box-size: var(--control-box-size-md);
-  --bekk-radio-dot-size: 8px;
   --bekk-radio-font-size: var(--font-size-md);
   --bekk-radio-gap: var(--spacing-2);
 }
 
 .bekk-radio--lg {
   --bekk-radio-box-size: var(--control-box-size-lg);
-  --bekk-radio-dot-size: 10px;
   --bekk-radio-font-size: var(--font-size-lg);
   --bekk-radio-gap: var(--spacing-3);
 }

@@ -9,6 +9,9 @@
    ============================================================ */
 
 .bekk-checkbox {
+  /* The check/indeterminate glyph sits inset 2px on each side of the box. */
+  --bekk-checkbox-icon-size: calc(var(--bekk-checkbox-box-size) - var(--spacing-1));
+
   display: inline-flex;
   align-items: center;
   gap: var(--bekk-checkbox-gap);
@@ -31,21 +34,18 @@
 /* Sizes set internal vars consumed by box + label */
 .bekk-checkbox--sm {
   --bekk-checkbox-box-size: var(--control-box-size-sm);
-  --bekk-checkbox-icon-size: 10px;
   --bekk-checkbox-font-size: var(--font-size-sm);
   --bekk-checkbox-gap: var(--spacing-2);
 }
 
 .bekk-checkbox--md {
   --bekk-checkbox-box-size: var(--control-box-size-md);
-  --bekk-checkbox-icon-size: 14px;
   --bekk-checkbox-font-size: var(--font-size-md);
   --bekk-checkbox-gap: var(--spacing-2);
 }
 
 .bekk-checkbox--lg {
   --bekk-checkbox-box-size: var(--control-box-size-lg);
-  --bekk-checkbox-icon-size: 18px;
   --bekk-checkbox-font-size: var(--font-size-lg);
   --bekk-checkbox-gap: var(--spacing-3);
 }

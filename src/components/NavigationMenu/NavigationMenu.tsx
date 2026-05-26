@@ -30,10 +30,10 @@ function NavigationMenuRoot({
     <BaseNavigationMenu.Root
       ref={ref}
       className={cx(
-        "bekk-nav",
-        `bekk-nav--${variant}`,
-        `bekk-nav--${size}`,
-        `bekk-nav--${orientation}`,
+        "bekk-navigation-menu",
+        `bekk-navigation-menu--${variant}`,
+        `bekk-navigation-menu--${size}`,
+        `bekk-navigation-menu--${orientation}`,
         className
       )}
       style={style}
@@ -47,12 +47,12 @@ function NavigationMenuRoot({
       {children}
       <BaseNavigationMenu.Portal>
         <BaseNavigationMenu.Positioner
-          className={"bekk-nav__positioner"}
+          className={"bekk-navigation-menu__positioner"}
           sideOffset={sideOffset}
           align={align}
         >
-          <BaseNavigationMenu.Popup className={"bekk-nav__popup"}>
-            <BaseNavigationMenu.Viewport className={"bekk-nav__viewport"} />
+          <BaseNavigationMenu.Popup className={"bekk-navigation-menu__popup"}>
+            <BaseNavigationMenu.Viewport className={"bekk-navigation-menu__viewport"} />
           </BaseNavigationMenu.Popup>
         </BaseNavigationMenu.Positioner>
       </BaseNavigationMenu.Portal>
@@ -62,7 +62,11 @@ function NavigationMenuRoot({
 
 function NavigationMenuList({ ref, className, style, children }: NavigationMenuListProps) {
   return (
-    <BaseNavigationMenu.List ref={ref} className={cx("bekk-nav__list", className)} style={style}>
+    <BaseNavigationMenu.List
+      ref={ref}
+      className={cx("bekk-navigation-menu__list", className)}
+      style={style}
+    >
       {children}
     </BaseNavigationMenu.List>
   )
@@ -72,7 +76,7 @@ function NavigationMenuItem({ ref, className, style, children, value }: Navigati
   return (
     <BaseNavigationMenu.Item
       ref={ref}
-      className={cx("bekk-nav__item", className)}
+      className={cx("bekk-navigation-menu__item", className)}
       style={style}
       value={value}
     >
@@ -92,12 +96,14 @@ function NavigationMenuTrigger({
   return (
     <BaseNavigationMenu.Trigger
       ref={ref}
-      className={cx("bekk-nav__trigger", className)}
+      className={cx("bekk-navigation-menu__trigger", className)}
       style={style}
       disabled={disabled}
     >
-      <span className={"bekk-nav__trigger-label"}>{children}</span>
-      <span className={"bekk-nav__trigger-icon"}>{icon ?? <ChevronDown aria-hidden />}</span>
+      <span className={"bekk-navigation-menu__trigger-label"}>{children}</span>
+      <span className={"bekk-navigation-menu__trigger-icon"}>
+        {icon ?? <ChevronDown aria-hidden />}
+      </span>
     </BaseNavigationMenu.Trigger>
   )
 }
@@ -106,7 +112,7 @@ function NavigationMenuContent({ ref, className, style, children }: NavigationMe
   return (
     <BaseNavigationMenu.Content
       ref={ref}
-      className={cx("bekk-nav__content", className)}
+      className={cx("bekk-navigation-menu__content", className)}
       style={style}
     >
       {children}
@@ -126,7 +132,7 @@ function NavigationMenuLink({
   return (
     <BaseNavigationMenu.Link
       ref={ref}
-      className={cx("bekk-nav__link", className)}
+      className={cx("bekk-navigation-menu__link", className)}
       style={style}
       active={active}
       closeOnClick={closeOnClick}
