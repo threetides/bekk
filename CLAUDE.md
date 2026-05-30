@@ -390,6 +390,7 @@ The docs site is part of the dev experience but **not** part of the published li
 > - [x] Switch
 > - [x] Textarea
 > - [x] Tabs
+> - [x] Autocomplete
 >
 > Before writing any code, ask the user the questions in § 9. This is not optional.
 

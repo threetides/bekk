@@ -36,7 +36,8 @@ export interface SelectRootProps<Value = string> {
   autoComplete?: string
   /**
    * Modal popup locks page scroll and disables outside pointer interaction
-   * while open. Defaults to `true` to match Base UI.
+   * while open. Defaults to `false` so opening the popup doesn't lock scroll
+   * or shift layout; set `true` for a modal dropdown.
    */
   modal?: boolean
   /** Ref to the hidden form input — useful for form-library integration. */

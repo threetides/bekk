@@ -212,7 +212,7 @@ const docPage: DocPage = {
     {
       part: "Select.Content",
       description:
-        "The popup body. Absorbs Base UI's Portal + Positioner + Popup + List + ScrollArrows + Arrow. Anchored to the trigger and aligned by default so the active item's text sits over the trigger's value text."
+        "The popup body. Absorbs Base UI's Portal + Positioner + Popup + List. Drops below the trigger as a standard dropdown (honoring `side`/`align`/`sideOffset`); the list scrolls when it overflows."
     },
     {
       part: "Select.Item",
@@ -455,9 +455,9 @@ const docPage: DocPage = {
       {
         name: "modal",
         type: "boolean",
-        default: "true",
+        default: "false",
         description:
-          "When true, opening the popup locks page scroll and disables outside pointer interaction. Set `false` for non-modal dropdowns."
+          "When true, opening the popup locks page scroll and disables outside pointer interaction. Defaults to `false` so the dropdown doesn't lock scroll or shift layout."
       },
       {
         name: "inputRef",

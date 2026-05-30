@@ -149,12 +149,16 @@
 /* ---------- Popup ---------- */
 
 .bekk-select__positioner {
-  z-index: var(--z-popover);
+  z-index: var(--z-dropdown);
 }
 
 .bekk-select__popup {
   --bekk-select-popup-max-h: 320px;
+  /* Match the trigger width exactly so the closed trigger and open dropdown
+     line up. Set the width once on the trigger (via style/className); long item
+     labels ellipsize rather than widening the popup past the control. */
   min-width: var(--anchor-width);
+  max-width: var(--anchor-width);
   max-height: min(var(--available-height), var(--bekk-select-popup-max-h));
   background-color: var(--color-bg-surface);
   border: var(--border-width-1) solid var(--color-border-subtle);

@@ -47,7 +47,7 @@ function SelectRoot<Value = string>({
   name,
   form,
   autoComplete,
-  modal,
+  modal = false,
   inputRef,
   open,
   defaultOpen,
@@ -154,6 +154,11 @@ function SelectContent({
     <BaseSelect.Portal>
       <BaseSelect.Positioner
         className={"bekk-select__positioner"}
+        /* Base UI defaults this to `true`, which overlaps the popup on the
+           trigger and centers the selected item over it (native-select style),
+           ignoring side/align/sideOffset. Turn it off so Select behaves like a
+           standard drop-below dropdown, consistent with Autocomplete/Popover. */
+        alignItemWithTrigger={false}
         side={side}
         align={align}
         sideOffset={sideOffset}

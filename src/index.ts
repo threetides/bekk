@@ -12,6 +12,20 @@ export type {
 export { Button } from "./components/Button"
 export type { ButtonProps, ButtonSize, ButtonVariant } from "./components/Button"
 
+export { Autocomplete } from "./components/Autocomplete"
+export type {
+  AutocompleteAlign,
+  AutocompleteContentChildren,
+  AutocompleteContentProps,
+  AutocompleteInputProps,
+  AutocompleteItemProps,
+  AutocompleteRootProps,
+  AutocompleteSeparatorProps,
+  AutocompleteSide,
+  AutocompleteSize,
+  AutocompleteVariant
+} from "./components/Autocomplete"
+
 export { Toggle, ToggleGroup } from "./components/Toggle"
 export type { ToggleGroupProps, ToggleProps, ToggleSize, ToggleVariant } from "./components/Toggle"
 

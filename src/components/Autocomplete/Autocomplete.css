@@ -1,0 +1,294 @@
+/* ============================================================
+   Autocomplete
+   ------------------------------------------------------------
+   Input visually matches bekk Input (same border, sizes, focus
+   ring, ghost underline). Popup matches Select — a floating
+   panel with keyboard-navigable items highlighted on hover/nav.
+   ============================================================ */
+
+/* ---------- Input ---------- */
+
+/* The InputGroup wrapper hosts the border, focus ring, and adornments.
+   The actual <input> sits inside, borderless and transparent. */
+.bekk-autocomplete__input {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bekk-autocomplete-gap);
+  width: 100%;
+  padding-inline: var(--bekk-autocomplete-pad-x);
+  background-color: var(--color-bg-surface);
+  border: var(--border-width-1) solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family-sans);
+  color: var(--color-text-primary);
+  transition:
+    border-color var(--duration-fast) var(--easing-standard),
+    box-shadow var(--duration-fast) var(--easing-standard),
+    background-color var(--duration-fast) var(--easing-standard);
+  cursor: text;
+}
+
+.bekk-autocomplete__input:hover:not(:has([data-disabled])) {
+  border-color: var(--color-border-strong);
+}
+
+/* Focus ring lives on the wrapper, driven by :focus-within because the focus
+   target is the inner <input>. Mirrors the global :focus-visible treatment. */
+.bekk-autocomplete__input:focus-within {
+  border-color: var(--color-accent-border);
+  outline: var(--border-width-2) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.bekk-autocomplete__input:has([data-disabled]) {
+  background-color: var(--color-bg-muted);
+  border-color: var(--color-border-subtle);
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+/* Invalid state — Field.Root surfaces `data-invalid` on descendants. */
+.bekk-autocomplete__input:has([data-invalid]) {
+  border-color: var(--color-status-danger);
+}
+
+.bekk-autocomplete__input:has([data-invalid]):focus-within {
+  outline-color: var(--color-status-danger);
+}
+
+/* Sizes set component-internal CSS variables */
+.bekk-autocomplete__input--sm {
+  --bekk-autocomplete-pad-x: var(--spacing-2);
+  --bekk-autocomplete-height: var(--control-height-sm);
+  --bekk-autocomplete-font-size: var(--font-size-sm);
+  --bekk-autocomplete-icon-size: var(--icon-size-sm);
+  --bekk-autocomplete-gap: var(--spacing-2);
+}
+
+.bekk-autocomplete__input--md {
+  --bekk-autocomplete-pad-x: var(--spacing-3);
+  --bekk-autocomplete-height: var(--control-height-md);
+  --bekk-autocomplete-font-size: var(--font-size-md);
+  --bekk-autocomplete-icon-size: var(--icon-size-md);
+  --bekk-autocomplete-gap: var(--spacing-2);
+}
+
+.bekk-autocomplete__input--lg {
+  --bekk-autocomplete-pad-x: var(--spacing-4);
+  --bekk-autocomplete-height: var(--control-height-lg);
+  --bekk-autocomplete-font-size: var(--font-size-lg);
+  --bekk-autocomplete-icon-size: var(--icon-size-lg);
+  --bekk-autocomplete-gap: var(--spacing-3);
+}
+
+/* Ghost variant — no box, just a bottom line matching the default border, so
+   the two read as one family. The underline is a pseudo-element so the wrapper
+   keeps `border-radius` for a properly-rounded focus outline. */
+.bekk-autocomplete__input--ghost {
+  background-color: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  padding-inline: var(--spacing-1);
+  position: relative;
+}
+
+.bekk-autocomplete__input--ghost::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--border-width-1);
+  background-color: var(--color-border-default);
+  transition: background-color var(--duration-fast) var(--easing-standard);
+}
+
+.bekk-autocomplete__input--ghost:hover:not(:has([data-disabled]))::after {
+  background-color: var(--color-border-strong);
+}
+
+.bekk-autocomplete__input--ghost:focus-within::after {
+  background-color: var(--color-accent-border);
+}
+
+.bekk-autocomplete__input--ghost:has([data-invalid])::after {
+  background-color: var(--color-status-danger);
+}
+
+.bekk-autocomplete__input--ghost:has([data-disabled])::after {
+  background-color: var(--color-border-subtle);
+}
+
+/* The actual input element — borderless, fills the wrapper */
+.bekk-autocomplete__control {
+  flex: 1;
+  min-width: 0;
+  height: var(--bekk-autocomplete-height);
+  padding: 0;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: var(--bekk-autocomplete-font-size);
+  line-height: var(--line-height-normal);
+  color: inherit;
+  outline: none;
+}
+
+/* Suppress the global :focus-visible ring on the inner element — the wrapper
+   carries the indicator via :focus-within. */
+.bekk-autocomplete__control:focus-visible {
+  outline: none;
+}
+
+.bekk-autocomplete__control::placeholder {
+  color: var(--color-text-muted);
+}
+
+.bekk-autocomplete__control[data-disabled] {
+  cursor: not-allowed;
+}
+
+/* Icon slot (passive: iconStart) */
+.bekk-autocomplete__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--bekk-autocomplete-icon-size);
+  height: var(--bekk-autocomplete-icon-size);
+  color: var(--color-text-muted);
+}
+
+.bekk-autocomplete__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Action button (interactive: clear) */
+.bekk-autocomplete__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: calc(var(--bekk-autocomplete-icon-size) + var(--spacing-1));
+  height: calc(var(--bekk-autocomplete-icon-size) + var(--spacing-1));
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition:
+    color var(--duration-fast) var(--easing-standard),
+    background-color var(--duration-fast) var(--easing-standard);
+}
+
+.bekk-autocomplete__action:hover:not(:disabled) {
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-subtle);
+}
+
+.bekk-autocomplete__action svg {
+  width: var(--bekk-autocomplete-icon-size);
+  height: var(--bekk-autocomplete-icon-size);
+}
+
+/* ---------- Popup ---------- */
+
+.bekk-autocomplete__positioner {
+  z-index: var(--z-dropdown);
+}
+
+.bekk-autocomplete__popup {
+  --bekk-autocomplete-popup-max-h: 320px;
+  /* Match the input width exactly: at least as wide, but never wider, so long
+     item labels ellipsize instead of widening the popup past the control. */
+  min-width: var(--anchor-width);
+  max-width: var(--anchor-width);
+  max-height: min(var(--available-height), var(--bekk-autocomplete-popup-max-h));
+  background-color: var(--color-bg-surface);
+  border: var(--border-width-1) solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-sans);
+  outline: none;
+  overflow: hidden;
+  transform-origin: var(--transform-origin);
+  transition:
+    opacity var(--duration-fast) var(--easing-standard),
+    transform var(--duration-fast) var(--easing-standard);
+}
+
+.bekk-autocomplete__popup[data-starting-style],
+.bekk-autocomplete__popup[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.97);
+}
+
+/* Collapse padding when the list is empty so the empty message owns the space */
+.bekk-autocomplete__popup[data-empty] .bekk-autocomplete__list {
+  padding-block: 0;
+}
+
+.bekk-autocomplete__list {
+  max-height: inherit;
+  padding-block: var(--spacing-1);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* ---------- Item ---------- */
+
+.bekk-autocomplete__item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  /* Long labels ellipsize rather than widening the (anchor-capped) popup. */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.bekk-autocomplete__item[data-highlighted] {
+  background-color: var(--color-bg-subtle);
+}
+
+.bekk-autocomplete__item[data-disabled] {
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+/* Keyboard navigation uses data-highlighted — suppress the global ring. */
+.bekk-autocomplete__item:focus-visible {
+  outline: none;
+}
+
+/* ---------- Empty / Separator ---------- */
+
+.bekk-autocomplete__empty {
+  padding: var(--spacing-3);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-muted);
+}
+
+/* Empty stays mounted for screen readers but only renders its children when the
+   list is empty — collapse the padding box while it has no content. */
+.bekk-autocomplete__empty:empty {
+  display: none;
+}
+
+.bekk-autocomplete__separator {
+  height: var(--border-width-1);
+  margin: var(--spacing-1) var(--spacing-3);
+  background-color: var(--color-border-subtle);
+}
