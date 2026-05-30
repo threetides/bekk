@@ -1,4 +1,14 @@
-# Logs
+# build output
+dist/
+dist-ssr/
+
+# generated types
+*.tsbuildinfo
+
+# dependencies
+node_modules/
+
+# logs
 logs
 *.log
 npm-debug.log*
@@ -7,16 +17,18 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
+# environment variables
+.env
+.env.production
 *.local
+
+# macOS-specific files
+.DS_Store
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
-.DS_Store
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
