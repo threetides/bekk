@@ -1,11 +1,9 @@
 # bekk
 
-A small, opinionated React component library built on Base UI.
+A React component library built on Base UI.
 
-`bekk` wraps [Base UI](https://base-ui.com)'s accessible primitives in a
-friendlier, pared-down API and a single design-token-driven visual language, so
-you can drop in a component and get something that looks and behaves correctly
-without further configuration. It's published on npm as
+`bekk` wraps [Base UI](https://base-ui.com)'s accessible primitives in a smaller
+API and a single design-token visual language. It's published on npm as
 [`@threetides/bekk`](https://www.npmjs.com/package/@threetides/bekk).
 
 ## Installation
@@ -15,8 +13,8 @@ npm install @threetides/bekk @base-ui/react react react-dom
 ```
 
 bekk ships its styles separately from its components. Import the stylesheet once
-at the entry of your app — this pulls in the design tokens, a polite CSS reset,
-and the Plus Jakarta Sans font face:
+at the entry of your app. This pulls in the design tokens, a CSS reset, and the
+Plus Jakarta Sans font face:
 
 ```tsx
 import "@threetides/bekk/styles.css"
@@ -49,20 +47,20 @@ export function Example() {
 }
 ```
 
-Every component is a thin wrapper over a Base UI primitive, so keyboard
-navigation, ARIA wiring, focus management, and screen reader support come along
-for free. The only consumer-facing styling hooks are `className` and `style` on
-each component's root element, for layout-level composition.
+Every component wraps a Base UI primitive, so keyboard navigation, ARIA wiring,
+focus management, and screen reader support come along with it. The only
+consumer-facing styling hooks are `className` and `style` on each component's
+root element, for layout-level composition.
 
-### Styling à la carte
+### Importing styles individually
 
-`@threetides/bekk/styles.css` is the kitchen-sink bundle. If you have your own
-reset or your own brand font, import the pieces you want individually instead:
+`@threetides/bekk/styles.css` bundles everything. If you have your own reset or
+your own brand font, import the pieces you want individually instead:
 
 ```tsx
-import "@threetides/bekk/styles/tokens.css" // required — the design system
-import "@threetides/bekk/styles/reset.css"  // optional — modern CSS reset
-import "@threetides/bekk/styles/fonts.css"  // optional — Plus Jakarta Sans
+import "@threetides/bekk/styles/tokens.css" // required: the design system
+import "@threetides/bekk/styles/reset.css"  // optional: CSS reset
+import "@threetides/bekk/styles/fonts.css"  // optional: Plus Jakarta Sans
 ```
 
 Only `tokens.css` is mandatory; without it, components have no values to read.
@@ -81,16 +79,16 @@ src/
 └── main.tsx        bootstraps styles + React
 ```
 
-Every visual value — color, spacing, radius, type, motion, shadow — comes from a
-single `tokens.css` file. Light and dark themes work out of the box, auto-following
-`prefers-color-scheme` and overridable per-document with
-`html[data-theme="light" | "dark"]`. The only dependencies are React and Base UI.
+Every visual value (color, spacing, radius, type, motion, shadow) comes from a
+single `tokens.css` file. Light and dark themes follow `prefers-color-scheme`
+and can be overridden per-document with `html[data-theme="light" | "dark"]`.
+The only dependencies are React and Base UI.
 
 ## Development
 
 bekk uses [Bun](https://bun.sh) as its package manager and ships its own in-repo
-docs site (no Storybook). Clone the repo and start the dev server to browse every
-component with live examples and prop tables:
+docs site. Clone the repo and start the dev server to browse every component
+with live examples and prop tables:
 
 ```sh
 bun install
