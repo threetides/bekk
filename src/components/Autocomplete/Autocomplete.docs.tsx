@@ -436,6 +436,14 @@ const docPage: DocPage = {
         type: "string / CSSProperties",
         description: "Forwarded to the item element."
       }
+    ],
+    Separator: [
+      {
+        name: "className / style",
+        type: "string / CSSProperties",
+        description:
+          "Forwarded to the separator element. An optional divider between groups of items."
+      }
     ]
   }
 }

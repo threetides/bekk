@@ -271,7 +271,7 @@ const docPage: DocPage = {
     {
       title: "Long content",
       description:
-        "Long content scrolls inside the popup. The popup caps at the viewport height (minus gutter) so the dialog never spills past the screen.",
+        "Long content scrolls within the dialog viewport (capped at the viewport height, minus a gutter) while the popup stays centered, so the dialog never spills past the screen.",
       render: () => <LongContent />,
       code: `<Dialog.Content size="lg">
   <Dialog.Title>Terms of service</Dialog.Title>

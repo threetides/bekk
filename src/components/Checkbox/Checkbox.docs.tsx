@@ -140,6 +140,7 @@ const docPage: DocPage = {
 <Checkbox defaultChecked>Checked</Checkbox>
 <Checkbox indeterminate>Indeterminate</Checkbox>
 <Checkbox disabled>Disabled (unchecked)</Checkbox>
+<Checkbox disabled defaultChecked>Disabled (checked)</Checkbox>
 <Checkbox readOnly defaultChecked>Read-only (checked)</Checkbox>`
     },
     {

@@ -3,12 +3,15 @@
   z-index: var(--z-tooltip);
 }
 
-/* Popup — the visible bubble. `max-width: var(--available-width)` keeps long
-   tooltips from running off the viewport edge. */
+/* Popup — the visible bubble. The min() caps the bubble at a comfortable
+   reading width while `--available-width` (set by Base UI's Positioner) keeps
+   long tooltips from running off the viewport edge. The cap is a tooltip-
+   specific measure, not a scale value, so it lives as a component-internal var. */
 .bekk-tooltip__popup {
+  --bekk-tooltip-max-width: 280px;
   display: flex;
   align-items: center;
-  max-width: min(280px, var(--available-width));
+  max-width: min(var(--bekk-tooltip-max-width), var(--available-width));
   padding: var(--bekk-tooltip-pad-y) var(--bekk-tooltip-pad-x);
   background-color: var(--color-bg-inverse);
   color: var(--color-text-on-inverse);
@@ -51,7 +54,9 @@
 }
 
 /* Arrow — Base UI's Arrow component is positioned automatically.
-   We render an SVG inside it and rotate per side via data-side. */
+   We render an SVG inside it and rotate per side via data-side. The width/height
+   and the per-side offsets below are intrinsic to the inline SVG's viewBox
+   (0 0 12 8) — geometry, not design-scale values — so they stay as literals. */
 .bekk-tooltip__arrow {
   display: flex;
 }

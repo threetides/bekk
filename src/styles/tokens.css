@@ -104,6 +104,15 @@
   --control-box-size-md: 18px;
   --control-box-size-lg: 22px;
 
+  /* Switch track height + thumb diameter (thumb inset is derived in-component). */
+  --control-track-height-sm: 16px;
+  --control-track-height-md: 20px;
+  --control-track-height-lg: 24px;
+
+  --control-thumb-size-sm: 12px;
+  --control-thumb-size-md: 16px;
+  --control-thumb-size-lg: 20px;
+
   /* ---------- Typography ---------- */
   --font-family-sans: "PlusJakartaSans", system-ui, sans-serif;
   --font-family-mono: ui-monospace, "SF Mono", Menlo, monospace;
@@ -137,6 +146,7 @@
   --letter-spacing-tight: -0.02em;
   --letter-spacing-normal: 0;
   --letter-spacing-wide: 0.02em;
+  --letter-spacing-wider: 0.06em;
 
   /* ---------- Z-index scale ---------- */
   --z-base: 0;

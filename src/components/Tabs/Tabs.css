@@ -20,7 +20,7 @@
   font-family: var(--font-family-sans);
   color: var(--color-text-primary);
   /* Indicator bar thickness is constant across sizes. */
-  --bekk-tabs-indicator-bar: 2px;
+  --bekk-tabs-indicator-bar: var(--border-width-2);
 }
 
 .bekk-tabs--horizontal {

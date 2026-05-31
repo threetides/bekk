@@ -352,6 +352,12 @@ const docPage: DocPage = {
         description: "Whether to render the arrow pointer."
       },
       {
+        name: "backdrop",
+        type: "boolean",
+        default: "false",
+        description: "Render a dimming backdrop behind the popover for a modal-like effect."
+      },
+      {
         name: "className",
         type: "string",
         description: "Forwarded to the popup element for layout composition."

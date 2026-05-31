@@ -36,29 +36,31 @@
 }
 
 /* Sizes set internal vars */
+/* Thumb inset is derived from track/thumb so it never needs a literal:
+   inset = (track height − thumb diameter) / 2 centers the thumb vertically. */
 .bekk-switch--sm {
   --bekk-switch-track-w: var(--control-height-sm);
-  --bekk-switch-track-h: 16px;
-  --bekk-switch-thumb-size: 12px;
-  --bekk-switch-thumb-inset: 2px;
+  --bekk-switch-track-h: var(--control-track-height-sm);
+  --bekk-switch-thumb-size: var(--control-thumb-size-sm);
+  --bekk-switch-thumb-inset: calc((var(--bekk-switch-track-h) - var(--bekk-switch-thumb-size)) / 2);
   --bekk-switch-font-size: var(--font-size-sm);
   --bekk-switch-gap: var(--spacing-2);
 }
 
 .bekk-switch--md {
   --bekk-switch-track-w: var(--control-height-md);
-  --bekk-switch-track-h: 20px;
-  --bekk-switch-thumb-size: 16px;
-  --bekk-switch-thumb-inset: 2px;
+  --bekk-switch-track-h: var(--control-track-height-md);
+  --bekk-switch-thumb-size: var(--control-thumb-size-md);
+  --bekk-switch-thumb-inset: calc((var(--bekk-switch-track-h) - var(--bekk-switch-thumb-size)) / 2);
   --bekk-switch-font-size: var(--font-size-md);
   --bekk-switch-gap: var(--spacing-2);
 }
 
 .bekk-switch--lg {
   --bekk-switch-track-w: var(--control-height-lg);
-  --bekk-switch-track-h: 24px;
-  --bekk-switch-thumb-size: 20px;
-  --bekk-switch-thumb-inset: 2px;
+  --bekk-switch-track-h: var(--control-track-height-lg);
+  --bekk-switch-thumb-size: var(--control-thumb-size-lg);
+  --bekk-switch-thumb-inset: calc((var(--bekk-switch-track-h) - var(--bekk-switch-thumb-size)) / 2);
   --bekk-switch-font-size: var(--font-size-lg);
   --bekk-switch-gap: var(--spacing-3);
 }

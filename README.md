@@ -59,8 +59,8 @@ your own brand font, import the pieces you want individually instead:
 
 ```tsx
 import "@threetides/bekk/styles/tokens.css" // required: the design system
-import "@threetides/bekk/styles/reset.css"  // optional: CSS reset
-import "@threetides/bekk/styles/fonts.css"  // optional: Plus Jakarta Sans
+import "@threetides/bekk/styles/reset.css" // optional: CSS reset
+import "@threetides/bekk/styles/fonts.css" // optional: Plus Jakarta Sans
 ```
 
 Only `tokens.css` is mandatory; without it, components have no values to read.

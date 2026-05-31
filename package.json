@@ -2,15 +2,15 @@
   "name": "@threetides/bekk",
   "version": "0.2.1",
   "description": "A polished, accessible, opinionated React component library built on top of Base UI.",
+  "homepage": "https://github.com/threetides/bekk#readme",
+  "bugs": {
+    "url": "https://github.com/threetides/bekk/issues"
+  },
   "license": "MIT",
   "author": "threetides",
-  "homepage": "https://github.com/threetides/bekk#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/threetides/bekk.git"
-  },
-  "bugs": {
-    "url": "https://github.com/threetides/bekk/issues"
   },
   "files": [
     "dist"

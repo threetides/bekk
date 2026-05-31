@@ -167,14 +167,19 @@ const PlusMinusIcon: FC = () => (
 )
 
 const CustomIcon: FC = () => (
-  <Accordion.Root defaultValue={["what"]} style={{ maxWidth: 480 }}>
-    {FAQ.map((i) => (
-      <Accordion.Item key={i.value} value={i.value}>
-        <Accordion.Trigger icon={<PlusMinusIcon />}>{i.title}</Accordion.Trigger>
-        <Accordion.Panel>{i.body}</Accordion.Panel>
-      </Accordion.Item>
-    ))}
-  </Accordion.Root>
+  <>
+    {/* Collapse the plus's vertical stroke when the panel opens, morphing it
+        into a minus. Scoped to this example's data-plus-vertical marker. */}
+    <style>{`.bekk-accordion__trigger[data-panel-open] [data-plus-vertical] { transform: scaleY(0) }`}</style>
+    <Accordion.Root defaultValue={["what"]} style={{ maxWidth: 480 }}>
+      {FAQ.map((i) => (
+        <Accordion.Item key={i.value} value={i.value}>
+          <Accordion.Trigger icon={<PlusMinusIcon />}>{i.title}</Accordion.Trigger>
+          <Accordion.Panel>{i.body}</Accordion.Panel>
+        </Accordion.Item>
+      ))}
+    </Accordion.Root>
+  </>
 )
 
 const docPage: DocPage = {

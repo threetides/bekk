@@ -121,19 +121,21 @@
   justify-content: flex-start;
 }
 
-.bekk-navigation-menu__trigger:hover:not([data-disabled]):not([aria-disabled="true"]),
-.bekk-navigation-menu__link:hover:not([data-disabled]):not([aria-disabled="true"]) {
+/* The Trigger is a native <button>, so its disabled state is `:disabled` —
+   Base UI does not emit `data-disabled` on it. Links are <a> elements that
+   can't be `:disabled`; the consumer marks them with `aria-disabled`. */
+.bekk-navigation-menu__trigger:hover:not(:disabled),
+.bekk-navigation-menu__link:hover:not([aria-disabled="true"]) {
   background-color: var(--color-bg-subtle);
   color: var(--color-text-primary);
 }
 
-.bekk-navigation-menu__trigger:active:not([data-disabled]):not([aria-disabled="true"]),
-.bekk-navigation-menu__link:active:not([data-disabled]):not([aria-disabled="true"]) {
+.bekk-navigation-menu__trigger:active:not(:disabled),
+.bekk-navigation-menu__link:active:not([aria-disabled="true"]) {
   background-color: var(--color-bg-muted);
 }
 
-.bekk-navigation-menu__trigger[data-disabled],
-.bekk-navigation-menu__link[data-disabled],
+.bekk-navigation-menu__trigger:disabled,
 .bekk-navigation-menu__link[aria-disabled="true"] {
   color: var(--color-text-disabled);
   cursor: not-allowed;
@@ -146,7 +148,7 @@
   background-color: var(--color-bg-subtle);
 }
 
-.bekk-navigation-menu__link[data-active]:hover:not([data-disabled]) {
+.bekk-navigation-menu__link[data-active]:hover:not([aria-disabled="true"]) {
   color: var(--color-accent-fg);
 }
 
@@ -210,10 +212,8 @@
   color: var(--color-text-secondary);
 }
 
-.bekk-navigation-menu--ghost
-  .bekk-navigation-menu__trigger:hover:not([data-disabled]):not([aria-disabled="true"]),
-.bekk-navigation-menu--ghost
-  .bekk-navigation-menu__link:hover:not([data-disabled]):not([aria-disabled="true"]) {
+.bekk-navigation-menu--ghost .bekk-navigation-menu__trigger:hover:not(:disabled),
+.bekk-navigation-menu--ghost .bekk-navigation-menu__link:hover:not([aria-disabled="true"]) {
   background-color: var(--color-bg-subtle);
 }
 

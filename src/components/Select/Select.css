@@ -153,6 +153,9 @@
 }
 
 .bekk-select__popup {
+  /* Comfortable dropdown cap before the list scrolls. A component-specific
+     measure, not a design-scale value, so it lives as an internal var; the
+     min() below still yields to the viewport via --available-height. */
   --bekk-select-popup-max-h: 320px;
   /* Match the trigger width exactly so the closed trigger and open dropdown
      line up. Set the width once on the trigger (via style/className); long item
@@ -255,7 +258,7 @@
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
-  letter-spacing: 0.06em; /* tracking — eyebrow caps */
+  letter-spacing: var(--letter-spacing-wider); /* tracking — eyebrow caps */
   color: var(--color-text-muted);
   pointer-events: none;
 }

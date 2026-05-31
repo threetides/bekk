@@ -77,8 +77,9 @@
   border-color: var(--color-accent-bg);
 }
 
-.bekk-checkbox[data-checked]:hover:not([data-disabled]) .bekk-checkbox__box,
-.bekk-checkbox[data-indeterminate]:hover:not([data-disabled]) .bekk-checkbox__box {
+.bekk-checkbox[data-checked]:hover:not([data-disabled]):not([data-readonly]) .bekk-checkbox__box,
+.bekk-checkbox[data-indeterminate]:hover:not([data-disabled]):not([data-readonly])
+  .bekk-checkbox__box {
   background-color: var(--color-accent-bg-hover);
   border-color: var(--color-accent-bg-hover);
 }

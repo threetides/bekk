@@ -46,8 +46,12 @@ function NavigationMenuRoot({
     >
       {children}
       <BaseNavigationMenu.Portal>
+        {/* The Portal moves this subtree out of the Root, so the size
+            modifier (which sets the --bekk-navigation-menu-* vars consumed by
+            the popup + content) must be repeated here — CSS custom properties
+            don't inherit across a portal boundary. */}
         <BaseNavigationMenu.Positioner
-          className={"bekk-navigation-menu__positioner"}
+          className={cx("bekk-navigation-menu__positioner", `bekk-navigation-menu--${size}`)}
           sideOffset={sideOffset}
           align={align}
         >

@@ -216,6 +216,13 @@ toast.add({ title: "Toast #2", description: "And so on." })`
         name: "children",
         type: "ReactNode",
         description: "Your app. Wrap once near the root."
+      },
+      {
+        name: "limit",
+        type: "number",
+        default: "5",
+        description:
+          "Maximum number of toasts visible at once; older ones are dropped past the limit."
       }
     ],
     "Toast.Viewport": [

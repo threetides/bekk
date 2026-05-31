@@ -56,10 +56,18 @@ export function Checkbox({
       <span className={"bekk-checkbox__box"} aria-hidden>
         {/* keepMounted so the indicator stays in the DOM even when unchecked —
             otherwise the box's flex baseline shifts when the SVG mounts, which
-            nudges the row (and everything below it) by ~1px. */}
-        <BaseCheckbox.Indicator className={"bekk-checkbox__indicator"} keepMounted>
-          {indeterminate ? <Minus /> : <Check />}
-        </BaseCheckbox.Indicator>
+            nudges the row (and everything below it) by ~1px.
+            Pick the glyph from Base UI's indicator state, not the `indeterminate`
+            prop: a `parent` checkbox derives its mixed state internally from the
+            group, so the prop stays undefined while `state.indeterminate` is the
+            real source of truth. */}
+        <BaseCheckbox.Indicator
+          className={"bekk-checkbox__indicator"}
+          keepMounted
+          render={(props, state) => (
+            <span {...props}>{state.indeterminate ? <Minus /> : <Check />}</span>
+          )}
+        />
       </span>
       {children && <span className={"bekk-checkbox__label"}>{children}</span>}
     </BaseCheckbox.Root>
